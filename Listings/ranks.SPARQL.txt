@@ -1,0 +1,5 @@
+PREFIX dwciri: <http://rs.tdwg.org/dwc/iri/>
+SELECT DISTINCT ?rank
+WHERE {
+  ?x dwciri:taxonRank ?rank .
+}

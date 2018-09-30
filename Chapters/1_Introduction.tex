@@ -1,0 +1,78 @@
+% Chapter 1
+\chapter{Introduction}
+\label{chapter-introduction} 
+%----------------------------------------------------------------------------------------
+% Define some commands to keep the formatting separated from the content 
+\newcommand{\keyword}[1]{\textbf{#1}}
+\newcommand{\tabhead}[1]{\textbf{#1}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\file}[1]{\texttt{\bfseries#1}}
+\newcommand{\option}[1]{\texttt{\itshape#1}}
+%----------------------------------------------------------------------------------------
+\section{Importance of the Topic}
+
+\todo{convert the footnotes to proper citations unless where appropriate.}
+
+The desire for an integrated information system serving the needs of the biodiversity community dates at least as far back as 1985 when the Taxonomy Database Working Group (TDWG)---later renamed to Biodiversity Informatics Standards but retaining the abbreviation---was established\footnote{TDWG Past Meetings \href{http://www.tdwg.org/past-meetings/}{<http://www.tdwg.org/past-meetings/>}}. In 1999, the Global Biodiversity Information Facility (GBIF) was created\footnote{What is GBIF? \href{https://www.gbif.org/what-is-gbif}{<https://www.gbif.org/what-is-gbif>}} after the Organization for Economic Cooperation and Development (OECD) had arrived at the conclusion that ``an international mechanism is needed to make biodiversity data and information accessible worldwide''. The Bouchout declaration\footnote{Bouchout Declaraiton \href{http://bouchoutdeclaration.org/}{<http://bouchoutdeclaration.org/>}} crowned the results of the E.U.-funded project pro-iBiosphere\footnote{E.U. pro-iBiosphere project \href{http://wiki.pro-ibiosphere.eu/}{<http://wiki.pro-ibiosphere.eu/>}} (2012 - 2014) dedicated to the task of creating an integrated biodiversity information system. The Bouchout declaration proposes to make scholarly biodiversity knowledge freely available as Linked Open Data. A parallel process in the U.S.A. started even earlier with the establishment of the Global Names Architecture (\cite{patterson_names_2010,pyle_towards_2016}).
+
+\section{Previous Work}
+
+In the biomedical domain there are well-established efforts to extract information and discover knowledge from literature (\cite{momtchev_expanding_2009, williams_open_2012, rebholz-schuhmann_facts_2005}). The biodiversity domain, and in particular biological systematics and taxonomy (from here on in this thesis referred to as \emph{taxonomy}), is also moving in the direction of semantization of its research outputs (\cite{kennedy_scientific_2005,penev_fast_2010, tzitzikas_integrating_2013}). The publishing domain has been modeled through the Semantic Publishing and Referencing Ontologies (SPAR Ontologies) (\cite{peroni_semantic_2014}). The SPAR Ontologies are a collection of ontologies incorporating---amongst others---FaBiO, the FRBR-aligned Bibliographic Ontology (\cite{peroni_fabio_2012}), and DoCO, the Document Component Ontology (\cite{constantin_document_2016}). The SPAR Ontologies provide a set of classes and properties for the description of general-purpose journal articles, their components, and related publishing resources. Taxonomic articles and their components, on the other hand, have been modeled through the TaxPub XML Document Type Definition (DTD) (also referred to loosely as XML schema) and the Treatment Ontologies (\cite{catapano_taxpub:_2010}). While TaxPub is the XML-schema of taxonomic publishing for several important taxonomic journals (e.g. ZooKeys, Biodiversity Data Journal), the Treatment Ontologies are still in development and have served as a conceptual template for OpenBiodiv-O (discussed in Chapter~\ref{chapter-ontology}). 
+
+Taxonomic nomenclature is a discipline with a very long tradition. It transitioned to its modern form with the publication of the Linnaean System (\cite{linnaeus_systema_1758}). Already by the beginning of the last century, there were hundreds of vocabulary terms (e.g. \emph{types}) (\cite{witteveen_naming_2015}). At present the naming of organismal groups is governed by by the International Code of Zoological Nomenclature (ICZN) (\cite{international_commission_on_zoological_nomenclature_international_1999}) and by the International Code of Nomenclature for algae, fungi, and plants (Melbourne Code) (\cite{mcneill_international_2012}). Due to their complexity (e.g. ICZN has 18 chapters and 3 appendices), it proved challenging to create a top-down ontology of biological nomenclature. Example attempts include the relatively complete NOMEN ontology (\cite{dmitriev_nomen_2017}) and the somewhat less complete Taxonomic Nomenclatural Status Terms (TNSS, \cite{morris_taxonomic_nodate}).
+
+There are several projects that are aimed at modeling the broader biodiversity domain conceptually. Darwin Semantic Web (Darwin-SW) (\cite{baskauf_darwin-sw:_2016}) adapts the previously existing Darwin Core (DwC) terms (\cite{wieczorek_darwin_2012}) as RDF. These models deal primarily with organismal occurrence data.
+
+Modeling and formalization of the strictly taxonomic domain has been discussed by Berendsohn (\cite{berendsohn_concept_1995}) and later, e.g., in (\cite{franz_perspectives:_2009,sterner_taxonomy_2017}). Noteworthy efforts are the XML-based Taxonomic Concept Transfer Schema (\cite{taxonomic_names_and_concepts_interest_group_taxonomic_2006}) and a now defunct Taxon Concept ontology (\cite{devries_taxon_nodate}).
+
+By the time the OpenBiodiv project started in June 2015, a number of articles had been previously published on the topics of linking data and sharing identifiers in the biodiversity knowledge space (\cite{page_biodiversity_2008}), unifying phylogenetic knowledge (\cite{parr_evolutionary_2012}), taxonomic names and their relation to the Semantic Web (\cite{page_taxonomic_2006,patterson_names_2010}), and aggregating and tagging biodiversity research (\cite{mindell_aggregating_2011}). Some partial discussion of OBKMS was to be found in the science blog \href{http://iphylo.blogspot.bg}{iPhylo}\footnote{The vision thing - it's all about the links (2014) \href{http://iphylo.blogspot.bg/2014/06/the-vision-thing-it-all-about-links.html}{<http://iphylo.blogspot.bg/2014/06/the-vision-thing-it-all-about-links.html>}}$^{,}$\footnote{Putting some bite into the Bouchout Declaration (2015) \href{http://iphylo.blogspot.bg/2015/05/putting-some-bite-into-bouchout.html}{<http://iphylo.blogspot.bg/2015/05/putting-some-bite-into-bouchout.html>}}. The legal aspects of the OBKMS had been discussed by \cite{egloff_open_2014}.
+
+Furthermore, several tools and systems that deal with the integration of biodiversity and biodiversity data had been developed by different groups. Some of the most important ones are UBio\footnote{UBio, \href{http://ubio.org/}{<http://ubio.org/>}}, Global Names\footnote{Global Names \href{http://globalnames.org/}{<http://globalnames.org/>}}, BioGuid\footnote{BioGuid \href{http://bioguid.org/}{<http://bioguid.org/>}}, BioNames\footnote{BioNames \href{http://bionames.org/}{<http://bionames.org/>}}, Pensoft Taxon Profile\footnote{Pensoft Taxon Profile\href{http://ptp.pensoft.eu/}{<http://ptp.pensoft.eu/>}}, and the Plazi Treatment Repository\footnote{Plazi Treatment Repository \href{http://plazi.org/wiki/}{<http://plazi.org/wiki/>}}.
+
+\todo{footnotes $\rightarrow$ citations}
+
+\section{Summary of the Main Results in the Area}
+
+The key findings from the papers cited in the previous paragraphs can be summarized as follows:
+
+\begin{enumerate}
+\item{Biodiversity science deals with disparate types of data: taxonomic\footnote{Please refer to Chapter~\ref{chapter-domain-conceptualization} for a discussion of the term taxonomy, which is slightly different to its interpretation in computer science.}, biogeographic, phylogenetic, visual, descriptive, and others. These data are siloed in unlinked data repositories.}
+\item{Biodiversity databases need a universal system of naming concepts due to the obsolesce of Linnaean names for modern taxonomy. Taxonomic concept labels have been proposed as a human-readable solution and stable globally unique identifiers of taxonomic concepts had been proposed as a machine-readable solution.}
+\item{There is a base of digitized semi-structured biodiversity information on-line with appropriate licenses waiting to be integrated.}
+\end{enumerate}
+
+
+\section{Goal and Objectives}
+
+Given the huge international interest in OBKMS, this dissertation started the OpenBiodiv project, the goal of which is to contribute to OBKMS by creating an \ul{open knowledge-based system of biodiversity information extracted from scholarly literature}.
+
+\paragraph{Objectives.} This goal is broken into following objectives. The reasoning behind this break-up is given in the next chapter, where the problem is formally introduced.
+
+\begin{enumerate}
+\item{Formally define OpenBiodiv as a knowledge-based system and create its integrated software architecture.}
+\item{Study the domain of biodiversity informatics and semantic taxonomic publishing and develop an ontology allowing data integration from diverse sources.}
+\item{Create a Linked Open Dataset (LOD) on the basis of published taxonomic articles.}
+\item{Develop methods for converting taxonomic publications into the semantic model of the ontology.}
+\item{Develop methods for converting taxonomic data into taxonomic publications.}
+\item{Create a web-portal and example applications on top of the LOD.}
+\end{enumerate}
+
+
+\section{Structure of the Thesis}
+
+The thesis is subdivided into three parts: Introduction, Arguments, and Conclusion.
+
+In this leading chapter of Part~\ref{part:introduction}, we have given the raison d'\^etre of the system and this thesis and outlined its goal and objectives. 
+
+Part~\ref{part:arguments} discusses the solutions to each of the stated six objectives. In Chapter~\ref{chapter-problem-defintion} we give a formal definition of the research problem and what is understood by a knowledge-based system. Then, Chapter~\ref{chapter-openbiodiv} defines the OpenBiodiv system as the answer to the research problem and outlines its software architecture (these two chapters form Objective 1).  Chapter~\ref{chapter-ontology} gives a conceptualization of the domain of scientific taxonomic publishing formalizes it by introducing the central result of this thesis, the OpenBiodiv Ontology (OpenBiodiv-O, Objective 2). Chapter~\ref{chapter-lod} describes the Linked Open Dataset that we've generated based on the ontology (objective 3). Chapter~\ref{chapter-rdf4r} describes in detail the RDF4R software package, an R package for working with RDF, which was used to create the LOD (Objective 4). Chapter~\ref{chapter-case-study}, we discuss two case-studies for importing data into OpenBiodiv from important international repositories (Objective 5). Chapter~\ref{chapter:webportal} discusses the website that has is being prepared to serve on top of OpenBiodiv-LOD and its applications (Objective 6).
+
+Part~\ref{part:conclusion} summarizes the contributions of the thesis , outlines how they solve the objectives, and discusses avenues for further research.
+
+
+%----------------------------------------------------------------------------------------
+
+
+
+
+
+%--------------------------------

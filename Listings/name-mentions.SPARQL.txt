@@ -1,0 +1,9 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX openbiodiv: <http://openbiodiv.net/>
+PREFIX pkm: <http://proton.semanticweb.org/protonkm#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+select (SAMPLE(?name) as ?name) (COUNT(DISTINCT ?tnu) AS ?nmentions) where { 
+	?s rdf:type openbiodiv:ScientificName ;
+       rdfs:label ?name .
+    ?tnu pkm:mentions ?s .
+} GROUP BY ?s ORDER BY DESC(?nmentions)

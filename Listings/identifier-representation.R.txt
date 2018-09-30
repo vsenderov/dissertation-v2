@@ -1,0 +1,29 @@
+artist
+# [1] "art:Artist"
+
+str(artist)
+# List of 4
+# $ id    : chr "Artist"
+# $ uri   : chr "<http://art-ontology.net/Artist>"
+# $ qname : chr "art:Artist"
+# $ prefix: Named chr "http://art-ontology.net/"
+#  ..- attr(*, "names")= chr "art"
+# - attr(*, "class")= chr "identifier"
+
+represent(artist)
+# [1] "<http://art-ontology.net/Artist>"
+
+wrote
+# [1] "art:wrote"
+
+str(wrote)
+# List of 4
+# $ id    : chr "wrote"
+# $ uri   : chr "<http://art-ontology.net/wrote>"
+# $ qname : chr "art:wrote"
+# $ prefix: Named chr "http://art-ontology.net/"
+#  ..- attr(*, "names")= chr "art"
+# - attr(*, "class")= chr "identifier"
+
+represent(wrote)
+# [1] "<http://art-ontology.net/wrote>"

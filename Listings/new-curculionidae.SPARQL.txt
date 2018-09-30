@@ -1,0 +1,23 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX openbiodiv: <http://openbiodiv.net/>
+PREFIX dwciri: <http://rs.tdwg.org/dwc/iri/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
+PREFIX pkm: <http://proton.semanticweb.org/protonkm#>
+PREFIX prism: <http://prismstandard.org/namespaces/basic/2.0/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+select * where { 
+    graph openbiodiv:35af6a8a-9817-449e-86dc-dddc81bce09c {
+        ?n rdfs:label "Curculionidae" .
+        ?c dwciri:scientificName ?n .
+        ?s skos:broader ?c .
+        ?s dwciri:scientificName ?sn .       
+    }
+     ?sn dwciri:taxonRank openbiodiv:Genus ;
+         dwc:genus ?vgenus .
+    ?tnu pkm:mentions ?name;
+         prism:publicationDate ?date ;
+         dwciri:taxonomicStatus openbiodiv:TaxonomicDiscovery .
+    ?name dwc:genus ?vgenus;
+          rdfs:label ?verbatim .
+}

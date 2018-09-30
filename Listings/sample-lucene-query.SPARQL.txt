@@ -1,0 +1,15 @@
+PREFIX lucene: <http://www.ontotext.com/connectors/lucene#>
+PREFIX inst: <http://www.ontotext.com/connectors/lucene/instance#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+SELECT *
+WHERE {
+?search a inst:WordSearch ;
+        lucene:query "label:Lubomir Penev" ;
+        lucene:entities ?resource .
+
+?resource lucene:score ?score ;
+   rdfs:label ?label .
+} ORDER BY DESC (?score)

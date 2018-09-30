@@ -1,0 +1,8 @@
+classics_rdf = ResourceDescriptionFramework$new()
+
+classics_rdf$add_triple(subject = idshakespeare,    predicate = wrote,      object = idking_lear)
+classics_rdf$add_triple(subject = idking_lear,      predicate = rdfs_label, object = lking_lear)
+classics_rdf$add_triple(subject = idshakespeare,    predicate = wrote,      object = idas_you_like_it)
+classics_rdf$add_triple(subject = idas_you_like_it, predicate = rdfs_label, object = las_you_like_it)
+classics_rdf$add_triple(subject = idas_you_like_it, predicate = has_year,   object = l1599)
+classics_rdf$add_triple(subject = idas_you_like_it, predicate = rdf_type,   object = play)

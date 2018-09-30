@@ -1,0 +1,15 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX openbiodiv: <http://openbiodiv.net/>
+PREFIX pkm: <http://proton.semanticweb.org/protonkm#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dwciri: <http://rs.tdwg.org/dwc/iri/>
+PREFIX po: <http://www.essepuntato.it/2008/12/pattern#>
+PREFIX fabio: <http://purl.org/spar/fabio/>
+PREFIX doco: <http://purl.org/spar/doco/>
+select (MAX(?name) AS ?name) (COUNT(DISTINCT ?a) AS ?nmentions) where { 
+	?s rdf:type openbiodiv:ScientificName ;
+       rdfs:label ?name .
+    ?tnu pkm:mentions ?s .
+    ?a po:contains ?tnu .
+    ?a rdf:type doco:Figure .
+} GROUP BY ?s ORDER BY DESC(?nmentions)

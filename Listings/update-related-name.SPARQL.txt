@@ -1,0 +1,29 @@
+PREFIX dwciri: <http://rs.tdwg.org/dwc/iri/>
+PREFIX : <http://openbiodiv.net/>
+PREFIX po: <http://www.essepuntato.it/2008/12/pattern#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX pkm: <http://proton.semanticweb.org/protonkm#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+INSERT  
+{
+    GRAPH <http://openbiodiv.net/Updates>
+    {
+    ?name2 :relatedName ?name .
+   }
+}
+
+WHERE { 
+  ?nom_sec rdf:type :NomenclatureSection ;
+    :contains ?tnu1 .
+  
+  ?tnu1 rdf:type :TaxonomicNameUsage ;
+    pkm:mentions ?name.
+        
+  ?nom_sec :contains ?tnu2 .
+
+  ?tnu2 rdf:type :TaxonomicNameUsage ;
+    pkm:mentions ?name2.
+    
+  FILTER(?name != ?name2)
+} 

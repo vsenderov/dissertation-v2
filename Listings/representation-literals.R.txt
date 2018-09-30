@@ -1,0 +1,41 @@
+lhamlet
+# [1] "\"Hamlet\"@en"
+
+str(lhamlet)
+# List of 4
+# $ text_value: chr "Hamlet"
+# $ xsd_type  :List of 4
+# $ lang      : chr "en"
+# $ squote    : chr "\"Hamlet\"@en"
+# - attr(*, "class")= chr "literal"
+
+represent(lhamlet)
+# [1] "\"Hamlet\"@en"
+
+lshakespeare
+# [1] "\"Shakespeare\""
+
+str(lshakespeare)
+# List of 4
+# $ text_value: chr "Shakespeare"
+# $ xsd_type  :List of 4
+# $ lang      : chr ""
+# $ squote    : chr "\"Shakespeare\""
+# - attr(*, "class")= chr "literal"
+
+represent(lshakespeare)
+# [1] "\"Shakespeare\""
+
+l1603
+# [1] "\"1603\"^^xsd:integer"
+
+str(l1603)
+# List of 4
+# $ text_value: chr "1603"
+# $ xsd_type  :List of 4  
+# $ lang      : chr ""
+# $ squote    : chr "\"1603\"^^xsd:integer"
+# - attr(*, "class")= chr "literal"
+
+represent(l1603)
+# [1] "\"1603\"^^xsd:integer"

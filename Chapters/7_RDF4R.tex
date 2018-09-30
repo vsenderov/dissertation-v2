@@ -1,0 +1,392 @@
+\chapter{RDF4R: R Library for Working with RDF}
+\label{chapter-rdf4r}
+
+RDF4R ({\tt rdf4r}) is an R package for working with Resource Description Framework (\cite{rdf_working_group_resource_2014}) data. It was developed as part of the OpenBiodiv project but is completely free of any OpenBiodiv-specific code and can be used for generic purposes requiring tools to work with RDF data in the R programming environment (\cite{r_core_team_r:_2016}).
+
+\section{Installation}
+
+RDF4R depends on the following packages (list may change in future releases):
+
+\begin{itemize}
+\item{{\tt gsubfn} (\cite{grothendieck_gsubfn:_2018})}
+\item{{\tt httr} (\cite{wickham_httr:_2017})}
+\item{{\tt xml2} (\cite{wickham_xml2:_2018})}
+\item{{\tt R6} (\cite{chang_r6:_2017})}
+\item{{{\tt devtools} (\cite{wickham_devtools:_2018})}---needed if one is to do a GitHub install.}
+\end{itemize}
+
+Installation of the above packages via {\tt install.packages} is needed to use RDF4R. Pay attention to error messages during their installation as additional OS-level components may need to be installed.
+
+Install RDF4R from GitHub with the following command:
+
+\begin{lstlisting}[language=R,
+basicstyle=\ttfamily\tiny]
+devtools::install_github("vsenderov/rdf4r")
+\end{lstlisting}
+
+We are currently in the process of submitting the package to a repository and making it available through the standard installation facilities of R. Our intention is to publish it through CRAN and/or rOpenSci\footnote{Repositories accessible under \url{https://cran.r-project.org/} and \url{https://github.com/ropensci/}, respectively}.
+
+\section{Specification}
+
+RDF4R has the features listed in the following subsections.
+
+\subsection{Connection to a triple-store}
+
+Triple-stores, also known as quad-stores, graph databases, or semantic databases, are databases that store RDF data and allow the querying of RDF data via the SPARQL query language (\cite{the_w3c_sparql_working_group_sparql_2013}). RDF4R can connect to triple-stores that support the RDF4J server REST API (\cite{rdf4j_development_team_rdf4j_2017}) such as GraphDB (\cite{ontotext_graphdb_2018}). It is possible to establish both basic connections (requiring no password or requiring basic HTTP user-pass authentication) or connection secured with an API access token.
+
+\subsection{Work with repositories on a triple-store}
+
+Once a connection to a triple-store has been established, it is possible to inspect the talk protocol version, view the list of repositories on the database, execute SPARQL Read (SELECT keyword and related) and SPARQL Update (INSERT and related) queries on the database, as well as submit serialized RDF data directly to the database.
+
+\subsection{Function factories to convert SPARQL queries to R functions}
+
+An important feature of RDF4R are its facilities for converting SPARQL queries and the like to R functions. This conversion is realized by a family of functions that return functions. In this thesis they will be referred to as function factories. Taking the example of the {\tt query\_factory} we have: given a parameterized SPARQL query (parametrization syntax is explained later), {\tt query\_factory} returns a function $f$ whose arguments are the parameters of the query. Upon being called $f$ submits the query to a SPARQL endpoint and returns the results.
+
+\subsection{Work with literals and identifiers}
+
+The building blocks of RDF are literals (e.g. strings, numbers, dates, etc.) and resource identifiers. RDF4R provides classes for literals and resource identifiers that are tightly integrated with the other facilities of the package.
+
+\subsection{Prefix management}
+
+Prefixes are managed automatically during serialization by being extracted from the resource identifiers.
+
+\subsection{Creation and serialization of RDF}
+
+RDF4R uses an own implementation of smart dynamically reallocated vector data structure to store RDF triples as mutable R6 objects. Blank nodes are partially supported: a triple may contain an anonymous RDF object (a list of triples with the same subject) as its third position. In this case, the parent RDF is serialized as Turtle by using the bracket syntax (Listing~\ref{fig:turtle-brackets}). Currently, the serialization procedure only supports Turtle (and its variant Trig, \cite{bizer_rdf_2014}) and only supports adding new triples.
+
+\begin{lstlisting}[language=SPARQL,
+caption=Using brackets to express RDF blank nodes in Turtle/TriG.,
+label=fig:turtle-brackets,
+basicstyle=\ttfamily\tiny]
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+# :someone knows someone else, who has the name "Bob".
+:someone foaf:knows [ foaf:name "Bob" ] .
+\end{lstlisting}
+
+\subsection{A basic vocabulary of semantic elements}
+
+RDF4R has some basic resource identifiers for widely used classes and predicates predefined (e.g. for {\tt rdf:type}, {\tt rdfs:label}, etc.).
+
+\section{Usage}
+
+Here, we explain how to use the package RDF4R by means of examples. In order to fully utilize the package capabilities, one needs to have access to an RDF graph database. We have made available a public endpoint (see next paragraph) to allow the users of the package to experiment. Since write access is enabled, please be considerate and don't issue catastrophic commands.
+
+\subsection{Connection to triple store}
+
+The code in Listing~\ref{fig:rdf4r-connecting-graphdb} creates an object, {\tt graphdb}, that stores the information needed to access the database. The user needs to supply it to the access functions discussed later. We have also created an object {\tt openbiodiv} that contains read-only access to the main OpenBiodiv instance. All examples in this section use one of these two access points.
+
+\begin{lstlisting}[language=SPARQL,
+caption=R code: connecting to an RDF database using RDF4R. Outputs are given as comments after the statements.,
+label=fig:rdf4r-connecting-graphdb,
+basicstyle=\ttfamily\tiny]
+library(rdf4r)
+
+openbiodiv = rdf4r::basic_triplestore_access(
+  server_url = "http://graph.openbiodiv.net",
+  repository = "depl2018-lite"
+)
+
+graphdb = rdf4r::basic_triplestore_access(
+  server_url = "http://graph.openbiodiv.net",
+  user = "dbuser",
+  password = "public-access",
+  repository = "test"
+)
+
+graphdb
+# $server_url
+# [1] "http://graph.openbiodiv.net"
+# $repository
+# [1] "test"
+# $authentication
+# <request>
+# Options:
+# * httpauth: 1
+# * userpwd: dbuser:public-access
+# $status
+# [1] 8
+# attr(,"class")
+# [1] "list"                       "triplestore_access_options"
+
+openbiodiv
+# $server_url
+# [1] "http://graph.openbiodiv.net"
+# $repository
+# [1] "depl2018-lite"
+# $authentication
+# NULL
+# $status
+# [1] 8
+# attr(,"class")
+# [1] "list"                       "triplestore_access_options"
+
+get_protocol_version(graphdb)
+# [1] 8
+
+list_repositories(graphdb)
+# uri             id readable writable
+# 1         http://graph.openbiodiv.net/repositories/SYSTEM         SYSTEM     true     true
+# 2 http://graph.openbiodiv.net/repositories/depl2018-mini2 depl2018-mini2     true     true
+# 3       http://graph.openbiodiv.net/repositories/depl2018       depl2018     true     true
+# 4           http://graph.openbiodiv.net/repositories/test           test     true     true
+# 5  http://graph.openbiodiv.net/repositories/depl2018-lite  depl2018-lite     true     true
+\end{lstlisting}
+
+\subsection{Example: convert a SPARQL query to an R function}
+
+The purpose of this example is to convert a simple SPARQL lookup query to an R function. The publicly accessible endpoint happens to store some biological information but for the purposes of this example knowledge of biological taxonomy or the ontology of the store is irrelevant. It is only necessary to know that the database stores information about biological papers that contain references to biological names. We are looking for papers that mention the biological name \emph{Drosophila}, which is a genus of flies. Please note the parametrization of the SPARQL query.
+
+\lstinputlisting[language=R,
+caption=R. Parameterized SPARQL query to lookup a genus in OpenBiodiv.,
+label=listing:update_replacement_name, basicstyle=\ttfamily\tiny]{Listings/update-replacement-name.SPARQL.txt}
+
+Note that this almost valid SPARQL with one exception - the {\tt \%param} string on the first line of the WHERE clause. A SPARQL query is parameterized by specifying a \% in front of the tokens that have to become the arguments of the generated R function. Construction of a function follows that looks up a genus (a biological rank) by a supplied string.
+
+\begin{lstlisting}[language=R,
+basicstyle=\ttfamily\tiny]
+genus_lookup = rdf4r::query_factory(p_query = p_query, access_options = openbiodiv)
+\end{lstlisting}
+
+{\tt query\_factory} takes two arguments: the parameterized query and an object with access options for an endpoint and returns an R function whose arguments are the parameters of the parameterized SPARQL query and which executes the SPARQL query against the endpoint specified in {\tt access\_options} and returns formatted results as a dataframe.
+
+\begin{lstlisting}[language=R,
+basicstyle=\ttfamily\tiny]
+genus_lookup("\"Drosophila\"")
+#    genus title
+# 1   Drosophila  Characterisation of the chemical profiles of Brazilian and Andean
+# morphotypes belonging to the Anastrephafraterculus complex (Diptera, Tephritidae)
+# 2   Drosophila                A new species group in the genus Dichaetophora, with
+# descriptions of six new species from the Oriental region (Diptera, Drosophilidae)
+\end{lstlisting}
+
+Note that we have enclosed the string {\tt Drosophila} in escaped quotes as only that would make the replacement of the parameter in the parameterized SPARQL query a valid SPARQL. Had the parameter been a resource identifier, we would not have needed the quotes. In a later example, we will show how we can get around this hassle by utilizing the built-in classes for literals and resource identifiers.
+
+\paragraph{Excercise.} Try experimenting with {\tt genus\_lookup} by looking up information about some other genera (\emph{Eupolybothrus} - a millepede, \emph{Myotis} - a bat).
+
+\subsection{Setting up literals and identifiers}
+
+We want to model Table~\ref{table:classical-works} (recreated from Alemang and Hendler 2008). We will use the prefix \url{<http://rdflib-rdf4r.net/>} for all instances that we create and a dummy ontology (not actually defined) with the prefix \url{<http://art-ontology.net/>} to reify the example classes and properties.
+
+\begin{table}[h!]
+\caption{Tabular Data about Elizabethan Literature and Music recreated from \cite{allemang_semantic_2011}.}
+\begin{tabular}{ccccc}
+\hline
+ ID & Title                       & Author            & Medium & Year\\  \hline
+ 1  & \emph{As You Like It}       & Shakespeare       & Play & 1599\\
+ 2  & \emph{Hamlet}               & Shakespeare       & Play & 1604\\
+ 3  & \emph{Othello}              & Shakespeare       & Play & 1603\\
+ 4  & "Sonnet 78"                 & Shakespeare       & Poem & 1609\\
+ 5  & \emph{Astrophil and Stella} & Sir Philip Sidney & Poem & 1590\\
+ 6  & \emph{Edward II}            & Christopher Marlowe  & Play & 1590\\
+ 7  & \emph{Hero and Leander}     & Christopher Marlowe  & Poem & 1593\\
+ 8  & Greensleeves                & Henry VIII Rex       & Song & 1525
+\end{tabular}
+\label{table:classical-works}
+\end{table}
+
+\subsubsection{Literals}
+
+In Listing~\ref{listing:literal-construction}, we repeatedly called the {\tt literal} function, which is a constructor of objects of class \emph{literal}, with different arguments. {\tt literal} can construct phrases in English (or any other language) with the {\tt lang} argument. It can construct pure strings (by omitting the {\tt lang} argument) of type {\tt xsd:string}. It can also construct literals of a number of defined semantic types by using the {\tt xsd\_type} argument. In order to see which types are available execute {\tt ?semantic\_elements}. Note that the XSD types are implemented as resource identifiers (class \emph{identifier}), which allows the user to implement additional types that are not provided. Behind the scenes the URL of the resource identifier will be appended to the representation ({\tt ?represent}) of the literal as text through pasting of {\tt \textasciicircum\textasciicircum} and then the URL.
+
+\lstinputlisting[language=R,
+caption=R. Literal construction.,
+label=listing:literal-construction, basicstyle=\ttfamily\tiny]{Listings/literal-construction.R.txt}
+
+In other words, for the work titles, we use the argument {\tt lang="en"} telling the literal constructor that the literal value is in English, whereas for the names, we omit this argument. As per semantic web conventions, when the argument is omitted, and no type is explicitly specified, it is assumed that the literal is a string ({\tt xsd:string}). For the literals containing years, on the other hand, we explicitly specify an integer type; otherwise they would have parsed as strings as well. All of this can be seen by inspecting the individual lists (objects of class \emph{literal} are lists):
+
+\lstinputlisting[language=R,
+caption=R. Representation of literals.,
+label=listing:literal-representation, basicstyle=\ttfamily\tiny]{Listings/representation-literals.R.txt}
+
+\subsubsection{Identifiers}
+
+We need resource identifiers for our resources, i.e. playwrights, works of art, as well as for the classes of which those resources are instances of. To make things simpler, we use a fictional ontology with the prefix \url{<http://art-ontology.net/>}. We hardcode identifiers for the ontology classes:
+
+\lstinputlisting[language=R,
+caption=R. Entering identifiers.,
+label=listing:some-identifiers, basicstyle=\ttfamily\tiny]{Listings/some-identifiers.R.txt}
+
+Inspection of one class and one property:
+
+\lstinputlisting[language=R,
+caption=R. Entering identifiers.,
+label=listing:some-identifiers, basicstyle=\ttfamily\tiny]{Listings/identifier-representation.R.txt}
+
+Note that each identifier object is a list where the field {\tt \$uri} gives the URI of the resource and the field {\tt qname} gives the shortened name (QNAME) with respect to the prefix stored in {\tt \$prefix}. Also note that both literal and identifier are representable, i.e. we have defined a the generic represent on both of the classes that outputs a proper string representation of the literal or resource identifier that can be used in a serialization.
+
+We also need resource identifiers for our entities such as Shakespeare, Christopher Marlowe, etc. Semantic Web best practices discourage the liberal minting of identifiers for resources for which somebody has already minted an identifier. Instead, we want to look them up in a database, and only mint if they are not found. For this, RDF4R offers factory functions to create lookup/mint functions as seen in Listing~\ref{listing:id-factory}.
+
+\lstinputlisting[language=R,
+caption=R. Identifier factory.,
+label=listing:id-factory, basicstyle=\ttfamily\tiny]{Listings/id-factory.R.txt}
+
+{\tt identifer\_factory}'s first argument, {\tt fun}, is a list of (lookup) functions that will be tried. {\tt identifier\_factory} returns an identifier constructor function, in our case we named it {\tt lookup\_or\_mind\_id}. The lookup functions need to return a single column (labeled e.g. {\tt ?id}). They will be tried in order and if any of them returns a unique solution, it will be returned by the constructor function to create an identifier object. If none of the lookup functions returns a unique solution, a new identifier will be minted. 
+
+\subsection{Creating RDF}
+
+To create an RDF representation, create a new {\tt ResourceDescriptionFramework} object and add triples to it (Listing~\ref{listing:rdf-representation}).
+
+\lstinputlisting[language=R,
+caption=R. Creating RDF.,
+label=listing:rdf-representation, basicstyle=\ttfamily\tiny]{Listings/rdf-representation.R.txt}
+
+The easiest way to inspect the {\tt ResourceDescriptionFramework} object is to serialize it. Before we serialize, however, we need to specify the subgraph where the triples should be stored with {\tt \$set\_context(id)}. We will reuse the example for that.
+
+\begin{lstlisting}[language=R,
+basicstyle=\ttfamily\tiny]
+classics_rdf$set_context(identifier(id = "classic_example", prefix  = eg))
+cat(classics_rdf$serialize())
+# @prefix example: <http://rdflib-rdf4r.net/> .
+# @prefix art: <http://art-ontology.net/> .
+# @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+# @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+# example:classic_example {
+# example:0bac3b32-8aac-11e8-a1c9-c961fe5afe72   art:wrote   example:0aeae996-8aac-11e8-a1c9-c961fe5afe72 ,  example:0aff274e-8aac-11e8-a1c9-c961fe5afe72 . 
+# example:0aeae996-8aac-11e8-a1c9-c961fe5afe72   rdfs:label   "King Lear"@en . 
+# example:0aff274e-8aac-11e8-a1c9-c961fe5afe72   rdfs:label   "As You Like It"@en ;
+#	 art:has_year   "1599"^^xsd:integer ;
+#	 rdf:type   art:Play .
+# }
+\end{lstlisting}
+
+\subsection{Submitting RDF to the triple store}
+
+Now that we have created some RDF ({\tt classics\_rdf}), we are ready to submit it to the endpoint ({\tt graphdb}). We can either submit it directly via {\tt add\_data}, or we can use the {\tt add\_data\_factory} to create a submitter function.
+
+\begin{lstlisting}[language=R,
+basicstyle=\ttfamily\tiny]
+# via add_data
+add_data(classics_rdf$serialize(), access_options = graphdb)
+simple_lookup(represent(lking_lear))
+# id
+# 1 http://rdflib-rdf4r.net/0aeae996-8aac-11e8-a1c9-c961fe5afe72
+simple_lookup(represent(lking_lear))
+# id
+# 1 http://rdflib-rdf4r.net/0aeae996-8aac-11e8-a1c9-c961fe5afe72
+p_query_describe = "PREFIX example: <http://rdflib-rdf4r.net/>
++ SELECT ?p ?o
++ WHERE {
++ %resource ?p ?o .
++ }"
+describe = query_factory(p_query = p_query_describe, access_options = graphdb)
+describe(represent(idshakespeare))
+# p                                                            o
+# 1 http://art-ontology.net/wrote http://rdflib-rdf4r.net/0aeae996-8aac-11e8-a1c9-c961fe5afe72
+#2 http://art-ontology.net/wrote http://rdflib-rdf4r.net/0aff274e-8aac-11e8-a1c9-c961fe5afe72
+describe(represent(idas_you_like_it))
+#               p                            o
+# 1 http://www.w3.org/1999/02/22-rdf-syntax-ns#type http://art-ontology.net/Play
+# 2      http://www.w3.org/2000/01/rdf-schema#label               As You Like It
+# 3                http://art-ontology.net/has_year                         1599
+\end{lstlisting}
+
+\section{Discussion}
+
+\subsection{Related Packages}
+
+The closest match to RDF4R is the {\tt rdflib} (\cite{boettiger_rdflib:_2018}). The development of the two packages was simultaneous and independent until {\tt rdflib}'s first official release on Dec 10, 2017. This explains why two closely related R packages for working with RDF exist. After the release of {\tt rdflib} work was started  to make both packages compatible with each other. In our opinion, the packages have different design philosophies and are thus complementary.
+
+{\tt rdflib} is a high-level wrapper to {\tt redland} (\cite{jones_redland:_2016}), which is a low-level wrapper to the C {\tt librdf} (\cite{beckett_redland_2014}), a powerful C library that provides support for RDF. {\tt librdf} provides an in-memory storage model for RDF beyond what is available in RDF4R and also persistent storage working with a number of databases. It enables the user to query RDF objects with SPARQL. Thus, {\tt librdf} can be considered a complete graph database implementation in C.
+
+In our opinion, {\tt redland} is more complex than needed for the purposes of OpenBiodiv. By the onset of the OpenBiodiv project it was available\footnote{But not {\tt rdflib}!}; however, we decided not to use it as a decision was made to rely on GraphDB for our storage and querying. Note that RDF4R's main purpose is to provide a convenient R interface for users of GraphDB and similar RDF4J compatible graph databases.
+
+A feature that differentiates {\tt rdflib} from RDF4R is the design philosophy. RDF4R was designed primarily with the Turtle and TriG serializations in mind. This means that RDF4R can work with named graphs, whereas their usage is discouraged or perhaps impossible with {\tt rdflib}\footnote{The issue was discussed on the {\tt librdf} GitHub page, \url{https://github.com/ropensci/rdflib/issues/23}.}, even though {\tt rdflib}'s default format is N-Quads.
+
+Another differentiating feature between RDF4R and {\tt rdflib} is that RDF4R provides facilities for converting SPARQL and related statements to native R functions!
+
+In a future release of RDF4R (2.0) we would like to replace or extend its in-memory model with {\tt rdflib}'s. This is why we would like to make the packages fully compatible and have contributed several patches to {\tt rdflib}\footnote{Please, consult the commit history under \url{https://github.com/ropensci/rdflib}.}). Thus, it will be possible for the user of RDF4R to retain its syntax and high-level features--- constructor factories, functors, etc., and the ability to use named graphs---but benefit from performance increases, stability, and scalability with the {\tt redland/rdflib/librdf} backend.
+
+This will enable the users of the R programming environment to use whichever syntax they prefer and benefit from an efficient storage engine.
+
+\subsection{Elements of Functional Programing (FP)}
+
+When choosing a programming environment for the project, a choice was made to use R (\cite{r_core_team_r:_2016}) given its ubiquity in data science. Having settled on R, we decided to incorporate elements of the functional programming style (\cite{wickham_advanced_2015}) that R supports in order to allow the users of the package to write simple code to solve complex tasks.
+
+RDF4R is not written as in a pure functional programming style: some of its functions have side-effects. However, we make use of functions as first-class citizens and closures. By ``functions as first-class citizens'' we mean that RDF4R has both functions that return functions and functions that take functions as arguments.
+
+The simplest example of such a function is the {\tt query\_factory} function which converts a SPARQL query to an R function. We believe that this is a very useful feature because the working ontologist often has quite a few SPARQL queries that they want to execute and then parse the results of. Had we just provided the generic {\tt submit\_sparql} function, the workflow for the user would have looked as follows: first, modify the SPARQL query somehow (e.g. by for example changing a label that is matched); second, execute {\tt submit\_sparql}---while not forgetting to specify the correct access point---; and, third, parse the results. {\tt query\_factory} packages all of this functionality in one place and hides the complexity by allowing the user to simply write
+
+\begin{lstlisting}[language=R,
+style=customr]
+genus_lookup("\"Drosophila\"")
+\end{lstlisting}
+
+This example is taken from the previous section. Here, {\tt genus\_lookup} is a function that has been dynamically generated by {\tt query\_factory} and encloses the functionality for parameterizing the query, executing it, and then parsing the results. This enclosing is possible thanks to the implementation of functions in R as \emph{closures}.
+
+In R functions are implemented as closures: statements of code and a reference to their defining environment\footnote{Please consult \cite{wickham_advanced_2015} for a tutorial on closures and environments.}. An environment is a data structure that maps names to values. This construction implies that whatever variables were defined in the environment that defined the function are implicitly accessible to the defined function. It is thus possible to encapsulate some of the arguments to the function factory in the constructed function.
+
+We make use of closures in {\tt genus\_factory} and even more evidently in the simpler case of {\tt add\_data\_factory}. {\tt add\_data\_factory}'s arguments are only the details needed to access a particular endpoint. It returns a function that takes some RDF statements and submits the statements to this endpoint. For example:
+
+\begin{lstlisting}[language=R,
+style=customr]
+add_data_to_graphdb = add_data_factory(access_options = graphdb, prefixes = prefixes)
+add_data_to_graphdb(rdf_data = ttl)
+\end{lstlisting}
+
+The constructed function, {\tt add\_data\_to\_graphdb} does not have the parameter {\tt access\_options} any more. Instead, {\tt add\_data\_to\_graphdb} looks for {\tt access\_options} in its enclosing environment. This pattern allows us to hide some of the complexity and reduce errors.
+
+Another example of the functional style that we will look at is to be found in the {\tt identifier\_factory} and {\tt fidentifier} function. Perhaps, here, a even a further reduction in complexity can be achieved through further efforts. {\tt identifier\_factory} takes a list of lookup functions as an input and returns constructor functions. This makes {\tt identifier\_factory} into a functor as it both takes functions as inputs and returns functions. The reasoning behind this functor is to enable the working ontologist to generate code that first looks up a resource identifier in several different places before coining a new one. The syntax achieved as follows:
+
+\begin{lstlisting}[style=customr]
+lookup_or_mint_id = identifier_factory(fun = list(simple_lookup),
+   prefixes = prefixes,
+   def_prefix = eg)
+
+idking_lear = lookup_or_mint_id(list(lking_lear))
+\end{lstlisting}
+
+Here, one has to enclose the arguments to {\tt lookup\_or\_mind\_id} in a list, as it is possible that the SPARQL queries that {\tt lookup\_or\_mind\_id} encapsulates---in this case the single {\tt simple\_lookup}---may have more that one parameter. Additional extension of the package are possible in the area of error reporting, as should one forget to enclose {\tt lking\_lear} in a list the error message produced is slightly cryptic:
+
+\begin{lstlisting}[style=customr]
+> lookup_or_mint_id(lking_lear)
+ Show Traceback
+ 
+ Rerun with Debug
+ Error in UseMethod("represent", x) : 
+  no applicable method for 'represent' applied to an object of class "character" In addition: Warning message:
+In l$fun = fun : Coercing LHS to a list
+\end{lstlisting}
+
+There are several ways to achieve the desired extension. One is to define a new super class \emph{representable} as a parent class of \emph{literal} and \emph{identifier}). Then extend {\tt lookup\_or\_mind\_id} with check on whether its input is a \emph{representable}.
+
+More in-line with the traditional functional programming style, is to have \url{lookup\_or\_mint\_id} have a dynamic function signature taking one or more arguments of the \emph{representable} class. I.e. the number of arguments to the function is not fixed. We will provide this extensions in a future release (2.0) of RDF4R.
+
+\subsection{Elements of Object-Oriented Programming (OOP)}
+
+We already briefly touched on the need to define specialized classes in the previous section. Classes may be needed for type-checking, for bundling related functionality together, and for achieving mutable state. There are several ways to implement object-oriented programming in R.
+
+\subsubsection{S3}
+
+Several functions of RDF4R return lists with their \emph{class} attribute set. The most notable of those are \url{literal} and \url{identifier}. There are also several generic functions used to invoke class-specific implementations via a call to \url{UseMethods}. The most notable of those is \url{represent}:
+
+\begin{lstlisting}[style=customr]
+represent = function(x)
+{
+     UseMethod("represent", x)
+}
+\end{lstlisting}
+
+One uses \url{represent} by calling it with an either \emph{literal} or \emph{identifier} object (see previous section on Usage). The goal is to make possible the writing of generic code that works with both of literals and of resource identifiers. Whereas, during serialization, literals need to be potentially quoted together with an XSD type (e.g. {\tt "CNN"\textasciicircum\textasciicircum xsd:string}, resource identifiers just need to be pasted in Turtle as they are (e.g. {\tt <http://cnn.com>}). By having this generic function the serialization function does not need to be aware of such details.
+
+\subsubsection{R6}
+
+We use the R6 classes (\cite{chang_r6:_2017}) both for bundling behavior with data for achieving mutable state.
+
+R6 is used for the in-memory representation of RDF (\url{ResourceDescriptionFormat}). The design decision to use R6 was taken in order to allow users of the package to create their RDF object incrementally, by adding more triples. E.g.
+
+\begin{lstlisting}[style=customr]
+classics_rdf = ResourceDescriptionFramework$new()
+classics_rdf$add_triple(subject = idshakespeare, predicate = wrote, object = idking_lear)
+classics_rdf$add_triple(subject = idking_lear, predicate = rdfs_label, object = lking_lear)
+\end{lstlisting}
+
+Resizing of R lists is a costly operation if the lists had not been preallocated. Therefore, we have implemented a dynamically reallocating vector \url{DynVector} as part of the package. \url{DynVector} initializes a list and every time its length is exceeded by adding new elements, it reallocates itself to double its size. This reallocation results in a constant computation time for the operation addition on average \cite{harrington_amortizing_2018}. As we pointed our earlier, however, a future release of RDF4R will support both \url{DynVector} and \url{librdf} as in-memory storage models.
+
+Furthermore, we support the \cl{$add_triples(rdf)} method that lets the user grow one ResourceDescriptionFramework object with another. Since this method is growing the RDF object by more than one, it can be used in conjunction with a function that returns an RDF object (in the following example \cl{extract_triples}). We can chain the two functions together to obtain all RDF statements that are obtained by application of \cl{extract_triples} to some list:
+\begin{lstlisting}[style=customr]
+merged_rdf = ResourceDescriptionFramework$new()
+lapply(lapply(information, extract_triples), merged_rdf$add_triples)
+\end{lstlisting}
+
+Note that this still can only be executed sequentially in order not to corrupt the in-memory representation of \cl{merged_rdf} as each call to \cl{merged_rdf$add_triples} changes the state of \cl{merged_rdf}. A future release of the package will contain an additional Triple class allowing users to store RDF as lists of triples (and thus benefitting from parralelism constructs such as parLapply). The user will have the option of waiting until the last possible moment to create a ResourceDescriptionFramework class from a list of triples before serialization.

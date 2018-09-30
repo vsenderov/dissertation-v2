@@ -1,0 +1,24 @@
+PREFIX : <http://openbiodiv.net/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX pkm: <http://proton.semanticweb.org/protonkm#>
+PREFIX dwciri: <http://rs.tdwg.org/dwc/iri/>
+PREFIX openbiodiv: <http://openbiodiv.net/>
+PREFIX prism: <http://prismstandard.org/namespaces/basic/2.0/>
+PREFIX po: <http://www.essepuntato.it/2008/12/pattern#>
+PREFIX fabio: <http://purl.org/spar/fabio/>
+ASK
+{
+  ?tnu pkm:mentions ?name .
+  ?name rdfs:label "Messerschmidia incana G. Mey. 1818" .
+  ?tnu dwciri:taxonomicStatus openbiodiv:UnavailableName .
+  ?tnu prism:publicationDate ?date .  
+  
+  # potential revalidation
+  FILTER NOT EXISTS {
+    ?tnu2 pkm:mentions ?name .
+    ?tnu2 dwciri:taxonomicStatus openbiodiv:AvailableName . 
+    ?tnu2  prism:publicationDate ?date2 .
+    FILTER (?date2 > ?date)
+  }   
+} 

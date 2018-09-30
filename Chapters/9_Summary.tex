@@ -1,0 +1,17 @@
+% Chapter Template
+
+\chapter{Summary} % Main chapter title
+
+\label{chapter:summary} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
+
+\section{Contributions of the Thesis}
+
+In the course of the investigative effort, we have made several significant contributions. The two equally important key contributions of the thesis are the creation of an ontology, OpenBiodiv-O (see Chapter~\ref{chapter-ontology}), enabling the linking of biodiversity knowledge on the basis of scholarly publications, and a linked open dataset, OpenBiodiv LOD (see Chapter~\ref{chapter-lod}) consisting of a transformation to Resource Description Framework (RDF) and integration in a single store of information from three major repositories of biodiversity data: the journal databases of Pensoft Publishers and Plazi, and GBIF's taxonomic backbone.
+
+OpenBiodiv-O, serves as the basis of OpenBiodiv-LOD. By developing an ontology focusing on biological taxonomy, our intent is to provide an ontology that fills in the gaps between ontologies for biodiversity resources such as Darwin-SW and semantic publishing ontologies such as the ontologies comprising the SPAR Ontologies. Moreover, we take the view that it is advantageous to model the taxonomic process itself rather than any particular state of knowledge.
+
+After the populating the ontology, we have developed a web-site (see Chapter~\ref{chapter-openbiodiv}, \href{http://openbiodiv.net}{<http://openbiodiv.net>}, containing a semantic search engine and apps running on top of OpenBiodiv LOD.
+
+Furthermore, we have developed two automated workflows---automatic data paper generation and automatic occurrence record import, see Chapter~\ref{chapter-case-study}---between external repositories and the Pensoft database of biodiversity data.
+
+Last but not least is the creation of a framework for transforming XML and CSV files to RDF in the R programming language (RDF4R, see Chapter~\ref{chapter-rdf4r}).

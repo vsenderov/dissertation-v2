@@ -1,0 +1,20 @@
+# Fetch all the figures (and their captions) belonging
+# to an article with a given DOI.
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX openbiodiv: <http://openbiodiv.net/>
+PREFIX pkm: <http://proton.semanticweb.org/protonkm#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dwciri: <http://rs.tdwg.org/dwc/iri/>
+PREFIX po: <http://www.essepuntato.it/2008/12/pattern#>
+PREFIX fabio: <http://purl.org/spar/fabio/>
+PREFIX doco: <http://purl.org/spar/doco/>
+PREFIX prism: <http://prismstandard.org/namespaces/basic/2.0/>
+PREFIX c4o: <http://purl.org/spar/c4o/>
+select (GROUP_CONCAT(?caption) AS ?captions) where { 
+	?a a fabio:JournalArticle ;
+       prism:doi "10.3897/mycokeys.1.1966" .
+    ?f a doco:Figure ;
+       c4o:hasContent ?caption .
+    ?a po:contains ?f .
+} GROUP BY ?a

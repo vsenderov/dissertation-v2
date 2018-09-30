@@ -1,0 +1,77 @@
+\chapter{Architecture of OpenBiodiv}
+\label{chapter-openbiodiv}
+
+In the course of the dissertation work, we have developed the OpenBiodiv system in order to answer the challenge described in the previous chapters. In this chapter we break up OpenBiodiv into components that will be treated in detail in subsequent chapters. We describe how these components inter-operate in order to former the OpenBiodiv knowledge-based system.
+
+OpenBiodiv is a publicly-accessible production-stage semantic system running on top of a reasonably-sized biodiversity knowledge graph. It stores biodiversity data in a semantic interlinked format and offers facilities for working with it. It is a dynamic system that continuously updates its database as new biodiversity information becomes available by connecting to several international biodiversity data publishers. It also allows its users to ask complex queries via SPARQL (a query language for semantic graph databases, \cite{the_w3c_sparql_working_group_sparql_2013}) and a simplified semantic search interface.
+
+OpenBiodiv consists of (1) a semantic graph database, (2) a codebase, and (3) a frontend in the form of a web-portal facilitating the access to the underlying knowledge-base (Fig.~\ref{fig:openbiodiv-components}). OpenBiodiv enables the flow of information between international repositories for biodiversity data to Biodiversity Data Journal (BDJ) and other journals that use the ARPHA-BioDiv toolkit (\cite{penev_arpha-biodiv:_2017}). As a second step, knowledge is extracted from such journals taking advantage of the TaxPub Document Type Definition (DTD)\footnote{We will take the liberty and refer to TaxPub as an XML schema in the rest of the chapter.} introduced by \cite{catapano_taxpub:_2010}. Example journals include ZooKeys, Biodiversity Data Journal (BDJ), PhytoKeys, MycoKeys, and so on\footnote{The journals can be accessed under \url{https://pensoft.net/browse_journals}.}. At the same time, knowledge is extracted from Plazi TreatmentBank, an archive of legacy biodiversity literature published containing over 200 thousand treatments\footnote{A treatment is a special section in a biological publication describing and discussion a species or a higher taxon. TreatmentBank is accessible under \url{https://pensoft.net/browse_journals}.} and updated every day. Last but not least, these sources are interlinked via GBIF's taxonomic backbone (\cite{gbif_secretariat_gbif_2017}). The extracted knowledge is then stored in a semantic graph database (Fig.~\ref{fig:openbiodiv-sources}).
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{Figures/components-openbiodiv}
+\decoRule
+\caption[OpenBiodiv Components]{The components of OpenBiodiv.}
+\label{fig:openbiodiv-components}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{Figures/openbiodiv-sources}
+\decoRule
+\caption[OpenBiodiv Components]{Flow of information in the biodiversity data space until it reaches the OpenBiodiv semantic database. Dashed lines are components that have not been implemented yet.
+}
+\label{fig:openbiodiv-sources}
+\end{figure}
+
+\section{Semantic Graph Database}
+
+A primary output of the OpenBiodiv effort is the creation of a semantic database based on knowledge extracted from the archives of Pensoft and Plazi and GBIF's taxonomic backbone and accessible under \url{http://graph.openbiodiv.net/}. A discussion of the components of the database follows.
+
+\subsection{OpenBiodiv ontology (OpenBiodiv-O)}
+
+The central result of the OpenBiodiv effort is the creation of a formal domain model of biodiversity publishing, the ontology OpenBiodiv-O (\cite{senderov_openbiodiv_2017}). The source code of the ontology and accompanying documentation can be accessed under \url{https://github.com/vsenderov/openbiodiv-o}. A detailed discussion is presented in Chapter~\ref{chapter-ontology}.
+
+\subsection{OpenBiodiv Linked Open Dataset (OpenBiodiv-LOD)}
+
+Using OpenBiodiv-O and the infrastructure described later in this chapter a dataset incorporating approximately 200 thousand Plazi treatments, five thousand Pensoft articles, as well as GBIF’s taxonomic backbone (over a million names) has been created. The dataset is available online through the workbench of the semantic database \url{http://graph.openbiodiv.net}. It is discussed in detail in Chapter~\ref{chapter-lod}.
+
+\section{Backend}
+
+In order to populate a semantic database it is necessary to create the infrastructure that converts raw data (text, images, data tables, etc.) into a structured semantic format allowing the interlinking of resource identifiers and the answering of complex queries. OpenBiodiv creates new infrastructure and extends existing infrastructure for transforming biodiversity scholarly publications into Resource Description Format (RDF) statements with the help of the components described in this section.
+
+\subsection{RDF4R: R package for working with RDF}
+
+One of the greater technical challenges for OpenBiodiv is the transformation of biodiversity information (e.g. taxonomic names, paper metadata, figures, etc.) stored as semi-structured XML into fully-structured semantic knowledge in the form of RDF. In order to solve this challenge, an R package has been developed that enables the creation, manipulation, and submission and retrieval to and from a semantic database of RDF statements. This package is accessible under an open source license on GitHub under \url{https://github.com/vsenderov/rdf4r}. We describe the package in Chapter~\ref{chapter-rdf4r}.
+
+\subsection{OpenBiodiv Base and ROpenBio}
+
+In combination with the RDF4R package, the code-base is completed by one more R package, \url{ropenbio} and a code-base (OpenBiodiv Base) of scripts and documentation necessary to bootstrap the database. \url{ropenbio} utilizes the RDF4R package to convert semi-structured XML to RDF. It contains the "mappings" necessary for that conversion. It is available under \url{https://github.com/pensoft/ropenbio}. OpenBiodiv Base coordinates the invocation of \url{ropenbio}, contains scripts for the automatic import of new resources, and other housekeeping details. It is available under \url{https://github.com/vsenderov/openbiodiv}. Their usage to generate the OpenBiodiv-LOD is discussed in Chapter~\ref{chapter-lod}.
+
+\subsection{Workflow for converting ecological metadata to a manuscript}  
+
+Ecological Metadata Language (EML) is a popular format for describing ecological datasets (\cite{michener_nongeospatial_1997}). Biodiversity repositories such as GBIF and DataOne make use of this format to describe the datasets that they store. An import pipeline for importing an EML file as a BDJ data paper\footnote{A data paper (\cite{chavan_data_2011}) is a paper in a scholarly (peer-reviewed) journal discussing a scientific dataset.} has been developed as part of OpenBiodiv (\cite{senderov_online_2016}). We describe this workflow in detail in Chapter~\ref{chapter-case-study}. To access the pipeline interactively, go to \url{https://arpha.pensoft.net}, login to the system (registration is free), select ``Start a new manuscript,'' scroll all the way down to ``Import a manuscript,'' and follow the necessary steps to upload an EML and use it as a template for your new manuscript.
+
+\subsection{Workflow for importing specimen data into Biodiversity Data Journal}
+
+One of the important types of biodiversity data is occurrence data---data that documents the presence of a properly taxonomically identified organism at a given location and time. Such data is stored at international repositories such as BOLD, GBIF, PlutoF, and iDigBio. In order to facilitate data publishing, as well as to act as an entry point into OpenBiodiv, a pipeline for importing any occurrence record from these databases into a BDJ taxonomic paper has been developed (\cite{senderov_online_2016}). We describe this workflow in detail in Chapter ~\ref{chapter-case-study}. To access the workflow interactively, go to \url{https://arpha.pensoft.net}, login to the system (registration is free), select "Start a new manuscript," select "Biodiversity Data Journal" as a journal and "Taxonomic Paper" as paper-type and "Create a manuscript." Then, in your new manuscript, expand the "Taxon treatments" section by clicking on the $+$ sign next to it, give a test classification to your treatment (e.g. Animalia), click ``Save'' and you will be presented with a choice of subsections. Click the ``Materials'' section on the left to visualize the workflow. Look at the lower-part of the dialog, where ``You may place multiple ID's...''---this is the part where you select external resource identifiers to be imported to your article.
+
+\section{Frontend}
+
+In addition to providing a searchable database endpoint, a website allowing semantic search and containing specific tasks packaged as apps is being developed (\url{http://openbiodiv.net}). The development of the site extends beyond the scope of the dissertation thesis and is driven by the Pensoft development team. A beta version is already operational Fig.~\ref{fig:website}. A limited discussion is found in Chapter~\ref{webportal}.
+
+\todo{Chapter should be an appendix instead}
+
+\section{IT}
+
+The system is deployed on a Debian GNU+Linux virtual machine. GraphDB runs with a 20 GB heap file and with the RDFS-Plus Optimized rule set\footnote{This is necessitated by the fact that we reached a performance bottleneck the OWL inference. Discussed in Chapter~\ref{chapter-lod}}.  Continuous operation is ensured by the automatic execution of scripts from the \url{run} directory of OpenBiodiv Base.
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{Figures/openbiodiv-webpage}
+\decoRule
+\caption[OpenBiodiv Website]{Beta version of the OpenBiodiv website together with sample app icons.}
+\label{fig:website}
+\end{figure}
+
+

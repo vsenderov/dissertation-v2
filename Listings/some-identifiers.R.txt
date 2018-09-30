@@ -1,0 +1,14 @@
+prefixes = c(
+   rdfs = "http://www.w3.org/2000/01/rdf-schema#",
+   rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+   example = "http://rdflib-rdf4r.net/",
+   art = "http://art-ontology.net/"
+ )
+eg = prefixes[3]
+art = prefixes[4]
+artist = identifier(id = "Artist", prefix = art)
+play = identifier(id = "Play", prefix = art)
+poem = identifier(id = "Poem", prefix = art)
+song = identifier(id = "Song", prefix = art)
+wrote = identifier(id = "wrote", prefix = art)
+has_year = identifier(id = "has_year", prefix = art)

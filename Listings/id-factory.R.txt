@@ -1,0 +1,23 @@
+p_query = "SELECT DISTINCT ?id WHERE {
+  ?id rdfs:label %label
+}"
+
+simple_lookup = query_factory(p_query, access_options = graphdb)
+
+lookup_or_mint_id = identifier_factory(fun = list(simple_lookup),
+   prefixes = prefixes,
+   def_prefix = eg)
+
+idking_lear = lookup_or_mint_id(list(lking_lear))
+idas_you_like_it = lookup_or_mint_id(list(las_you_like_it))
+idhamlet = lookup_or_mint_id(list(lhamlet))
+idothello = lookup_or_mint_id(list(lothello))
+idsonnet78 = lookup_or_mint_id(list(lsonnet_78))
+idastrophil = lookup_or_mint_id(list(lastrophil))
+idedward2 = lookup_or_mint_id(list(ledward2))
+idhero = lookup_or_mint_id(list(lhero))
+idgreensleeves = lookup_or_mint_id(list(lgreensleeves))
+idshakespeare = lookup_or_mint_id(list(lshakespeare))
+idsir_phillip_sidney = lookup_or_mint_id(list(lsir_phillip_sidney))
+idchristopher_marlowe = lookup_or_mint_id(list(lchristopher_marlowe))
+idlhenry_8_rex = lookup_or_mint_id(list(lhenry_8_rex))

@@ -1,0 +1,13 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX openbiodiv: <http://openbiodiv.net/>
+PREFIX pkm: <http://proton.semanticweb.org/protonkm#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dwciri: <http://rs.tdwg.org/dwc/iri/>
+select (MAX(?name) AS ?name) (COUNT(DISTINCT ?a) AS ?narticles) where { 
+	?s rdf:type openbiodiv:ScientificName ;
+       rdfs:label ?name ;
+       dwciri:taxonRank openbiodiv:Species .
+    ?tnu pkm:mentions ?s .
+    ?a po:contains ?tnu .
+    ?a rdf:type fabio:JournalArticle .
+} GROUP BY ?s ORDER BY DESC(?narticles)
