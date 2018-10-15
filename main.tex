@@ -228,6 +228,9 @@ babel=other,bibencoding=inputenc]{biblatex}
 \begin{abstract}
 OpenBiodiv (\cite{senderov_open_2016}) lifts biodiversity information from scholarly publications and academic databases into a computable semantic form. OpenBiodiv will serves as the central part of OBKMS to which other components may be added.
 
+OpenBiodiv is a publicly-accessible production-stage semantic system running on top of a reasonably-sized biodiversity knowledge graph. It stores biodiversity data in a semantic interlinked format and offers facilities for working with it. It is a dynamic system that continuously updates its database as new biodiversity information becomes available by connecting to several international biodiversity data publishers. It also allows its users to ask complex queries via SPARQL (a query language for semantic graph databases, \cite{the_w3c_sparql_working_group_sparql_2013}) and a simplified semantic search interface.
+
+
 \addchaptertocentry{\abstractname} % Add the abstract to the table of contents
 \todo{this}
 The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
@@ -263,12 +266,21 @@ Internaltional friends of Pensoft
 % %	ABBREVIATIONS
 % %----------------------------------------------------------------------------------------
 
-% \begin{abbreviations}{ll} % Include a list of abbreviations (a table of two columns)
+\begin{abbreviations}{ll} % Include a list of abbreviations (a table of two columns)
 
-% \textbf{LAH} & \textbf{L}ist \textbf{A}bbreviations \textbf{H}ere\\
-% \textbf{WSF} & \textbf{W}hat (it) \textbf{S}tands \textbf{F}or\\
+\textbf{TDWG} & \textbf{L}ist \textbf{A}Taxonomy \textbf{D}atabase \textbf{W}orking \textbf{G}roup\\
+\textbf{GBIF} &     \textbf{G}lobal  \textbf{B}iodiversity \textbf{I}nformation \textbf{F}acility\\
+\textbf{OECD} &     Organization for Economic Cooperation and Developmen\\
+\textbf{LOD} &     Linked Open Data\\
+\textbf{GNA} &     Global Names Architecture\\
+\textbf{OBKMS} &     \\
+\textbf{IICT} &     \\
+\textbf{BDJ} &     \\
+Web Ontology Language (OWL)\\
+Resource Description Format (RDF)\\
 
-% \end{abbreviations}
+
+\end{abbreviations}
 
 %----------------------------------------------------------------------------------------
 %	DEDICATION
@@ -289,13 +301,13 @@ Internaltional friends of Pensoft
 
 %\part{Introduction}
 %\label{part:introduction}
-\include{Chapters/1_Introduction}
+\include{Chapters/0_Introduction}
 %\part{Arguments}
 %\label{part:arguments}
-\include{Chapters/2_ProblemDefinition}
-\include{Chapters/3_Overview_OpenBiodiv}
-\include{Chapters/4_Ontology}
-\include{Chapters/5_LinkedOpenDataset}
+%\include{Chapters/2_ProblemDefinition}
+\include{Chapters/1_Overview_OpenBiodiv}
+\include{Chapters/2_Ontology}
+\include{Chapters/3_LinkedOpenDataset}
 \include{Chapters/7_RDF4R}
 \include{Chapters/6_CaseStudy}
 \include{Chapters/8_Webpportal}
