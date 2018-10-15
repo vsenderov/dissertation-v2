@@ -159,6 +159,8 @@ SPAR provides facilities to deal with the dichotomy between the abstract represe
 
 As SPAR, DwC, and OpenBiodiv-O have already been explained elsewhere, we shall illustrate the data model by issuing sample SPARQL queries illuminating aspects of it.
 
+\subsection{Simple queries}
+
 \subsubsection{Query for author} Authors are instances of {\tt foaf:Person} (except in the rare institutional case, in which case they would be {\tt foaf:Agent}'s) and are \emph{creator}-s of Works that have an Expression. The SPARQL query in Listing~\ref{listing:prolific_author} answers the question of which author has been on the author list of the most articles. Note that the results may change as new articles are added to the graph.
 
 \lstinputlisting[language=SPARQL,
@@ -224,15 +226,18 @@ caption=Sample Lucene query via SPARQL. We have intentionally misspelled the per
 
 In the above query \cl{?search} defines an object of type \cl{inst:WordSearch} for the query. The search results are specified by linking the search object to \cl{?resource} via \cl{lucene:entities}. Finally \cl{?resource} has a \cl{lucene:score} property indicating how close was the guess. It is hard to quantify the meaning of the scores in absolute terms but it is always the case that a higher score is closer to the true text than a lower one.
 
-\subsubsection{Competency question answering via SPARQL}
+\subsection{Competency question answering via SPARQL}
 
-At the end of Chapter~\ref{chapter-ontology} we suggested some competency questions that may be answered by OpenBiodiv. Of central importance is the question of whether a given taxonomic name is valid or not. We shall consider a taxonomic name invalid from the viewpoint of the information made available to OpenBiodiv if and only if at least one of the following invalidation criteria holds:
+At the end of Chapter~\ref{chapter-ontology} we suggested some competency questions that may be answered by OpenBiodiv.
+
+\subsubsection{Validity of a taxonomic name}
+
+Of central importance is the question of whether a given taxonomic name is valid or not. We shall consider a taxonomic name invalid from the viewpoint of the information made available to OpenBiodiv if and only if at least one of the following invalidation criteria holds:
 
 \begin{enumerate}
 \item{The name has been replaced. I.e. there is a {\tt :replacementName} property originating in the name and there are no loops: it is impossible to follow the {\tt :replacementName} edges and come back to the name. This query is illustrated in Listing~\ref{listing:replacement-name}}.
 \item{The name has been invalidated, i.e. there is a taxonomic usage with the status {\tt :UnavailableName} and there is no newer taxonomic name usage revalidating it ({\tt :AvailableName}). Illustrated in Listing~\ref{listing:unavailable-name}.}
 \end{enumerate}
-
 
 \lstinputlisting[language=SPARQL,
 caption=Asks if the name given by the label has been replaced., label=listing:replacement-name, basicstyle=\ttfamily\tiny]
@@ -240,6 +245,10 @@ caption=Asks if the name given by the label has been replaced., label=listing:re
 
 \lstinputlisting[language=SPARQL,
 caption=Asks if the name given by the label is considered unavailable., label=listing:unavailable-name, basicstyle=\ttfamily\tiny]{Listings/ask-unavailable.name.SPARQL.txt}
+
+\subsubsection{Investigation of the impact of the lost collections of Museu Nacional}
+
+. In order to illustrate the capabilities of OpenBiodiv and draw attention to the impact of the tragically lost collection of the Museu Nacional de Rio de Janeiro (MNRJ), I can ask our system to give me the number of times a specimen from that collection was used in a taxonomic article, and in which ones.
 
 
 \section{Dataset Generation}
