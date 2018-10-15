@@ -1,0 +1,28 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX openbiodiv: <http://openbiodiv.net/>
+PREFIX pkm: <http://proton.semanticweb.org/protonkm#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX po: <http://www.essepuntato.it/2008/12/pattern#>
+PREFIX : <http://www.ontotext.com/connectors/lucene#>
+PREFIX fabio: <http://purl.org/spar/fabio/>
+PREFIX dcelements: <http://purl.org/dc/elements/1.1/>
+PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
+PREFIX prism: <http://prismstandard.org/namespaces/basic/2.0/>
+PREFIX dwciri: <http://rs.tdwg.org/dwc/iri/>
+
+SELECT ?institution_name (COUNT( DISTINCT ?icu) AS ?times_mentioned) (COUNT(DISTINCT ?title) AS ?articles) (GROUP_CONCAT(DISTINCT ?title; SEPARATOR=", ") AS ?doi_of_articles)  (GROUP_CONCAT(DISTINCT ?name; SEPARATOR=", ") AS ?names_mentioned) (COUNT (DISTINCT ?name) AS ?number_of_taxa)
+{
+   	?s rdf:type openbiodiv:ScientificName ;
+       rdfs:label ?name .
+    ?tnu pkm:mentions ?s .
+    
+    
+    
+    BIND("Museu Nacional de Rio de Janeiro (MNRJ)" as ?institution_name)
+	?icu rdf:type openbiodiv:InstitutionalCodeUsage ;
+         dwc:institutional_code "MNRJ" .
+    ?container po:contains ?icu, ?tnu ;
+               rdf:type fabio:JournalArticle ;
+			   prism:doi ?title .
+} GROUP BY ?institution_name 
+ORDER BY DESC (?times_mentioned)
