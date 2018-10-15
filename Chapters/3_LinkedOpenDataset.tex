@@ -248,7 +248,11 @@ caption=Asks if the name given by the label is considered unavailable., label=li
 
 \subsubsection{Investigation of the impact of the lost collections of Museu Nacional}
 
-. In order to illustrate the capabilities of OpenBiodiv and draw attention to the impact of the tragically lost collection of the Museu Nacional de Rio de Janeiro (MNRJ), I can ask our system to give me the number of times a specimen from that collection was used in a taxonomic article, and in which ones.
+. In order to illustrate the capabilities of OpenBiodiv and draw attention to the impact of the tragically lost collection of the Museu Nacional de Rio de Janeiro (MNRJ), I can ask our system to give me the number of times a specimen from that collection was used in a taxonomic article, and in which ones (Listing~\ref{listing:museu-nacional}). It turns out that MNRJ has been mentioned 195 times in our system in a total of 22 articles published by Pensoft. Perhaps more interestingly, we can see specimens of which taxa may have been lost. Examples include the insects (Xestoblatta, Charinus, Lamproclasiopa, etc.), nematode worms (Paracamallanus, Cucullanus, Pseudascarophis, etc.), birds (Ichthyouris), fish (Sphoeroides), and many others for a total of 6,127 distinct names mentioned in taxonomic articles whose materials methods include MNRJ. I believe a similar analysis may prove helpful in the effort to rebuild MNRJ’s collection by highlighting what may have been lost and giving access to the primary literature describing the lost species. Imagine what detailed inventory we could have build if OpenBiodiv contained knowledge extracted from all taxonomic literature!
+
+\lstinputlisting[language=SPARQL,
+caption=Impact of fire in Museu Nacional on biodiversity knowledge., label=listing:museu-nacional, basicstyle=\ttfamily\tiny]{Listings/museu-nacional.SPARQL.txt}
+
 
 
 \section{Dataset Generation}
