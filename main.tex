@@ -43,10 +43,13 @@ headsepline, % Uncomment to get a line under the header
 
 \usepackage{mathpazo} % Use the Palatino font by default
 
+
+
+
 %\usepackage[backend=bibtex,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 
 % chicago style but with comma
-\usepackage[style=chicago-authordate,strict,backend=bibtex8,%
+\usepackage[style=chicago-authordate,strict,backend=bibtex8,maxnames=99,%
 babel=other,bibencoding=inputenc]{biblatex}
 \renewcommand*{\nameyeardelim}{\addcomma\space}
 
@@ -310,7 +313,7 @@ Resource Description Format (RDF)\\
 \include{Chapters/3_LinkedOpenDataset}
 \include{Chapters/7_RDF4R}
 \include{Chapters/6_CaseStudy}
-%\include{Chapters/8_Webportal}
+\include{Chapters/8_Webportal}
 %\part{Conclusion}
 %\label{part:conclusion}
 \include{Chapters/9_Summary}
