@@ -1,0 +1,80 @@
+\chapter{Summary of Chapter 4: An R Library for Working with RDF}
+\label{chapter-rdf4r}
+
+RDF4R ({\tt rdf4r}) is an R package for working with Resource Description Framework (\cite{rdf_working_group_resource_2014}) data. It was developed as part of the OpenBiodiv project but is completely free of any OpenBiodiv-specific code and can be used for generic purposes requiring tools to work with RDF data in the R programming environment (\cite{r_core_team_r:_2016}).
+
+\section{Installation}
+
+In this section we describe how to install the RDF4R package. Installation is straighforward and consists of two steps: (1) resolve dependencies and (2) build the package from source using \cl{devtools::install_github}.
+
+\section{Specification}
+
+In this section we present the specifications of RDF4R by detailing the features of the package. Each feature has a dedicated subsection.
+
+\subsection{Connection to a triple-store}
+
+It is possible to establish both basic connections (requiring no password or requiring basic HTTP user-pass authentication) or connection secured with an API access token.
+
+\subsection{Work with repositories on a triple-store}
+
+Once a connection to a triple-store has been established, it is possible to inspect the talk protocol version, view the list of repositories on the database, execute SPARQL Read (SELECT keyword and related) and SPARQL Update (INSERT and related) queries on the database, as well as submit serialized RDF data directly to the database.
+
+\subsection{Function factories to convert SPARQL queries to R functions}
+
+An important feature of RDF4R are its facilities for converting SPARQL queries and the like to R functions.
+
+\subsection{Work with literals and identifiers}
+
+The building blocks of RDF are literals (e.g. strings, numbers, dates, etc.) and resource identifiers. RDF4R provides classes for literals and resource identifiers that are tightly integrated with the other facilities of the package.
+
+\subsection{Prefix management}
+
+Prefixes are managed automatically during serialization by being extracted from the resource identifiers.
+
+\subsection{Creation and serialization of RDF}
+
+The serialization function supports Turtle (and its variant Trig, \cite{bizer_rdf_2014}) and adding new triples.
+
+\begin{lstlisting}[language=SPARQL,
+caption=Using brackets to express RDF blank nodes in Turtle/TriG.,
+label=fig:turtle-brackets,
+basicstyle=\ttfamily\tiny]
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+# :someone knows someone else, who has the name "Bob".
+:someone foaf:knows [ foaf:name "Bob" ] .
+\end{lstlisting}
+
+\subsection{A basic vocabulary of semantic elements}
+
+RDF4R has some basic resource identifiers for widely used classes and predicates predefined (e.g. for {\tt rdf:type}, {\tt rdfs:label}, etc.).
+
+\section{Usage}
+
+Here, we explain how to use the package RDF4R by means of examples. In order to fully utilize the package capabilities, one needs to have access to an RDF graph database. We have made available a public endpoint (see next paragraph) to allow the users of the package to experiment. Since write access is enabled, please be considerate and don't issue catastrophic commands.
+
+\section{Discussion}
+
+\subsection{Related Packages}
+
+The closest match to RDF4R is the {\tt rdflib} (\cite{boettiger_rdflib:_2018}). The development of the two packages was simultaneous and independent until {\tt rdflib}'s first official release on Dec 10, 2017. This explains why two closely related R packages for working with RDF exist. After the release of {\tt rdflib} work was started  to make both packages compatible with each other. In our opinion, the packages have different design philosophies and are thus complementary.
+
+{\tt rdflib} is a high-level wrapper to {\tt redland} (\cite{jones_redland:_2016}), which is a low-level wrapper to the C {\tt librdf} (\cite{beckett_redland_2014}), a powerful C library that provides support for RDF. {\tt librdf} provides an in-memory storage model for RDF beyond what is available in RDF4R and also persistent storage working with a number of databases. It enables the user to query RDF objects with SPARQL. Thus, {\tt librdf} can be considered a complete graph database implementation in C.
+
+In our opinion, {\tt redland} is more complex than needed for the purposes of OpenBiodiv. By the onset of the OpenBiodiv project it was available\footnote{But not {\tt rdflib}!}; however, we decided not to use it as a decision was made to rely on GraphDB for our storage and querying. Note that RDF4R's main purpose is to provide a convenient R interface for users of GraphDB and similar RDF4J compatible graph databases.
+
+A feature that differentiates {\tt rdflib} from RDF4R is the design philosophy. RDF4R was designed primarily with the Turtle and TriG serializations in mind. This means that RDF4R can work with named graphs, whereas their usage is discouraged or perhaps impossible with {\tt rdflib}\footnote{The issue was discussed on the {\tt librdf} GitHub page, \url{https://github.com/ropensci/rdflib/issues/23}.}, even though {\tt rdflib}'s default format is N-Quads.
+
+Another differentiating feature between RDF4R and {\tt rdflib} is that RDF4R provides facilities for converting SPARQL and related statements to native R functions!
+
+In a future release of RDF4R (2.0) we would like to replace or extend its in-memory model with {\tt rdflib}'s. This is why we would like to make the packages fully compatible and have contributed several patches to {\tt rdflib}\footnote{Please, consult the commit history under \url{https://github.com/ropensci/rdflib}.}). Thus, it will be possible for the user of RDF4R to retain its syntax and high-level features--- constructor factories, functors, etc., and the ability to use named graphs---but benefit from performance increases, stability, and scalability with the {\tt redland/rdflib/librdf} backend.
+
+This will enable the users of the R programming environment to use whichever syntax they prefer and benefit from an efficient storage engine.
+
+\subsection{Elements of Functional Programming (FP)}
+
+In this subsection we discuss how patterns from functional programming were used to create RDF4R.
+
+\subsection{Elements of Object-Oriented Programming (OOP)}
+
+In this subsection we discuss how patterns from object-oriented programming were used to create RDF4R.

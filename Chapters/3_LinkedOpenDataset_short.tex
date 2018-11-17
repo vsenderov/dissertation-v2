@@ -1,9 +1,11 @@
-\chapter{OpenBiodiv Linked Open Dataset}
+\chapter{Summary of Chapter 3: OpenBiodiv Linked Open Dataset}
 \label{chapter-lod}
 
-We have created a Linked Open Dataset, OpenBiodiv LOD, comprising biodiversity information extracted from Pensoft journals and Plazi Treatment Bank and which was integrated with the GBIF Taxonomic Backbone. As ontology, we use the new \mbox{OpenBiodiv-O} developed by us. We propose to the biodiversity informatics community to use OpenBiodiv LOD as the central point for a biodiversity knowledge graph. OpenBiodiv LOD is an RDF dataset adhering to the principles of Linked Open Data. It is available under \url{http://graph.openbiodiv.net}, which provides a SPARQL endpoint for it.
+In Chapter~\ref{chapter-lod} I explore in detail the data sources and their data models.
 
-OpenBiodiv LOD is a synthetic dataset. It does not contain previously unpublished data. Instead it integrates information previously found in academic journals and databases into one dataset. It also contains  extracted, previously unaccessible information from the original datasets in the form of relations. In the next few paragraphs we discuss the sources of information that were combined to from OpenBiodiv LOD and the types of resources that have been extracted, as well as the overall data model. We also discuss the principles of Linked Open Data that tie everything together. The chapter ends with many examples of queries on the dataset and with a technical discussion of how it was generated.
+I, with the help of my support team---see the Acknowledgements in the back---have created a Linked Open Dataset, OpenBiodiv LOD, comprising biodiversity information extracted from Pensoft journals and from Plazi Treatment Bank, and which was integrated with the GBIF Taxonomic Backbone. As ontology, I use the new \mbox{OpenBiodiv-O} developed through the course of the dissertation. I propose to the biodiversity informatics community to use OpenBiodiv LOD as the central point for a biodiversity knowledge graph. OpenBiodiv LOD is an RDF dataset adhering to the principles of Linked Open Data. It is available under \url{http://graph.openbiodiv.net}, which provides a SPARQL endpoint for it.
+
+OpenBiodiv LOD is a synthetic dataset. It does not contain previously unpublished data. Instead it integrates information previously found in academic journals and databases into one dataset. It also contains  extracted, previously inaccessible information from the original datasets in the form of relations. In the next few paragraphs we discuss the sources of information that were combined to from OpenBiodiv LOD and the types of resources that have been extracted, as well as the overall data model. We also discuss the principles of Linked Open Data that tie everything together. The chapter ends with many examples of queries on the dataset and with a technical discussion of how it was generated.
 
 \section{Data Sources}
 
@@ -24,8 +26,7 @@ GBIF is the largest international repository of occurrence data, i.e. data about
 
 Keeping in mind this critique, it is evident how the backbone taxonomy allows GBIF to integrate name based information from diverse sources such as Encyclopedia of Life (EOL), Genbank, or the International Union for Conservation of Nature, and provides a facility for taxonomic searching and browsing.
 
-In order to grant the same capabilities to OpenBiodiv, we have imported Nub as instances of {\tt openbiodiv:TaxonomicConcept} according to OpenBiodiv-O. Each GBIF taxonomic concept is linked to an instance of {\tt openbiodiv:ScientificName} and to its parent taxonomic concept via SKOS and RCC-5 (Fig.~\ref{fig:harmonia-halii-visual}). Thus, even though users of OpenBiodiv-LOD have the opportunity of taxonomic search using Nub, we have decoupled scientific names from a single hierarchical representation allowing the future evolution of OpenBiodiv-LOD to incorporate other simultaneous views of taxonomic alignment.
-
+In order to grant the same capabilities to OpenBiodiv, we have imported Nub as instances of {\tt openbiodiv:TaxonomicConcept} according to OpenBiodiv-O (Fig.~\ref{fig:harmonia-halii-visual}).
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Figures/harmonia-halii-visgraph}
@@ -34,11 +35,10 @@ In order to grant the same capabilities to OpenBiodiv, we have imported Nub as i
 \label{fig:harmonia-halii-visual}
 \end{figure}
 
-Furthermore, as the GBIF backbone taxonomy is updated regularly through an automated process from over 56 sources, future updates may be ingested as different versions into OpenBiodiv-LOD without affecting existing records.
 
 \subsection{Pensoft and Plazi}
 
-All valid articles from the journals published by Pensoft listed in Table~\ref{rdf-pensoft-journals} have been converted to RDF and stored in the biodiversity knowledge graph. Additionally, all valid taxonomic treatments from Plazi Treatment Bank have been converted to RDF and stored in the graph as well. Furthermore, the RDF-ization procedure is triggered automatically on a weekly basis and thus the semantic database is always updated with the newest articles published by Pensoft and newest taxonomic treatments extracted by Plazi. The RDF-ization is made possible by the fact that all Pensoft journals are published as XML according to TaxPub, an extension of the NLM/NCBI journal publishing DTD for taxonomic description (\cite{catapano_taxpub:_2010}) and, similarly, all Plazi treatments follow the TaxonX XML Schema (\cite{penev_xml_2011}). Thus, the RDF-ization pipeline does not require a natural language processing step, as a considerable amount of information is marked-up at the time of publication. We have given an example of how a taxonomic name usage is marked up in a TaxPub article in Listing~\ref{listing:tnu}. The datatypes that have been marked up in TaxPub and TaxonX and whose entities are converted to RDF are listed in Table~\ref{datatypes-taxpub-taxonx}. Note that the marked-up datatypes do not correspond 1-to-1 to the RDF entities that have been created in the graph as TaxPub, TaxonX, and OpenBiodiv-O take slightly different approaches to modeling the biodiversity world. OpenBiodiv-O takes the most granular approach. For example, each taxonomic name usage in a Pensoft article results in a corresponding {\tt openbiodiv:TaxonomicNameUsage} resource and a link to the {\tt openbiodiv:ScientificName} resource that the taxonomic name usage mentions (Fig.~\ref{fig:tnu-vis}).
+All valid articles from the journals published by Pensoft listed in Table~\ref{rdf-pensoft-journals} have been converted to RDF and stored in the biodiversity knowledge graph. Additionally, all valid taxonomic treatments from Plazi Treatment Bank have been converted to RDF and stored in the graph as well. Furthermore, the RDF-ization procedure is triggered automatically on a weekly basis and thus the semantic database is always updated with the newest articles published by Pensoft and newest taxonomic treatments extracted by Plazi. The RDF-ization is made possible by the fact that all Pensoft journals are published as XML according to TaxPub, an extension of the NLM/NCBI journal publishing DTD for taxonomic description (\cite{catapano_taxpub:_2010}) and, similarly, all Plazi treatments follow the TaxonX XML Schema (\cite{penev_xml_2011}) (Fig.~\ref{fig:tnu-vis}).
 
 \begin{lstlisting}[language=XML,
 caption=Taxonomic name usage of the name \emph{P. emarginaticeps} in Taxpub. Name parts are tagged with {\tt tp:taxon-name-part} and the expansion of abbreviations (regularization) is marked up with the attribute {\tt reg},
@@ -115,17 +115,13 @@ Linked Open Data (LOD, \cite{heath_linked_2011}) is a concept of the Semantic We
 
 We have followed these guidelines when creating the OpenBiodiv LOD. We will now discuss each of these points separately.
 
-\subsection{Usage of URIs as resource identifiers}
+\subsection{Usage of URI's as resource identifiers}
 
 Every instance in OpenBiodiv LOD is uniquely identifiable by a HTTP URI of the following form: \url{http://openbiodiv.net/uuid-(suffix)}. All instance identifiers in OpenBiodiv LOD follow this schema. The optional suffix field is assigned only to resources extracted from GBIF.
 
-\paragraph{Identfiers for Pensoft and Plazi.} During the RDF-ization of the sources Pensoft and Plazi, when a new concept is discovered (e.g. a person, a scientific name, etc.) a UUID is generated. Then the resource is always referred to in the database by this UUID in the OpenBiodiv namespace, \url{http://openbiodiv.net/}. Pensoft and Plazi furthermore share the UUID part of the identifier in the semi-structured representation of treatments. For example, Lyubomir Penev is a resource identified by \url{http://openbiodiv.net/7a247614-878b-4d01-ab97-bf5fc608dc86}.
+In this subsection we further discuss how identifiers are assigned to resources extracted from Pensoft and Plazi as well as to the GBIF taxonomic concepts.
 
-\paragraph{Identifiers for GBIF taxonomic concepts.} GBIF offers its taxonomic backbone as a big DarwinCore (\cite{wieczorek_darwin_2012}) tab separated file (TSV). Each row in the TSV corresponds to a taxonomic concept published by GBIF. GBIF does not offer a globally unique ID of its concepts, but only a local ID (e.g. $4239$ is the GBIF ID of concept of Curculionidae sec \cite{gbif_secretariat_gbif_2017}). This is why, we generated a UUID (e.g. for the example \url{35af6a8a-9817-449e-86dc-dddc81bce09c-4239}) for each row of data table published from GBIF. However, each taxonomic concept is linked to a taxonomic name and to a taxonomic concept label (see Chapter~\ref{chapter-ontology}. It was impractical for programmatic reasons to generate a new UUID for these linked entities. This is why their unique identifiers are suffixed. We use the suffix \url{-ScientificName} to denote scientific names and \url{-TCL} to denote taxonomic concept labels.
-
-In our example we have respectively\\\url{http://openbiodiv.net/35af6a8a-9817-449e-86dc-dddc81bce09c-4239-ScientificName}\\and \url{http://openbiodiv.net/35af6a8a-9817-449e-86dc-dddc81bce09c-4239-TCL}.
-
-\subsection{Usage of HTTP URIs and dereferencing}
+\subsection{Usage of HTTP URI's and dereferencing}
 
 As per the Linked Data Principles, we use dereferenceable HTTP URIs for our resources. For example, if a web-browser opens\\\url{http://openbiodiv.net/35af6a8a-9817-449e-86dc-dddc81bce09c-4239-ScientificName} a web-page is displayed (Fig.~\ref{fig:portal-name-visualization}) providing useful information for the name such as where it used and other names are related to it. Also it is possible to request OpenBiodiv resources via Curl with the header {\tt Content-Type: application/rdf+xml} and an RDF representation of the resources is returned.
 
@@ -161,99 +157,31 @@ As SPAR, DwC, and OpenBiodiv-O have already been explained elsewhere, we shall i
 
 \subsection{Simple queries}
 
-\subsubsection{Query for author} Authors are instances of {\tt foaf:Person} (except in the rare institutional case, in which case they would be {\tt foaf:Agent}'s) and are \emph{creator}-s of Works that have an Expression. The SPARQL query in Listing~\ref{listing:prolific_author} answers the question of which author has been on the author list of which articles. Note that the results may change as new articles are added to the graph.
+In this section, we give some simple queries. For example, how to search for an author, for a scientific name, etc.
 
-\lstinputlisting[language=SPARQL,
-caption=Most prolific author SPARQL query.,
-label=listing:prolific_author, basicstyle=\ttfamily\tiny]
-{Listings/prolific-author.SPARQL.txt}
+\subsubsection{Query the article structure} 
 
-\subsubsection{Query for scientific name}
-
-Latin names are stored in the system as {\tt :ScientificName}'s and are \emph{mention}-ed by taxonomic name usages.
-
-Listing~\ref{listing:mentioned_name} orders scientific names of any rank by the number of unique mentions that they have in articles. It is possible to narrow down the solution to binomial names (species names) by adding the {\tt dwciri:taxonRank} property as shown in Listing~\ref{listing:mentioned_species_name}. In order to see the different ranks that scientific names are assigned to in OpenBiodiv you can use the query in Listing~\ref{listing:ranks}. It is also possible, for example, to determine the most mentioned scientific name by the number of articles it is mentioned in (Listing~\ref{listing:mentioned_name_articles}).
-
-\lstinputlisting[language=SPARQL,
-caption=Most mentioned scientific name.,
-label=listing:mentioned_name, basicstyle=\ttfamily\tiny]{Listings/name-mentions.SPARQL.txt}
-
-\lstinputlisting[language=SPARQL,
-caption=Most mentioned species name.,
-label=listing:mentioned_species_name, basicstyle=\ttfamily\tiny]{Listings/species-name-mentions.SPARQL.txt}
-
-\lstinputlisting[language=SPARQL,
-caption=What are the available taxonomic ranks?,
-label=listing:ranks, basicstyle=\ttfamily\tiny]{Listings/ranks.SPARQL.txt}
-
-\lstinputlisting[language=SPARQL,
-caption=Most mentioned species name by number of articles that mention it.,
-label=listing:mentioned_name_articles, basicstyle=\ttfamily\tiny]
-{Listings/species-name-mentions-by-articles.SPARQL.txt}
-
-\subsubsection{Query the article structure} A unique feature of OpenBiodiv LOD is that articles are broken down into their components (see e.g. Table~\ref{datatypes-taxpub-taxonx} later in this Chapter) and mentions (e.g. taxonomic name usages) connected to the specific part of the article and not just to the article in general.
-
-Combining this feature with queries from the previous paragraph, we can, for example, look for the most mentioned scientific name in a figure (Listing~\ref{listing:mentioned_name_figures}). The only difference in this query is that we have replaced the type of {\tt ?a} with {\tt doco:Figure}. 
-
-\lstinputlisting[language=SPARQL,
-caption=Most mentioned scientific name in figures,
-label=listing:mentioned_name_figures, basicstyle=\ttfamily\tiny]
-{Listings/name-mentions-by-figure.SPARQL.txt}
-
-We can look, for example, for the figures present in a particular article (Listing~\ref{listing:figures_article})
-
-\lstinputlisting[language=SPARQL,
-caption=Figures of a given article., label=listing:figures_article, basicstyle=\ttfamily\tiny]
-{Listings/figures-of-article.SPARQL.txt}
+A unique feature of OpenBiodiv LOD is that articles are broken down into their components (see e.g. Table~\ref{datatypes-taxpub-taxonx} later in this Chapter) and mentions (e.g. taxonomic name usages) connected to the specific part of the article and not just to the article in general. We illustrate how to build queries utilizing this structure.
 
 \subsubsection{Query for taxonomic concepts}
 
-A key feature of OpenBiodiv-O is that it allows for the separation of taxonomic concepts from scientific names. Scientific names are linked both to the components of an article that mentions them and to taxonomic concepts. To illustrate this, we can create a query uniting information from concepts from the GBIF Backbone Taxonomy (next subsection) with semantics coming from the article structure. The query in Listing~\ref{listing:new_curcu} locates the beetle family Curculionidae sec. \cite{gbif_secretariat_gbif_2017} in the system, and looks for new taxa ({\tt :TaxonomicDiscovery}) that have been associated with one of its genera.
-
-\lstinputlisting[language=SPARQL,
-caption=Taxonomic discoveries in the weevils., label=listing:new_curcu, basicstyle=\ttfamily\tiny]
-{Listings/new-curculionidae.SPARQL.txt}
+A key feature of OpenBiodiv-O is that it allows for the separation of taxonomic concepts from scientific names. Scientific names are linked both to the components of an article that mentions them and to taxonomic concepts. To illustrate this, we can create a query uniting information from concepts from the GBIF Backbone Taxonomy with semantics coming from the article structure.
 
 \subsubsection{Fuzzy Queries via Lucene}
 
-The SPARQL endpoint of OpenBiodiv LOD supports fuzzy matching via a Lucene connector (\cite{ontotext_graphdb_2018}). In taxonomy, this can be a very useful as due to multiplicity of taxonomic names and the complexities of Latin grammar, one often does not remember the correct spelling of a name. This can lead to no matches in an exact search even though the system may contain information about that name.
-
-Lucene queries at the OpenBiodiv workbench are made in SPARQL. In order to carry out a Lucene query, one matches the following graph patter. A search variable is defined of type \url{http://www.ontotext.com/connectors/lucene/instance#WordSearch}. Then the Lucene query that needs to follow the standard Lucene query syntax (\cite{the_apache_software_foundation_apache_2013}) is specified as a literal string of the property \url{http://www.ontotext.com/connectors/lucene#query} of the search variable:
-
-\lstinputlisting[style=customsparql,
-caption=Sample Lucene query via SPARQL. We have intentionally misspelled the person's name., label=listing:replacement-name]
-{ Listings/sample-lucene-query.SPARQL.txt}
-
-In the above query \cl{?search} defines an object of type \cl{inst:WordSearch} for the query. The search results are specified by linking the search object to \cl{?resource} via \cl{lucene:entities}. Finally \cl{?resource} has a \cl{lucene:score} property indicating how close was the guess. It is hard to quantify the meaning of the scores in absolute terms but it is always the case that a higher score is closer to the true text than a lower one.
+The SPARQL endpoint of OpenBiodiv LOD supports fuzzy matching via a Lucene connector (\cite{ontotext_graphdb_2018}). In taxonomy, this can be a very useful as due to multiplicity of taxonomic names and the complexities of Latin grammar, one often does not remember the correct spelling of a name. This can lead to no matches in an exact search even though the system may contain information about that name. We illustrate how to do Lucene queries in OpenBiodiv via SPARQL.
 
 \subsection{Competency question answering via SPARQL}
 
-At the end of Chapter~\ref{chapter-ontology} we suggested some competency questions that may be answered by OpenBiodiv.
+At the end of Chapter~\ref{chapter-ontology} I suggested some competency questions that may be answered by OpenBiodiv. In this subsection I show how these can be answered with the help of OpenBiodiv.
 
 \subsubsection{Validity of a taxonomic name}
 
-Of central importance is the question of whether a given taxonomic name is valid or not. We shall consider a taxonomic name invalid from the viewpoint of the information made available to OpenBiodiv if and only if at least one of the following invalidation criteria holds:
-
-\begin{enumerate}
-\item{The name has been replaced. I.e. there is a {\tt :replacementName} property originating in the name and there are no loops: it is impossible to follow the {\tt :replacementName} edges and come back to the name. This query is illustrated in Listing~\ref{listing:replacement-name}}.
-\item{The name has been invalidated, i.e. there is a taxonomic usage with the status {\tt :UnavailableName} and there is no newer taxonomic name usage revalidating it ({\tt :AvailableName}). Illustrated in Listing~\ref{listing:unavailable-name}.}
-\end{enumerate}
-
-\lstinputlisting[language=SPARQL,
-caption=Asks if the name given by the label has been replaced., label=listing:replacement-name, basicstyle=\ttfamily\tiny]
-{Listings/ask-replacement-name.SPARQL.txt}
-
-\lstinputlisting[language=SPARQL,
-caption=Asks if the name given by the label is considered unavailable., label=listing:unavailable-name, basicstyle=\ttfamily\tiny]{Listings/ask-unavailable.name.SPARQL.txt}
+Of central importance is the question of whether a given taxonomic name is valid or not. We give the formal criteria on judging the validity of a taxonomic name and translate these into SPARQL.
 
 \subsubsection{Investigation of the impact of the lost collections of Museu Nacional}
 
-In order to illustrate the capabilities of OpenBiodiv and draw attention to the impact of the tragically lost collection of the Museu Nacional de Rio de Janeiro (MNRJ), I can ask our system to give me the number of times a specimen from that collection was used in a taxonomic article, and in which ones (Listing~\ref{listing:museu-nacional}). It turns out that MNRJ has been mentioned 195 times in our system in a total of 22 articles published by Pensoft. Perhaps more interestingly, we can see specimens of which taxa may have been lost. Examples include the insects (Xestoblatta, Charinus, Lamproclasiopa, etc.), nematode worms (Paracamallanus, Cucullanus, Pseudascarophis, etc.), birds (Ichthyouris), fish (Sphoeroides), and many others for a total of 6,127 distinct names mentioned in taxonomic articles whose materials methods include MNRJ. I believe a similar analysis may prove helpful in the effort to rebuild MNRJ’s collection by highlighting what may have been lost and giving access to the primary literature describing the lost species. Imagine what detailed inventory we could have build if OpenBiodiv contained knowledge extracted from all taxonomic literature!
-
-\lstinputlisting[language=SPARQL,
-caption=Impact of fire in Museu Nacional on biodiversity knowledge., label=listing:museu-nacional, basicstyle=\ttfamily\tiny]{Listings/museu-nacional.SPARQL.txt}
-
-
+We conclude the discussion of SPARQL queries by showing how OpenBiodiv can be used to assess the impact of the tragically lost collection of the Museu Nacional de Rio de Janeiro (MNRJ).
 
 \section{Dataset Generation}
 
@@ -263,8 +191,6 @@ In the previous section on sources we examined the data formats that each source
 
 The first step before running any transformation is to obtain the raw inputs. GBIF's taxonomic backbone is available under\\ 
 \url{<https://www.gbif.org/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c>}.\\There is an RSS feed from which Plazi's treatments can be downloaded on a daily basis under \url{<http://tb.plazi.org/GgServer/xml.rss.xml>}. Each of Pensoft's journals has a public API endpoint under \url{<http://[journal_name].pensoft.net/lib/journal_archive.php>}, where \url{[journal_name]} ought to be replaced with the name of the Pensoft journal. E.g. {\tt bdj} to make \url{<http://bdj.pensoft.net/lib/journal_archive.php>}.
-
-
 
 \subsection{Tools}
 
@@ -303,33 +229,11 @@ In order to transform an article represented as an XML document to RDF, we make 
 
 \subsubsection{Atoms extraction}
 
-The atoms of an XML node consist of all text-fields that can be reached from the XML node with an XPATH expression (can be attribute values or text values) that can be directly converted to RDF as literals or identifiers. They all belong to one or to several related RDF resources. For example in Listing~\ref{listing:author-xml-snippet} we have listed the XML node that contains author information in the TaxPub schema. The atoms here are {\tt surname = "Wachkoo"}, {\tt given\_name = "Aijaz Ahmad"}, {\tt orcid\_id = "https://orcid.org/0000-0003-2506-9840"}, {\tt affiliation = "Central Institute of Temperate Horticulture, Srinagar, Jammu \& Kashmir, India"}. In order to achieve the extraction, the atoms extractor must know the XPATH locations (e.g. the surname is at {\tt ./name/surname}) of the authors it is looking for and the types of the values (e.g. string, integer, link, etc.). Sometimes this can be quite challenging as is the affiliation field in the given example. In it the XPATH location of the address string is influenced by the value of {\tt xref}. In other words we have here that the address line is stored at "{//aff[id=./xref/@rid]}"; however, this syntax may be invalid some XPATH libraries and additional processing outside of XPATH may be required!
-
-\begin{lstlisting}[language=XML,
-caption=XML snippet of an author.,
-label=listing:author-xml-snippet, basicstyle=\ttfamily\tiny]
-<contrib contrib-type="author" corresp="no">
-  <name name-style="western">
-    <surname>Wachkoo</surname>
-    <given-names>Aijaz Ahmad</given-names>
-  </name>
-  <uri content-type="orcid">https://orcid.org/0000-0003-2506-9840</uri>
-  <xref ref-type="aff" rid="A3">3</xref>
-</contrib>  
-
-<aff id="A3">
- <label>3</label>
- <addr-line>
-   Central Institute of Temperate Horticulture, Srinagar, Jammu & Kashmir, India
- </addr-line>
-</aff>
-\end{lstlisting}
+In this subsection we elaborate on the text-fields of the XML (atoms) are extracted in our framework utilizing the XPATH query language.
 
 \subsubsection{RDF Generation}
 
-Once the atoms have been extracted they can be put together as RDF. Conceptually this is straightforward as for each atom we know its type  and therefore we know which RDF property to use. The author example is given in Listing~\ref{listing:author_rdf}.
-
-It should be noted in this paragraph that the semantics of certain node types such as taxonomic name usage (reified as {\tt :TaxonomicNameUsage}) reflect the relative position of the node in the XML document. For example, a taxonomic name usage may be inside a figure, inside an introduction section, inside a title, etc. Therefore besides the atoms, the constructor receives information about the relative position of the resource in the article by means of the unique identifier of the parent node(s). Then this information is encoded in RDF as given in Listing~\ref{listing:parent-node-rdf}. 
+Once the atoms have been extracted they can be put together as RDF. Conceptually, this is straightforward as for each atom we know its type and therefore we know which RDF property to use. The author example is given in Listing~\ref{listing:author_rdf}.
 
 \begin{lstlisting}[language=SPARQL,
 caption=RDF snippet of an author. This is a somewhat idealized situation in which the language of the address was available from the article., label=listing:author_rdf, basicstyle=\ttfamily\tiny]

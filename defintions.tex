@@ -1,0 +1,112 @@
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[
+11pt, % The default document font size, options: 10pt, 11pt, 12pt
+%oneside, % Two side (alternating margins) for binding by default, uncomment to switch to one side
+english, % ngerman for German
+singlespacing, % Single line spacing, alternatives: onehalfspacing or doublespacing
+%draft, % Uncomment to enable draft mode (no pictures, no links, overfull hboxes indicated)
+%nolistspacing, % If the document is onehalfspacing or doublespacing, uncomment this to set spacing in lists to single
+%liststotoc, % Uncomment to add the list of figures/tables/etc to the table of contents
+%toctotoc, % Uncomment to add the main table of contents to the table of contents
+%parskip, % Uncomment to add space between paragraphs
+%nohyperref, % Uncomment to not load the hyperref package
+headsepline, % Uncomment to get a line under the header
+%chapterinoneline, % Uncomment to place the chapter title next to the number on one line
+%consistentlayout, % Uncomment to change the layout of the declaration, abstract and acknowledgements pages to match the default layout
+]{MastersDoctoralThesis} % The class file specifying the document structure
+
+\usepackage[utf8]{inputenc} % Required for inputting international characters
+\usepackage[T1]{fontenc}
+
+%\usepackage{mathpazo} % Use the Palatino font by default
+% needs to be turned off for cyrilic
+
+%Russian-specific packages
+%--------------------------------------
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+
+%\usepackage[backend=bibtex,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
+
+% chicago style but with comma 
+\usepackage[style=chicago-authordate,strict,backend=bibtex8, maxcitenames=2, maxbibnames=999%
+babel=other,bibencoding=inputenc]{biblatex}
+\renewcommand*{\nameyeardelim}{\addcomma\space}
+
+\addbibresource{openbiodiv.bib} % The filename of the bibliography
+
+% long citations
+
+\makeatletter
+\newcommand{\tempmaxup}[1]{\def\blx@maxcitenames{\blx@maxbibnames}#1}
+\makeatother
+
+\DeclareCiteCommand{\longfullcite}[\tempmaxup]
+  {\usebibmacro{prenote}}
+  {\usedriver
+     {\DeclareNameAlias{sortname}{default}}
+     {\thefield{entrytype}}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+
+\usepackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
+
+%code listings
+\usepackage{listings}
+\usepackage{soul} % for underline
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\lstdefinestyle{customr}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+ % frame=L,
+  xleftmargin=\parindent,
+  language=R,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{black!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{black},
+  stringstyle=\color{black},
+}
+
+\lstdefinestyle{customsparql}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+ % frame=L,
+  xleftmargin=\parindent,
+  language=SPARQL,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{black!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{black},
+  stringstyle=\color{black},
+}
+
+
+\newcommand\cl{\lstinline[style=customr]}
+
+\def\todo#1{\medskip\par\noindent\textcolor{red}{\bf TODO: #1}\par\medskip}
+\def\KIRIL#1{\medskip\par\noindent\textcolor{red}{\bf KIRIL: #1}\par\medskip}
+\def\LYUBO#1{\medskip\par\noindent\textcolor{red}{\bf LYUBO: #1}\par\medskip}
+
+%----------------------------------------------------------------------------------------
+%	MARGIN SETTINGS
+%----------------------------------------------------------------------------------------
+
+\geometry{
+	paper=a4paper, % Change to letterpaper for US letter
+	inner=2.5cm, % Inner margin
+	outer=3.8cm, % Outer margin
+	bindingoffset=.5cm, % Binding offset
+	top=1.5cm, % Top margin
+	bottom=1.5cm, % Bottom margin
+	%showframe, % Uncomment to show how the type block is set on the page
+}

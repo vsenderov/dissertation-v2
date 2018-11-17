@@ -1,3 +1,4 @@
+%\input{avtoreferat.tex}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Masters/Doctoral Thesis 
 % LaTeX Template
@@ -39,21 +40,39 @@ headsepline, % Uncomment to get a line under the header
 ]{MastersDoctoralThesis} % The class file specifying the document structure
 
 \usepackage[utf8]{inputenc} % Required for inputting international characters
-\usepackage[T1]{fontenc} % Output font encoding for international characters
+\usepackage[T1]{fontenc}
 
-\usepackage{mathpazo} % Use the Palatino font by default
+%\usepackage{mathpazo} % Use the Palatino font by default
+% needs to be turned off for cyrilic
 
-
-
+%Russian-specific packages
+%--------------------------------------
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
 
 %\usepackage[backend=bibtex,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 
-% chicago style but with comma
-\usepackage[style=chicago-authordate,strict,backend=bibtex8,maxnames=99,%
+% chicago style but with comma 
+\usepackage[style=chicago-authordate,strict,backend=bibtex8, maxcitenames=2, maxbibnames=999%
 babel=other,bibencoding=inputenc]{biblatex}
 \renewcommand*{\nameyeardelim}{\addcomma\space}
 
 \addbibresource{openbiodiv.bib} % The filename of the bibliography
+
+% long citations
+
+\makeatletter
+\newcommand{\tempmaxup}[1]{\def\blx@maxcitenames{\blx@maxbibnames}#1}
+\makeatother
+
+\DeclareCiteCommand{\longfullcite}[\tempmaxup]
+  {\usebibmacro{prenote}}
+  {\usedriver
+     {\DeclareNameAlias{sortname}{default}}
+     {\thefield{entrytype}}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
 
 \usepackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
 
@@ -117,7 +136,7 @@ babel=other,bibencoding=inputenc]{biblatex}
 %	THESIS INFORMATION
 %----------------------------------------------------------------------------------------
 \thesistitle{The Open Biodiversity Knowledge Management System in Scholarly Publishing} % Your thesis title, this is used in the title and abstract, print it elsewhere with \ttitle
-\supervisor{Prof. Dr. Lyubomir \textsc{Penev} and Dr. Kiril \textsc{Simov}} % Your supervisor's name, this is used in the title page, print it elsewhere with \supname
+\supervisor{Prof. Lyubomir \textsc{Penev} and Prof. Kiril \textsc{Simov}} % Your supervisor's name, this is used in the title page, print it elsewhere with \supname
 
 \examiner{} % Your examiner's name, this is not currently used anywhere in the template, print it elsewhere with \examname
 \degree{Doctor of Philosophy} % Your degree name, this is used in the title page and abstract, print it elsewhere with \degreename
@@ -218,42 +237,25 @@ babel=other,bibencoding=inputenc]{biblatex}
 %	QUOTATION PAGE
 %----------------------------------------------------------------------------------------
 
-% \vspace*{0.2\textheight}
+\vspace*{0.2\textheight}
 
-% \noindent\enquote{\itshape Thanks to my solid academic training, today I can write hundreds of words on virtually any topic without possessing a shred of information, which is how I got a good job in journalism.}\bigbreak
+\noindent\enquote{\itshape The semantic web is the future of the internet and always will be.}\bigbreak
 
-% \hfill Dave Barry
+\hfill Peter Norvig, Director of Research at Google
 
 %----------------------------------------------------------------------------------------
 %	ABSTRACT PAGE
 %----------------------------------------------------------------------------------------
 
 \begin{abstract}
-OpenBiodiv (\cite{senderov_open_2016}) lifts biodiversity information from scholarly publications and academic databases into a computable semantic form. OpenBiodiv will serves as the central part of OBKMS to which other components may be added.
-
-OpenBiodiv is a publicly-accessible production-stage semantic system running on top of a reasonably-sized biodiversity knowledge graph. It stores biodiversity data in a semantic interlinked format and offers facilities for working with it. It is a dynamic system that continuously updates its database as new biodiversity information becomes available by connecting to several international biodiversity data publishers. It also allows its users to ask complex queries via SPARQL (a query language for semantic graph databases, \cite{the_w3c_sparql_working_group_sparql_2013}) and a simplified semantic search interface.
+OpenBiodiv is a publicly-accessible production-stage semantic system running on top of a reasonably-sized biodiversity knowledge graph. It stores biodiversity data in a semantic interlinked format and offers facilities for working with it. It is a dynamic system that continuously updates its database as new biodiversity information becomes available by connecting to several international biodiversity data publishers. It also allows its users to ask complex queries via SPARQL and a simplified semantic search interface.
 
 
 \addchaptertocentry{\abstractname} % Add the abstract to the table of contents
-\todo{this}
-The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
+
 \end{abstract}
 
-%----------------------------------------------------------------------------------------
-%	ACKNOWLEDGEMENTS
-%----------------------------------------------------------------------------------------
 
-\begin{acknowledgements}
-\addchaptertocentry{\acknowledgementname} % Add the acknowledgements to the table of contents
-\todo{Add MC Curies String}
-\todo{Write this nicely}
-Pensoft Publishers and Lyubomir Penev
-IICT and Kiril Simov
-IBEI 
-MarieCurie
-Internaltional friends of Pensoft
-\ldots
-\end{acknowledgements}
 
 %----------------------------------------------------------------------------------------
 %	LIST OF CONTENTS/FIGURES/TABLES PAGES
@@ -270,6 +272,7 @@ Internaltional friends of Pensoft
 % %----------------------------------------------------------------------------------------
 
 \begin{abbreviations}{ll} % Include a list of abbreviations (a table of two columns)
+\addchaptertocentry{Abbreviations}
 
 \textbf{TDWG} & \textbf{L}ist \textbf{A}Taxonomy \textbf{D}atabase \textbf{W}orking \textbf{G}roup\\
 \textbf{GBIF} &     \textbf{G}lobal  \textbf{B}iodiversity \textbf{I}nformation \textbf{F}acility\\
@@ -282,8 +285,24 @@ Internaltional friends of Pensoft
 Web Ontology Language (OWL)\\
 Resource Description Format (RDF)\\
 
-
 \end{abbreviations}
+
+
+
+\begin{software}{ll} % Include a list of abbreviations (a table of two columns)
+\addchaptertocentry{Availability of data and software}
+
+\href{http://graph.openbiodiv.net}{graph.openbiodiv.net} & OpenBiodiv SPARQL endpoint and LOD dataset\\
+\href{http://openbiodiv.net}{openbiodiv.net} & OpenBiodiv portal (Beta), supported by Pensoft\\
+\href{https://github.com/pensoft/openbiodiv}{github.com/pensoft/OpenBiodiv} & OpenBiodiv documentation\\
+\href{https://github.com/vsenderov/openbiodiv}{github.com/pensoft/OpenBiodiv} & OpenBiodiv documentation\\
+\href{https://github.com/pensoft/openbiodiv-o}{github.com/pensoft/openbiodiv-o} & OpenBiodiv ontology source code\\
+\href{https://github.com/pensoft/rdf4r}{github.com/pensoft/openbiodiv-o} & R library for working with RDF\\
+\href{https://github.com/pensoft/ropenbio}{github.com/pensoft/openbiodiv-o} & XML converters used with RDF4R\\
+
+
+
+\end{software}
 
 %----------------------------------------------------------------------------------------
 %	DEDICATION
@@ -311,12 +330,12 @@ Resource Description Format (RDF)\\
 \include{Chapters/1_Overview_OpenBiodiv}
 \include{Chapters/2_Ontology}
 \include{Chapters/3_LinkedOpenDataset}
-\include{Chapters/7_RDF4R}
-\include{Chapters/6_CaseStudy}
-\include{Chapters/8_Webportal}
+\include{Chapters/4_RDF4R}
+\include{Chapters/5_CaseStudy}
+\include{Chapters/6_Webportal}
 %\part{Conclusion}
 %\label{part:conclusion}
-\include{Chapters/9_Summary}
+\include{Chapters/7_Conclusion}
 
 %----------------------------------------------------------------------------------------
 %	THESIS CONTENT - APPENDICES

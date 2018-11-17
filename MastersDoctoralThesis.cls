@@ -214,8 +214,11 @@
 }
 \DeclareDocumentCommand{\author}{m}{\newcommand{\authorname}{#1}\renewcommand{\@author}{#1}}
 \NewDocumentCommand{\supervisor}{m}{\newcommand{\supname}{#1}}
+\NewDocumentCommand{\consultant}{m}{\newcommand{\consname}{#1}}
 \NewDocumentCommand{\examiner}{m}{\newcommand{\examname}{#1}}
 \NewDocumentCommand{\degree}{m}{\newcommand{\degreename}{#1}}
+\NewDocumentCommand{\degreeprogram}{m}{\newcommand{\degreeprogramname}{#1}}
+\NewDocumentCommand{\profession}{m}{\newcommand{\professionname}{#1}}
 \NewDocumentCommand{\addresses}{m}{\newcommand{\addressname}{#1}}
 \NewDocumentCommand{\university}{m}{\newcommand{\univname}{#1}}
 \NewDocumentCommand{\company}{m}{\newcommand{\compname}{#1}}
@@ -334,6 +337,26 @@ KOMA-script documentation for details.}]{fancyhdr}
 	\ifbool{nolistspace}{\endgroup}{}
 }
 
+
+
+%----------------------------------------------------------------------------------------
+%	Software PAGE DESIGN
+%----------------------------------------------------------------------------------------
+
+\newcommand{\softwarename}{Availability of data and software}
+\providecaptionname{english,british,american}{\softwarename}{Availability of data and software}
+\NewDocumentEnvironment{software}{ m }{%
+	\ifbool{nolistspace}{\begingroup\singlespacing}{}
+	\ifbool{listtoc}{\addchap{\softwarename}}{\addchap*{\softwarename}}
+	\begin{longtable}{#1}
+	}{%
+	\end{longtable}
+	\addtocounter{table}{-1}% Don't count this table as one of the document tables
+	\ifbool{nolistspace}{\endgroup}{}
+}
+
+
+
 %----------------------------------------------------------------------------------------
 %	ABSTRACT PAGE DESIGN
 %----------------------------------------------------------------------------------------
@@ -342,6 +365,8 @@ KOMA-script documentation for details.}]{fancyhdr}
 \DeclareDocumentCommand{\abstracttitlefont}{}{}
 \newcommand{\byname}{by}
 \newcommand{\abstractname}{Abstract}
+\newcommand{\abbrname}{Abbreviations}
+\newcommand{\softname}{Software}
 \providecaptionname{german,ngerman,austrian,naustrian}{\byname}{von}
 \providecaptionname{american,australian,british,canadian,english,newzealand,UKenglish,USenglish}{\byname}{by}
 \ifbool{consistentlayout}{
