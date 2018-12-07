@@ -1,21 +1,21 @@
-\chapter{Summary of Chapter 1: Architecture of OpenBiodiv}
+\chapter{Резюме на глава 1: Архитектура на OpenBiodiv}
 \label{chapter-openbiodiv}
 
-In this chapter, we provide the architectural blueprint, i.e. the specification and design of OpenBiodiv. We break up OpenBiodiv into components that will be treated in detail in subsequent chapters. We describe how these components inter-operate in order to form the OpenBiodiv knowledge-based system.
+В тази глава предоставяме архитектурата, т.е. спецификацията и дизайна на OpenBiodiv. Въвеждаме компонентите на OpenBiodiv, които ще бъдат разгледани подробно в следващите глави. Описваме как взаимодействат тези компоненти, за да се формира базираната на знанието система OpenBiodiv.
 
-\section{What is OpenBiodiv?}
+\section{Какво е OpenBiodiv?}
 
-The understanding of OpenBiodiv as a knowledge-based system can be summarized as follows: OpenBiodiv is a  database of interconnected biodiversity information together with logic and application layers allowing users to not only query the data but also discover additional facts of relevance implied by the data. The primary sources of information in OpenBiodiv are the journals of the academic publisher Pensoft, taxonomic information from Plazi, and the taxonomic backbone of Global Biodiversity Information Facility (GBIF).
+Разбирането на OpenBiodiv като система базирана на знанието може да се обобщи по следния начин: OpenBiodiv е база данни за взаимосвързана информация за биологичното разнообразие, заедно с логика и приложения, позволяващи на потребителите не само да се допитват до данните, но и да откриват допълнителни факти, свързани с данните. Основните източници на информация в OpenBiodiv са списанията на академичния издател Пенсофт, таксономичната информация от Плаци и таксономичният гръбнак на Global Information Biodiversity Facility (GBIF).
 
-The research problem of OpenBiodiv's architecture can be postulated as designing an open-access semantic RDF graph database, incorporating information stored in Pensoft, Plazi, and GBIF, and allowing the users of the system to ask complicated queries. 
+Изследователският проблем на архитектурата на OpenBiodiv може да се формулира като проектиране на семантична графова база данни въз основа на RDF с отворен достъп, включваща информация, предоставяна от Пенсофт, Плаци и GBIF, и позволяваща на потребителите на системата да задават сложни заявки.
 
-OpenBiodiv consists of (1) a semantic graph database, (2) a back-end code base, and (3) a front-end in the form of a web-portal facilitating the access to the underlying knowledge base (Fig.~\ref{fig:openbiodiv-components}). OpenBiodiv enables the flow of information between international repositories for biodiversity data to Biodiversity Data Journal (BDJ) and other journals that use the ARPHA-BioDiv toolkit (\cite{penev_arpha-biodiv:_2017}). As a second step, knowledge is extracted from such journals taking advantage of the TaxPub Document Type Definition (DTD)\footnote{We will take the liberty and refer to TaxPub as an XML schema in the rest of the chapter.} introduced by \cite{catapano_taxpub:_2010}. Example journals include ZooKeys, Biodiversity Data Journal (BDJ), PhytoKeys, MycoKeys, and so on\footnote{The journals can be accessed under \url{https://pensoft.net/browse_journals}.}. At the same time, knowledge is extracted from Plazi TreatmentBank, an archive of legacy biodiversity literature containing over 200 thousand treatments\footnote{A treatment is a special section in a biological publication describing and discussion a species or a higher taxon. TreatmentBank is accessible under \url{https://http://plazi.org/resources/treatmentbank/}.} and updated every day. Last but not least, these sources are interlinked via GBIF's taxonomic backbone (\cite{gbif_secretariat_gbif_2017}). The extracted knowledge is then stored in a semantic graph database (Fig.~\ref{fig:openbiodiv-sources}).
+OpenBiodiv се състои от (1) семантична графова база данни, (2) програмен код, осигуряващ функционирането на базата и (3) динамична уеб страница (front-end), улесняваща достъпа до основната база от знания (Фиг.~\ref{fig:openbiodiv-components}). OpenBiodiv позволява донамичното вмъкване на данни от хранилища за данни за биологичното разнообразие в текста на статия в Biodiversity Data Journal или друго списание, използващи фреймуорка на Пенсофт за писане на статии, ARPHA-BioDiv (\cite{penev_arpha-biodiv:_2017}). Като втора стъпка, от тези списания се извлича знание, като се възползваме от XML-схемата на тези списания TaxPub. Примерни списания включват ZooKeys, Biodiversity Data Bureau (BDJ), PhytoKeys, MycoKeys и т.н.\footnote{Списанията могат да бъдат достъпвани под \url{https://pensoft.net/browse_journals}}. В същото време факти се извличат от Plazi TreatmentBank, архив на литература за биологичното разнообразие, съдържащ над 200 хиляди таксономични дискусии\footnote{Таксономичната дискусия е специален раздел в биологична публикация, която описва и дискутира вид или по-висок таксон. TreatmentBank е достъпен под \url{https:// //plazi.org/resources/treatmentbank/}} и актуализиран всеки ден. Не на последно място, тези факти са взаимосвързани чрез таксономичният гръбнак на GBIF (\cite{gbif_secretariat_gbif_2017}). След това извлеченото знание се съхранява в базата данни на семантичния граф (Фиг.~\ref{fig:openbiodiv-sources}).
 
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Figures/components-openbiodiv}
 \decoRule
-\caption[OpenBiodiv Components]{The components of OpenBiodiv.}
+\caption[OpenBiodiv Components]{Компоненти на OpenBiodiv.}
 \label{fig:openbiodiv-components}
 \end{figure}
 
@@ -23,56 +23,55 @@ OpenBiodiv consists of (1) a semantic graph database, (2) a back-end code base, 
 \centering
 \includegraphics[width=\textwidth]{Figures/openbiodiv-sources}
 \decoRule
-\caption[OpenBiodiv Components]{Flow of information in the biodiversity data space until it reaches the OpenBiodiv semantic database. Dashed lines are components that have not been implemented yet.
-}
+\caption[OpenBiodiv Components]{Поток на информация в пространството за данни за биологичното разнообразие. Пунктираните линии са компоненти, които все още не са създадени.}
 \label{fig:openbiodiv-sources}
 \end{figure}
 
-\section{Semantic graph database}
+\section{Семантичен граф}
 
-A primary output of the OpenBiodiv effort is the creation of a semantic database based on knowledge extracted from the archives of Pensoft and Plazi and GBIF's taxonomic backbone and accessible under \url{http://graph.openbiodiv.net/}. A discussion of the components of the database follows.
+Основен резултат от усилията на OpenBiodiv е създаването на семантична база данни, базирана на знания, извлечени от архивите на Pensoft и Plazi и таксономичния гръбнак на GBIF и достъпни под \url{http://graph.openbiodiv.net/}. Следва обсъждане на компонентите на базата данни.
 
-\subsection{OpenBiodiv ontology (OpenBiodiv-O)}
+\subsection{Онтология OpenBiodiv-O}
 
-The central result of the OpenBiodiv effort is the creation of a formal domain model of biodiversity publishing, the ontology OpenBiodiv-O (\cite{senderov_openbiodiv_2017}). The source code of the ontology and accompanying documentation can be accessed under \url{https://github.com/vsenderov/openbiodiv-o}. A detailed discussion is presented in Chapter~\ref{chapter-ontology}.
+Централният резултат от усилията по OpenBiodiv е създаването на формален модел на областта за публикуването на знание за биоразнообразието. Този формален модел е онтологията OpenBiodiv-O (\cite{senderov_openbiodiv_2017}). Изходният код на онтологията и придружаващата документация могат да бъдат достъпни под \url{https://github.com/pensoft/openbiodiv-o}. Детайлна дискусия е представена в глава~\ref{chapter-ontology}.
 
-\subsection{OpenBiodiv Linked Open Dataset (OpenBiodiv-LOD)}
+\subsection{Свързани отворени данни OpenBiodiv-LO }
 
-Using OpenBiodiv-O and the infrastructure described later in this chapter a dataset incorporating approximately 200 thousand Plazi treatments, five thousand Pensoft articles, as well as GBIF’s taxonomic backbone (over a million names) has been created. The dataset is available online through the workbench of the semantic database \url{http://graph.openbiodiv.net}. It is discussed in detail in Chapter~\ref{chapter-lod}.
+Използвайки OpenBiodiv-O и инфраструктурата, описана по-нататък в тази глава, са създадени свързани отворени данни, включващи приблизително 200 хиляди записа от Плаци, пет хиляди статии от Пенсофт, както и таксономичият гръбнак на GBIF (над милион биологични имена). Данните са достъпни онлайн чрез работния инстумент на семантичната база данни \url{http://graph.openbiodiv.net}. Разясняват се подробно в глава~\ref {chapter-lod}.
 
 \section{Backend}
 
-In order to populate a semantic database it is necessary to create the infrastructure that converts raw data (text, images, data tables, etc.) into a structured semantic format allowing the interlinking of resource identifiers and the answering of complex queries. OpenBiodiv creates new infrastructure and extends existing infrastructure for transforming biodiversity scholarly publications into Resource Description Format (RDF) statements with the help of the components described in this section.
+За да се попълва семантична база данни, е необходимо да се създаде инфраструктура, която преобразува необработени данни (текст, изображения, таблици с данни и т.н.) в структуриран семантичен формат, позволяващ свързването на ресурси посредством техните уникални идентификатори и отговарянето на сложни заявки. OpenBiodiv създаде нова инфраструктура за трансформиране на научни публикации за биоразнообразието в твърдения под формата на RDF с помощта на инструментите, описани в този раздел.
 
-\subsection{RDF4R: R package for working with RDF}
+\subsection{RDF4R: R пакет за работа с RDF}
 
-One of the greater technical challenges for OpenBiodiv is the transformation of biodiversity information (e.g. taxonomic names, paper metadata, figures, etc.) stored as semi-structured XML into fully-structured semantic knowledge in the form of RDF. In order to solve this challenge, an R package has been developed that enables the creation, manipulation, and submission and retrieval to and from a semantic database of RDF statements. This package is accessible under an open source license on GitHub under \url{https://github.com/vsenderov/rdf4r}. We describe the package in Chapter~\ref{chapter-rdf4r}.
+Едно от по-големите технически предизвикателства за OpenBiodiv е трансформирането на информация за биологичното разнообразие (напр. таксономични имена, метаданни, фигури и т.н.), съхранявани като полуструктуриран XML в напълно структурирани семантични знания под формата на RDF. За да се реши това предизвикателство, е разработен R пакет, който позволява създаването, манипулирането и записа в семантична база данни на създадения RDF. Този пакет е достъпен под лиценз с отворен код на GitHub под \url{https://github.com/vsenderov/rdf4r}. Описваме пакета в глава~\ref{chapter-rdf4r}.
 
-\subsection{OpenBiodiv Base and ROpenBio}
+\subsection{Базисен програмен код и ROpenBio}
 
-In combination with the RDF4R package, the code-base is completed by one more R package, \url{ropenbio} and a code-base (OpenBiodiv Base) of scripts and documentation necessary to bootstrap the database. \url{ropenbio} utilizes the RDF4R package to convert semi-structured XML to RDF. It contains the "mappings" necessary for that conversion. It is available under \url{https://github.com/pensoft/ropenbio}. OpenBiodiv Base coordinates the invocation of \url{ropenbio}, contains scripts for the automatic import of new resources, and other housekeeping details. It is available under \url{https://github.com/pensoft/openbiodiv}. Their usage to generate the OpenBiodiv-LOD is discussed in Chapter~\ref{chapter-lod}.
+В комбинация с пакета RDF4R, програмният код съдържа още един R пакет, \cl{ropenbio} и базисен програмен код от скриптове и документация, необходими за стартиране на базата данни. \cl{ropenbio} използва пакета RDF4R за преобразуване на полуструктуриран XML в RDF. Той съдържа бийективните проекции, необходими за тази реализация. Той е достъпен под \url{https://github.com/pensoft/ropenbio}. Базисният софтуерен код координира извикването на \cl{ropenbio}, съдържа скриптове за автоматично импортиране на нови ресурси и други подробности. Той е достъпен под \url{https://github.com/pensoft/openbiodiv}. Генерирането на OpenBiodiv-LOD с помощта на тези пакети е обсъдено в глава~\ref{chapter-lod}.
 
-\subsection{Workflow for converting ecological metadata to a manuscript}  
+\subsection{Работен процес за преобразуване на екологични метаданни в ръкопис}
 
-Ecological Metadata Language (EML) is a popular format for describing ecological datasets (\cite{michener_nongeospatial_1997}). Biodiversity repositories such as GBIF and DataOne make use of this format to describe the datasets that they store. An import pipeline for importing an EML file as a BDJ data paper\footnote{A data paper (\cite{chavan_data_2011}) is a paper in a scholarly (peer-reviewed) journal discussing a scientific dataset.} has been developed as part of OpenBiodiv (\cite{senderov_online_2016}). We describe this workflow in detail in Chapter~\ref{chapter-case-study}. To access the pipeline interactively, go to \url{https://arpha.pensoft.net}, login to the system (registration is free), select ``Start a new manuscript,'' scroll all the way down to ``Import a manuscript,'' and follow the necessary steps to upload an EML and use it as a template for your new manuscript.
+Език за екологични метаданни (EML) е популярен формат за описване на екологични данни (\cite{michener_nongeospatial_1997}). Хранилища за биоразнообразие, като GBIF и DataOne, използват този формат, за да опишат набора от данни, които съхраняват. Автоматичното преобразуване на EML файл в data paper ръкопис от Biodiversity Data Journal\footnote {Data paper (\cite{chavan_data_2011}) е научна статия, обсъждаща научни данни.} е възможно с помощта на системата OpenBiodiv (\cite{senderov_online_2016}). Този работен процес е описан подробно в глава~\ref{chapter-case-study}. За да работа в интерактивено режим, отидете на \url{https://arpha.pensoft.net}, влезте в системата (регистрацията е безплатна), изберете ``Start a new manuscript'', превъртете до ``Import manuscript'' и следвайте необходимите стъпки, за да качите EML файл и да го използвате като шаблон за вашия нов ръкопис.
 
-\subsection{Workflow for importing specimen data into Biodiversity Data Journal}
+\subsection{Работен поток за импортиране на данни от образец в дневника за биологичното разнообразие}
 
-One of the important types of biodiversity data is occurrence data---data that documents the presence of a properly taxonomically identified organism at a given location and time. Such data is stored at international repositories such as BOLD, GBIF, PlutoF, and iDigBio. In order to facilitate data publishing, as well as to act as an entry point into OpenBiodiv, a pipeline for importing any occurrence record from these databases into a BDJ taxonomic paper has been developed (\cite{senderov_online_2016}). We describe this workflow in detail in Chapter ~\ref{chapter-case-study}. To access the workflow interactively, go to \url{https://arpha.pensoft.net}, login to the system (registration is free), select "Start a new manuscript," select "Biodiversity Data Journal" as a journal and "Taxonomic Paper" as paper-type and "Create a manuscript." Then, in your new manuscript, expand the "Taxon treatments" section by clicking on the $+$ sign next to it, give a test classification to your treatment (e.g. Animalia), click ``Save'' and you will be presented with a choice of subsections. Click the ``Materials'' section on the left to visualize the workflow. Look at the lower-part of the dialog, where ``You may place multiple ID's...''---this is the part where you select external resource identifiers to be imported to your article.
+Един от важните видове данни за биологичното разнообразие са данни за наблюдения на организми occurrence data. Това са данни, които документират наличието на правилно таксономично идентифициран организъм на дадено място и време. Такива данни се съхраняват в международни хранилища като BOLD, GBIF, PlutoF и iDigBio. За да се улесни публикуването на такъв тип данни е разработен работен процес за импортиране на записи за събития от тези бази данни в таксономична статия в списанието Biodiverstiy Data Journal (\cite{senderov_online_2016}). Този работен процес е описан подробно в глава~\ref{chapter-case-study}. За да отворите интерактивно работния процес, отидете на \url{https://arpha.pensoft.net}, влезте в системата (регистрацията е безплатна), изберете ``Start a new manuscript'', изберете ``Biodiveristy Data Journal'', ``Taxonomic paper''  и ``Create a new manuscript''. След това в новия ръкопис щракнете с мишката върху раздела ``Taxon treatments'', като кликнете върху знака $+$ до него, и укажете биологичната класификация на новия запис (напр. Animalia), и най-накрая щракнете върху ``Save'' и ще ви бъде представен избор на подраздели. Кликнете върху секцията ``Materials'' от-вляво, за да видите инструмента на работния процес за вмъкване на материли. Погледнете в долната част на диалоговия прозорец, където можете да поставите множество идентификационни номера. Това е частта, в която избирате външни идентификатори на ресурси, които да бъдат импортирани във вашата статия.
 
-\section{Frontend}
+\section{Интерфейс}
 
-In addition to providing a searchable database endpoint, a website allowing semantic search and containing specific tasks packaged as apps is being developed (\url{http://openbiodiv.net}). The development of the site extends beyond the scope of the dissertation thesis and is driven by the Pensoft development team. A beta version is already operational Fig.~\ref{fig:website}. A limited discussion is found in Chapter~\ref{webportal}.
+В допълнение към предоставянето endpoint за база данни с възможност за търсене, се разработва уебсайт, позволяващ семантично търсене и капсулиращ специфични задачи, пакетирани като приложения (\url{http://openbiodiv.net}). Развитието на сайта надхвърля обхвата на дисертационната теза и се ръководи от екипа за разработка на Пенсофт. Бета версията вече е в действие. Фиг.~\ref{fig:website}. Ограничена дискусия е представена в глава~\ref{webportal}.
 
-\section{IT}
+\section{Системна администрация}
 
-The system is deployed on a Debian GNU+Linux virtual machine. GraphDB runs with a 20 GB heap file and with the RDFS-Plus Optimized rule set\footnote{This is necessitated by the fact that we reached a performance bottleneck the OWL inference. Discussed in Chapter~\ref{chapter-lod}}.  Continuous operation is ensured by the automatic execution of scripts from the \url{run} directory of OpenBiodiv Base.
+Системата е разположена на виртуална машина на Debian GNU+Linux. GraphDB работи с heap файл от 20 ГБ и с набор от правила RDFS-Plus Optimized\footnote{Това се налага поради факта, че достигнахме препятствия, когато използвахме OWL извод. Обсъдени в глава~\ref {chapter-lod}}. Непрекъснатата работа се осигурява от автоматичното изпълнение на скриптове от директорията \cl{run} на базисния код на OpenBiodiv.
 
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Figures/openbiodiv-webpage}
 \decoRule
-\caption[OpenBiodiv Website]{Beta version of the OpenBiodiv website together with sample app icons.}
+\caption[OpenBiodiv Website]{Бета версия на потребителския интерфейс.}
 \label{fig:website}
 \end{figure}
 

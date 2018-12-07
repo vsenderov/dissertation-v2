@@ -1,49 +1,48 @@
-\chapter{Summary of Chapter 2: The OpenBiodiv Ontology}
-
+\chapter{Резюме на глава 2: Онтологията на OpenBiodiv}
 \label{chapter-ontology}
 
-OpenBiodiv lifts biodiversity information from scholarly publications and academic databases into a computable semantic form.  In this chapter, we introduce OpenBiodiv-O (\cite{senderov_openbiodiv-o:_2018}), the ontology forming the knowledge and inferencing model of OpenBiodiv. OpenBiodiv-O provides a conceptual model of the structure of a biodiversity publication and the development of related taxonomic concepts. We first introduce the modeled domain in Domain Conceptualization and then formalize it in Results. 
+OpenBiodiv трансформира информация за биоразнообразието от научни публикации и академични бази данни в семантичен вид. В тази глава представям OpenBiodiv-O (\cite{senderov_openbiodiv-o:_2018}) - онтологията, формираща модела на OpenBiodiv за знания и извод. OpenBiodiv-O предоставя концептуален модел на структурата на академична публикация в сферата на биоразнообразието и на съдържаните в нея таксономични концепции. За първи път формално е концептуализирана областта на публикуването на данни за биоразнообразието.
 
-By developing an ontology focusing on biological taxonomy, our intent is to provide an ontology that fills in the gaps between ontologies for biodiversity resources such as Darwin-SW and semantic publishing ontologies such as the ontologies comprising the SPAR Ontologies. We take the view that it is advantageous to model the taxonomic process itself rather than any particular state of knowledge.
+Чрез разработването на онтология, насочена към биологичната таксономия са запълнени празнините между онтологии като Darwin-SW и онтологиите за семантично публикуване като онтологиите SPAR. Считам, че е предимство да се моделира самият таксономичен процес, а не някакво конкретно състояние на знанието.
 
-The source code and documentation are available under the CC BY license\footnote{Creative Commons Attribution 4.0 International Public License.} from GitHub\footnote{\url{https://github.com/vsenderov/openbiodiv-o/blob/master/LICENSE.md}}. We start by introducing the domain of biological taxonomy and the related biodiversity sciences.
+Изходният код и документацията са достъпни под лиценза CC BY \footnote {Creative Commons Attribution 4.0 International Public License} от GitHub \footnote {\url{https://github.com/vsenderov/openbiodiv-o/blob/master/LICENSE.md}}. Започваме с увод в областта на биологичната таксономия и свързаните с нея биоразнообразие.
 
-\section{Domain Conceptualization}
-We give an introduction of the history of modern biological taxonomy starting with Carl Linnaeus (1707-1778) who proposed the modern organism grouping of \emph{kingdoms, classes, orders, genera} and the usage of Latin binomial names in \emph{Systema Naturae} (\cite{linnaeus_systema_1758}). We emphasize that the work of taxonomists to describe and organize biodiversity is far from complete. This informs the creation of our ontology not as a static formalization of the existing biological taxonomy in computer-readable form, but as a formalization of the \emph{scientific process of biological taxonomy}.
+\section{Концептуализация на областта}
 
-We then describe in the detail what the scientific process of biological taxonomy entails. We start by introducing taxonomic concepts and how they are formed. A taxonomic concept is a scientific hypothesis (\cite{deans_time_2012}) that a certain well-defined group of organisms exists in Nature. It is formed by examining specimens and necessarily entails a scientific grouping criterion, often called a species concept (\cite{mallet_species_2001}; not to be confused with taxonomic concept!). Historically, organisms have been grouped by their appearance (morphological species concept) or reproductive behavior (biological species concept), but recently the focus has shifted towards grouping based on genetic relatedness (phylogenetic and genomic species concepts).
+Представям историята на модерната биологична таксономия, като се започне с Карл Линней (1707-1778), който предложи модерното групиране на организма на \emph{царства, класове, разреди, родове} и използването на латинските биномични имена в \emph{Systema Naturae} (\cite {linnaeus_systema_1758}). Подчертавам, че работата на таксономите за описване и организиране на биоразнообразието далеч не е пълна. Това информира създаването на новата онтология не като статично формализиране на съществуващата биологична таксономия в компютърно четима форма, а като формализиране на \emph{научния процес на биологичната таксономия}.
 
-We then describe the ranks of biological taxonomy and how they are regulated by International Codes \cite{international_commission_on_zoological_nomenclature_international_1999,mcneill_international_2012}). The codes govern lower ranks: species, genus, family, order; higher ranks (e.g. phylum, kingdom, domain, etc.) are however free to be used by researchers as they view fit. This leads to multiple competing viewpoints.
+След това описвам подробно, как протича научният процес в биологичната таксономия. Започвам с въвеждането на таксономични концепции и начина, по който се формират. Таксономичната концепция е научна хипотеза (\cite{deans_time_2012}), че определена група от организми съществува в природата. Тя се формира чрез изследване на екземпляри и задължително включва научен критерий по който те да се групират, често наричан видова концепция (\cite {mallet_species_2001}) Исторически погледнато, организмите могат да бъдат групирани по външен вид и вътрешно устройство (концепция за морфологични видове) или репродуктивно поведение (биологична видова концепция), но напоследък фокусът се е насочил към групиране въз основа на генетична свързаност (филогенетични и геномни видови концепции).
 
-Publishing taxonomic concepts is an integral step in the scientific workflow of every taxonomist. We describe the structure and types of taxonomic publications with a particular emphasis on the Treatment section. A Treatment is the section in a taxonomic publication where a taxonomic concept is circumscribed.
+След това описвам единците на биологичната таксономия и начина, по който те са регламентирани от международните кодекси \cite{international_commission_on_zoological_nomenclature_international_1999, noauthor_international_2012}). Кодексите уреждат по-ниските рангове: видове, род, семейство, разред; по-високите рангове (напр. отдел, царство, домейн и т.н.) могат да бъдат използвани от изследователите, както сметнат за подходящо. Това води до множество конкуриращи се гледни точки.
 
-\subsection*{Previous work}
-We discuss previous efforts made to ontologize  scientific publications and biological information. Particularly important are the Semantic Publishing and Referencing Ontologies (SPAR Ontologies, \cite{peroni_semantic_2014}) and the TaxPub XML Document Type Definition ((\cite{catapano_taxpub:_2010}) referred to loosely as XML schema). The modeling of biodiversity information is primarily influenced by the Codes (\cite{international_commission_on_zoological_nomenclature_international_1999,mcneill_international_2012}), that were mentioned in the previous section, and by a variety of standards (e.g. Darwin Core, DwC, \cite{wieczorek_darwin_2012}), published by the TDWG community.
+Публикуването таксономични концепции е неразделна стъпка в научния работен поток на всеки таксоном. Описваме структурата и типовете таксономични публикации, като се акцентираме специално върху секцията ``Таксономична дискусия'', раздела в таксономичната публикация, където таксономичната концепция е дефинирана.
 
-Finally, we discuss the emerging field of concept taxonomy (\cite{berendsohn_concept_1995, franz_perspectives:_2009,sterner_taxonomy_2017})---a re-imagination of how the circumscription process in biological taxonomy ought to work.
+\subsection*{Преглед на литературата}
 
-\section{Methods}
+В тази секция се разглеждат опитите областта на биологичната таксономия да бъде формално концептуализрана.  Интересни са SPAR Ontologies, \cite{peroni_semantic_2014}) и TaxPub XML Document Type Definition (\cite{catapano_taxpub:_2010}).
 
-OpenBiodiv-O is expressed in Resource Description Framework (RDF). At the onset of the project, a consideration was made to use RDF in favor of a more complex data model such as Neo4J's (\cite{senderov_open_2016}). The choice of RDF was made in order to be able to incorporate the multitude of existing domain ontologies into the overall model.
+Концептуализацията основно е повлияна освен от практиката и от кодексите (\cite{international_commission_on_zoological_nomenclature_international_1999,noauthor_international_2012}), а така и от стандартите, създадени от TDWG (напр. Darwin Core, DwC, \cite{wieczorek_darwin_2012}).
 
-To develop the conceptualization of the taxonomic process and then the ontology we utilized the following process: (1) domain analysis and identification of important resources and their relationships; (2) analysis of existing data models and ontologies and identification of missing classes and properties for the successful formalization of the domain.
+Накрая правим обзор на областта на концептуалната таксономия (\cite{berendsohn_concept_1995, franz_perspectives:_2009,sterner_taxonomy_2017}), която представлява нова гледна точка за това, как трябва да протича процесът на опсване на видове в биологичната таксономия, с оглед на напредъка на информационните технологии.
 
-The formal structure of the ontology is specified by employing the RDF Schema (RDFS) and the Web Ontology Language (OWL). It is encoded as a part of a literate programming (\cite{knuth_literate_1984}) document in RMarkdown format titled ``OpenBiodiv Ontology and Guide''\footnote{\href{http://openbiodiv.net/ontology}{http://openbiodiv.net/ontology}}. The statements have been extracted from the RMarkdown file via \emph{knitr} and are provided here as an appendix. It is also possible to request the ontology via Curl from its endpoint with the indication of {\tt content-type: application/rdf+xml}. The vocabularies can be found as additional appendices, Taxonomic Statuses and RCC-5, and on the GitHub page\footnote{\href{https://github.com/vsenderov/openbiodiv-o}{https://github.com/vsenderov/openbiodiv-o}}.
+\section{Методи}
 
-A dataset (OpenBiodiv-LOD, will be described in detail in the next Chapter) from Pensoft's journals, Plazi's treatments, and GBIF's taxonomic backbone has been generated with \mbox{OpenBiodiv-O} and can be found at the SPARQL Endpoint \footnote{\href{http://graph.openbiodiv.net/}{http://graph.openbiodiv.net/}}. The endpoint is also accessible from the website\footnote{\href{http://openbiodiv.net/}{http://openbiodiv.net/}}, under ``SPARQL Endpoint.'' Demos are available as ``Saved Queries'' from the workbench.
+OpenBiodiv-O се изразена посредством RDF чрез използване на RDF Schema (RDFS) и Web Ontology Language (OWL).
 
-\section{Results}
+За да разработим онтологията ние използвахме следния процес: (1) анализ на областта и идентифициране на важните класове обекти и техните взаимоотношения (наричани свойства); (2) анализ на съществуващите информационни модели и онтологии и идентифициране на липсващите класове и свойства за успешно формализиране на областта.
 
-We understand OpenBiodiv-O to be the \emph{shared formal specification of the conceptualization} (\cite{gruber_translation_1993,obitko_translations_2007,staab_handbook_2009}) that we have introduced in Background. OpenBiodiv-O describes the structure of this conceptualization, not any particular state of it.
+\section{Резултати}
 
-There are several domains in which the modeled resources fall. The first one is the scholarly biodiversity publishing domain. The second domain is that of taxonomic nomenclature. The third domain is that of broader taxonomic (biodiversity) resources (e.g. taxonomic concepts and their relationships, species occurrences, traits). To combine such disparate resources together we rely on SKOS \cite{miles_skos_nodate}. Unless otherwise noted, the default namespace of the classes and properties for this paper is \url{<http://openbiodiv.net/>}. The prefixes discussed here are listed at the beginning of the ontology source code.
+OpenBiodiv-O е \emph{споделена формална спецификация на концептуализация} на областта на биоразнообразието по смисъла на \cite{gruber_translation_1993, obitko_translations_2007, staab_handbook_2009}. Тяхното разбиране за онтология сме въвели в Background. 
 
-\subsection{Semantic Modeling of the Biodiversity Publishing Domain}
+Има няколко домейна, в които моделираните ресурси падат. Първият е научната област за публикуване на данни за биоразнообразието. Втората област е тази на таксономичната номенклатура. Третата област е на по-широката таксономия (например таксономични понятия и техните взаимоотношения, видови събития, черти).
 
-We extend the framework of the SPAR Ontologies by introducing a new class for taxonomic articles, its subsections, as well as a new class for the mentioning of a taxonomic name (see next subsection) in an article. These new classes are summarized in Table~\ref{bibliographic_classes}.
+\subsection{Семантично моделиране на домейна за публикуване на данни биоразнообразието}
+
+Разширяваме рамката на онтологиите на SPAR, като въвеждаме нова категория за таксономичните статии, нейните подраздели, както и нов клас за споменаване на таксономично име (вж. следващ подраздел). Тези нови класове са обобщени в Таблица~\ref{bibliographic_classes}.
 
 \begin{table}[h!]
-\caption{New biodiversity publishing classes introduced.}
+\caption{Нови класове в областта на публикуването на данни за биоразнообразието.}
       \begin{tabular}{cc}
         \hline
           Class QName             & Comment\\  \hline
@@ -62,32 +61,25 @@ We extend the framework of the SPAR Ontologies by introducing a new class for ta
       \label{bibliographic_classes}
 \end{table}
 
-The classes from this subsection are based on the TaxPub XML Document Type Definition (DTD, also referred to loosely as XML schema, \cite{catapano_taxpub:_2010}), on the structure of Biodiversity Data Journal's
-taxonomic paper (\cite{smith_beyond_2013}), and and on the Treatment Ontologies (\cite{catapano_treatment_2016}).
-
-Furthermore, we introduce two properties: \emph{contains} ({\tt :contains}) and \emph{mentions} ({\tt :mentions}). \emph{contains} is used to link parts of the article together and \emph{mentions} links parts of the article to other concepts.
-
-A graphical representation of the relationships between instances of the publishing-related classes that OpenBiodiv introduces is to be found in the diagram in Fig.~\ref{taxonomic-article-diagram}.
+Графичното представяне на взаимоотношенията между ресурси на класовете, свързани с публикуването, които OpenBiodiv въвежда, може да се намери в диаграмата на фиг.~\ref{taxonomic-article-diagram}.
 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=\textwidth]{Figures/taxonomic-article-diagram}
 	\decoRule
-  \caption[Taxonomic article diagram.]{A graphical representation of the relationships between instances of the publishing-related classes that OpenBiodiv introduces.}
+  \caption[Taxonomic article diagram.]{Графична репрезентация на взаимоотношенията между ресурсите, които OpenBiodiv въвежда за публикуване на данни за биоразнообразието.}
   \label{taxonomic-article-diagram}
 \end{figure}
 
-\subsubsection{Semantics, alignment, and usage}
+\subsubsection{Семантика и употреба}
 
-In this section we discuss how the classes and properties that we have introduced align to the Functional Requirements for Bibliographic Records (FRBR) model used by SPAR. In a nutshell taxonomic articles are considered FRBR Expressions of the more abstract FRBR Work that is the intellectual content of the article. Treatments are SPAR discourse elements akin to Introduction, Methods, etc. are also FRBR Expressions. Taxonomic Concepts are their corresponding FRBR Work's.
-
-Figs.~\ref{example-article-metadata} and \ref{example-article-structure} give example usage in Turtle illustrating these ideas.
+В тази секция ние обсъждаме как класовете и свойствата, които въведохме, са в съответствие с модела на функционалните изисквания за библиографски записи (FRBR), използван от SPAR. Считаме дадена таксономична статия за конкретен израз/запис, FRBR Expression, на абстрактното понятие работа, FRBR Work, представляващо интелектуалното съдържание на статията. Таксономичната дискусия се третира подобно на Въведение, Методи, Резултати и т.н., т.е. също e FRBR Expression и DEO discourse element. Таксономична концепция е съответният абстрактен ресурс от клас FRBR Work на дадена таксономична дискусия. Фигурите~\ref{example-article-metadata} и \ref{example-article-structure} дават примерен сорс-код, илюстриращ тези идеи.
 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=\textwidth]{Figures/example-article-metadata}
 	\decoRule
-  \caption[Example article metadata.]{This example shows how to express the metadata of a taxonomic article with the SPAR Ontologies' model and the classes that OpenBiodiv defines. The code is in Turtle.}
+  \caption[Example article metadata.]{Този пример показва как да се изразят метаданните на таксономичната статия с модела на SPAR Ontologies и класовете, които OpenBiodiv определя. Кодът е на Turtle.}
   \label{example-article-metadata}
 \end{figure}
 
@@ -95,33 +87,31 @@ Figs.~\ref{example-article-metadata} and \ref{example-article-structure} give ex
   \centering
   \includegraphics[width=\textwidth]{Figures/example-article-structure}
   \decoRule
-  \caption[Example article structure.]{This examples shows how to express the article structure with the help of {\tt :contains}. The code is in Turtle.}
+  \caption[Example article structure.]{Този пример показва как да изразява структурата на статията с помощта на \cl{contains}. Кодът е на Turtle.}
   \label{example-article-structure}
 \end{figure}
 
 
-\subsection{Semantic modeling of biological nomenclature}
+\subsection{Семантично моделиране на биологичната номенклатура}
 
-Biological nomenclature is a legacy system with over 200 years of accumulation from before the time of informatics and even from before the time of Darwininan Evolution! It is very hard to model due to complexity and has only partially been covered by the ontologies NOMEN and TNSS (introduced in subsection ``Previous work''). With OpenBiodiv-O, I take a bottom-up approach of modeling the use of taxonomic names in articles. Where possible we align OpenBiodiv-O classes to NOMEN.
+Биологичната номенклатура е система с над 200 годишна традиция датираща до преди времето на информатиката и дори до преди времето на Теорията за еволюцията на Дарвин. Много е трудно да се моделира поради сложността си и само частично е обхваната от онтологиите NOMEN и TNSS (въведени в подраздел ``Previous Work''). С OpenBiodiv-O използвам подход "отдолу-нагоре" за моделиране на използването на таксономични имена в статиите. Където е възможно, ние подравняваме класовете OpenBiodiv-O на NOMEN.
 
-We have defined the class hierarchy of taxonomic names found in Fig. \ref{taxonomic-name-class-hierarchy-diagram}. Furthermore, we have introduced the class Taxonomic Name Usage ({\tt :TaxonomicNameUsage}). Taxonomic name usages have been discussed widely in the community (e.g. in \cite{pyle_taxonomic_2016}); however, the meaning of term remains vague. The abbreviation TNU is used interchangeably for ``taxon name usage'' and for ``taxonomic name usage.'' In OpenBiodiv-O, a taxonomic name usage is the mentioning of a taxonomic name in the text, optionally followed by a taxonomic status.
+Дефинирахме йерархията на класовете на таксономичните имена, намиращи се на фиг.~\ref{taxonomic-name-class-hierarchy-diagram}. Освен това въведехме taxonomic name usage (\cl{TaxonomicNameUsage}).
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=\textwidth]{Figures/taxonomic-name-class-hierarchy-diagram}
   \decoRule
-  \caption[Taxonomic name class hierarchy diagram.]{We created this class hierarchy to accommodate both traditional taxonomic name usages and the usage of taxonomic concept labels and operational taxonomic units.}
+  \caption[Taxonomic name class hierarchy diagram.]{Създадохме тази йерархия, за да приспособим както традиционните таксономични наименования, така и използването на таксономични концептуални етикети и оперативни таксономични единици.}
   \label{taxonomic-name-class-hierarchy-diagram}
 \end{figure}
 
-For example, ``\emph{Heser stoevi} Deltschev 2016, sp. n.'' is a taxonomic name usage. The cursive text followed by the author and year of the original species description is the latinized scientific name. The abbreviation ``sp. n.'' stands for the Latin \emph{species novum}, indicating the discovery of a new taxon.
+Въвеждаме Taxonomic Concept Label (\cl{TaxonomicConceptLabel}). Етикетът на таксономична концепция (TCL) е линеево име плюс позоваване на публикация, където дискутираният таксон е дефиниран. Връзката се осъществява чрез ключовата дума ``sec.'' (Латинки за (\emph{secundum} \cite{berendsohn_concept_1995}). Напр. \emph{Andropogon virginicus} var. \emph{tenuispatheus} \cite{blomquist_grasses_1948}. Тук \cite{blomquist_grasses_1948} е валидна библиографска справка за публикацията, в която концепцията е дефинирана.
 
-We also introduce the class Taxonomic Concept Label ({\tt :TaxonomicConceptLabel}). A taxonomic concept label (TCL) is a Linnaean name plus a reference to a publication, where the discussed taxon is circumscribed. The link is via the keyword ``sec.'' (Latin for (\emph{secundum}, \cite{berendsohn_concept_1995}). An example would be "\emph{Andropogon virginicus} var. \emph{tenuispatheus} sec. \cite{blomquist_grasses_1948}". Here, \cite{blomquist_grasses_1948} is a valid bibliographic reference to the publication where the concept is circumscribed.
-
-We extracted taxonomic status abbreviations from about 4,000 articles across four taxonomic journals (ZooKeys, Biodiversity Data Journal, PhytoKeys, and MycoKeys) in order to create a taxonomic status vocabulary (see appendices) that covers the eight most common cases (Table \ref{taxonomic-status-vocabulary}). The Latin abbreviations that have been classified into these classes can be found on the OpenBiodiv-O GitHub page. (See Methods for more details).
+Извадихме съкращения от таксономични термини от около 4000 статии в четири таксономични списания (ZooKeys, Biodiversity Data Journal, PhytoKeys и MycoKeys), за да създадем таксономичен речник на термините, който обхваща осемте най-често срещани случая Таблица~\ref{taxonomic-status-vocabulary}). Латинските съкращения, които са класифицирани в тези класове, могат да бъдат намерени на страницата на OpenBiodiv-O GitHub. (Вижте Методи за повече подробности).
 
 \begin{table}[h!]
-\caption{OpenBiodiv Taxonomic Status Vocabulary.}
+\caption{Речник с таксономични термини.}
 \begin{tabular}{ccc}
 \hline
 Vocabulary Instance QName & Example Abbrev & Comment\\ \hline
@@ -138,81 +128,80 @@ Vocabulary Instance QName & Example Abbrev & Comment\\ \hline
 \label{taxonomic-status-vocabulary}
 \end{table}
 
-Based on our analysis of taxonomic statuses, we have identified two Code-compliant patterns of relationship between latinized scientific names (Fig. \ref{scientific-name-patterns}). The pattern \emph{replacement name}, implemented via the property {\tt :replacementName}, indicates that a certain Linnaean name should be used instead of another Linnaean name. It covers a wide variety of cases in the Codes, such as, for example, the placement of one species taxon in a new genus ("comb. n."), the correction of a name for nomenclatural reasons ("nomen novum"), or the application of the Principle of Priority for the discovery of synonyms ("syn. nov.", \cite{international_commission_on_zoological_nomenclature_official_2017}).
+Въз основа на нашия анализ на термините за таксономични статуси, идентифицирахме два модела за съответствие между кодирането на латинизираните научни имена (Фиг.~\ref{scientific-name-patterns}). Моделът \emph{заместващо име}, изпълняван чрез свойството \cl{replacementName}, показва, че вместо едно латинизирано име,  трябва да се използва друго. Тя обхваща голямо разнообразие от случаи в кодексите, като например поставянето на един вид таксон в нов род (нова комбинация), поправката на наименование поради номенклатурни причини (ново име), или прилагането на Принципа на приоритет за откриването на синоними ("syn nov.", \cite{international_commission_on_zoological_nomenclature_official_2017}).
 
 \begin{figure}[h!]
  \centering
   \includegraphics[width=\textwidth]{Figures/scientific-name-patterns}
   \decoRule
   \caption[Scientific name patterns diagram.]{
-  Chains of \emph{replacement names} can be followed to find the currently used name. \emph{Related name} indicates that two names are related somehow, but not which one is preferable.}
+  Веригите на \emph {заместващи имена} могат да бъдат проследени, за да се намери използваното понастоящем име. \emph{Свързано име} показва, че две имена са свързани по някакъв начин, но не кой е предпочитан.}
   \label{scientific-name-patterns}
 \end{figure}
 
-The other pattern is that of \emph{related names} ({\tt :relatedName}). It is a broader pattern, indicating that two names are somehow related. For example, they may be synonyms, with one replacing the other, or they may point to taxonomically related taxonomic concepts. For example, \emph{Harmonia manillana} (\cite{mulsant_monographie_1866}) is related to \emph{Caria manillana} \cite{mulsant_monographie_1866} since, as per \cite{poorani_harmonia_2016}, a name-bearing type (lectotype) of \emph{Harmonia manillana} (\cite{mulsant_monographie_1866}) sec. Poorani \cite{poorani_harmonia_2016} is named \emph{Caria manillana} \cite{mulsant_monographie_1866}.
+Другият модел е този на \emph{свързани имена} (\cl{relatedName}). Това е по-широк модел, който показва, че две имена са някак си свързани. Например, те могат да бъдат синоними, едното да замества другото, или да сочат към таксономично свързани таксономични понятия. Например, \emph{Harmonia manillana} (\cite{mulsant_monographie_1866}) е свързано с \emph{Caria manillana} \cite {mulsant_monographie_1866} \emph{Harmonia manillana} (според \cite{poorani_harmonia_2016} лектотипус на \emph{Harmonia manillana} (\cite{mulsant_monographie_1866}) sec. \cite{poorani_harmonia_2016} носи името \emph{Caria manillana} \cite{mulsant_monographie_1866}).
 
-\subsubsection*{Semantics, alignment and usage}
-As evident from Fig.~\ref{taxonomic-name-class-hierarchy-diagram}, OpenBiodiv-O taxonomic names are aligned to NOMEN names.
+\subsubsection{Семантика и употреба}
 
-The linking between text and taxonomic names must pass through the intermediary class Taxonomic Name Usage. As parts of the manuscript, taxonomic name usages link document components to taxonomic names. Taxonomic name usages are \emph{contained} in sections such as Treatment, and \emph{mention} a taxonomic name as illustrated in the example in Fig. \ref{example-taxonomic-name-usage}.
+Както се вижда от фиг.~\ref{taxonomic-name-class-hierarchy-diagram}, таксономичните имена на OpenBiodiv-O са приравнени към NOMEN имена. Илюстрации в примера на Фиг.~\ref{example-taxonomic-name-usage}.
 
 \begin{figure}[h!]
 \centering
   \includegraphics[width=\textwidth]{Figures/example-taxonomic-name-usage}
   \decoRule
   \caption[Example taxonomic name usage.]{
-  This examples shows how taxonomic name usages link document components to taxonomic names. The code is in Turtle.}
+  Тези примери показват как таксономичните имена използват свързващите компоненти на документа.}
   \label{example-taxonomic-name-usage}
 \end{figure}
 
-\subsection{Semantic Modeling of the Taxonomic Concepts}
+\subsection{Семантично моделиране на таксономичните концепции}
 
-In OpenBiodiv-O taxonomic names are not the carriers of semantic information about taxa. This task is accomplished by a new class, Taxonomic Concept ({\tt :TaxonomicConcept}). A taxonomic concept is the theory that a taxonomist forms about a taxon in a scholarly biological taxonomic publication and thus always has a taxonomic concept label. We also introduce a more general class, Operational Taxonomic Unit ({\tt :OperationalTaxonomicUnit}) that can be used for all kinds of taxonomic hypotheses, including ones that don't have a proper taxonomic concept label. The class hierarchy has been illustrated in Fig.~\ref{taxonomic-concept-diagram}.
+В таксономичните имена на OpenBiodiv-O не са носители на семантична информация за таксоните. Тази задача се изпълнява от нов клас, Taxonomic Concept (\cl{TaxonomicConcept}). Таксономична концепция е теорията, която таксономът формира около таксон посредством научна таксономична публикация. Тя винаги има етикет, състоящ се от таксономичното име и библиографско позоваване на статията, в която името е описано. Въвеждаме и по-общ клас, оперативно таксономично звено (\cl{OperationalTaxonomicUnit}), което може да се използва за всички видове таксономични хипотези, включително такива, които нямат правилен таксономичен етикет . Класовата йерархия е илюстрирана на Фиг.~\ref{taxonomic-concept-diagram}.
 
 \begin{figure}[h!]
 \centering
   \includegraphics[width=\textwidth]{Figures/taxonomic-concept-diagram}
   \decoRule
   \caption[Taxonomic concept diagram.]{
-  A taxonomic concept is a {\tt skos:Concept}, a {\tt frbr:Work}, a {\tt dwc:Taxon} and has at least one taxonomic concept label.}
+  Таксономичната концепция е от клас \cl{skos:Concept}, \cl{frbr: Work}, \cl{dwc:Taxon} и има поне един етикет.}
   \label{taxonomic-concept-diagram}
 \end{figure}
 
-Taxonomic concepts are related to taxonomic names---including taxonomic concept labels---via the property \emph{has taxonomic name} ({\tt :taxonomicName}) and its sub-properties mimicking in their range the hierarchy of taxonomic names that we introduced earlier. We have defined a property specifically to link taxonomic concepts to taxonomic concept labels, \emph{has taxonomic concept label} ({\tt :taxonomicConceptLabel}). The property hierarchy diagram is shown in Fig.~\ref{name-property-hierarchy}.
+Свойствата на таксономичните имена са илюстрирани в Фиг.~\ref{name-property-hierarchy}.
 
 \begin{figure}[h!]
 \centering
   \includegraphics[width=\textwidth]{Figures/name-property-hierarchy}
   \decoRule
   \caption[axonomic name property hierarchy diagram.]
-  {Property hierarchy is aligned with the taxonomic name class hierarchy and with DarwinCore.}
+  {Йерархията на свойствата съвпада с йерархията на таксономичните имена и е приравнена към DarwinCore.}
   \label{name-property-hierarchy}
 \end{figure}
 
-There are two ways to relate taxonomic concepts to each other (Fig. \ref{taxonomic-concept-relationships-diagram}). As we pointed out earlier, historically taxonomic concepts form the hierarchy known as biological taxonomy. To express such simple semantic relations, it is fully sufficient to use the SKOS semantic vocabulary \cite{miles_skos_nodate}. 
+Двата начина са изразяване на взаимоотношения между таксономични концепции са дадени във Фиг.~\ref{taxonomic-concept-relationships-diagram}).
 
 \begin{figure}[h!]
 \centering
   \includegraphics[width=\textwidth]{Figures/taxonomic-concept-relationships-diagram}
   \decoRule
-  \caption[Taxonomic concept relationships diagram.]{In order to express an RCC-5 relationship between concepts, create an {\tt :RCC5Sgtatement} and use the corresponding properties to link two taxonomic concepts via it. Further, taxonomic concepts are linked to traits (e.g. ecology in ENVO), occurrences (e.g. Darwin-SW) and realize treatments.}
+  \caption[Taxonomic concept relationships diagram.]{За да изразите RCC-5 връзка между концепциите, създайте \cl{RCC5Statement} и използвайте съответните свойства, за да свържете две таксономични концепции през него. Освен това, таксономичните понятия са свързани със качества (например екология в ENVO), събития (например Darwin-SW) и са абстрактният клас на Таксономичните дискусии.}
   \label{taxonomic-concept-relationships-diagram}
 \end{figure}
 
-However, these simple relationships are not well suited for machine reasoning. This is why Franz and Peet \cite{franz_perspectives:_2009} suggested, building on previous work by e.g. \cite{koperski_referenzliste_2000}, to use the RCC-5 language to express relationships between taxonomic concepts. Furthermore, the Euler (\cite{chen_euler/x:_2014}) program was developed, which uses Answer Set Programming (ASP) to reason over RCC-5 taxonomic relationships. An answer set reasoner is not part of  OpenBiodiv as this task can be accomplished by Euler; however, we have provided an RCC-5 dictionary class ({\tt :RCC5Dictionary}), an RCC-5 relation term class ({\tt :RCC5Relation}), a vocabulary of such terms to express the RCC-5 relationships in RDF (see appendices), as well as a class and properties to express RCC-5 statements ({\tt :RCC5Statement}, {\tt :rcc5Property}, and subproperties). 
+Простите отношения не са подходящи за машинен извод. Ето защо \cite{franz_perspectives:_2009}, позовавайки се на \cite{koperski_referenzliste_2000} предложиха да използваме езика RCC-5, за да изразим взаимоотношенията между таксономичните понятия. Тяхни колеги разработиха програмата Euler (\cite{chen_euler/x:_2014}), която използва Answer Set Programming (ASP) за разсъждения и извод по таксономичните взаимоотношения, стъпвайки на RCC-5. Изводната машина за RCC-5 не е част от OpenBiodiv, тъй като тази задача може да бъде изпълнена от Ойлер; въпреки това, ние предоставихме RCC-5 терминилогичен речник. Вж. Фиг.~\ref{example-rcc5-taxonomic-concept-relationships}.
 
-\subsubsection{Semantics and alignment}
+\subsubsection{Семантика и приравняване}
 
-In this section taxonomic concepts are aligned to DarwinCore (DwC) and a discussion of how taxonomic concepts related to each either via simple relations (SKOS) and fine-grained (RCC-5) is presented. Also the relationships between biological names and scieintific concepts are discussed. We treat instances of our class Taxonomic Concept as functionally equivalent to DwC Taxa.  We can now list what types of relationships between names and taxonomic concepts are allowed: (1) The relationship between a taxonomic concept and a name that is not a taxonomic concept label is many-to-many---i.e. one Linnaean name can be a mention of multiple taxonomic concepts, and one taxonomic concept may have multiple Linnaean names. (2) The relationship between a taxonomic concept and a taxonomic concept label is one-to-many: while a taxonomic concept may have more than one (at least one is needed) labels, every label uniquely identifies a concept. These logical restrictions make taxonomic concept labels into unique identifiers to taxonomic concepts, something that Linnaean names are not.
+В тази секция таксономичните понятия са приведени в съответствие с DarwinCore (DwC) и е проведена дискусия за това как са представени таксономичните понятия, свързани както с прости отношения (SKOS), така и в подходящ за извод вид (RCC-5). Също така се обсъждат взаимоотношенията между биологичните имена и таксономичните концепции.
 
-\subsubsection{Usage} In Fig. \ref{example-simple-taxonomic-concept-relationships}, Fig.~\ref{example-rcc5-taxonomic-concept-relationships}, and Fig.~\ref{example-envo}, and  Fig~\ref{example-treatment-concept}) we provide some useful examples.
+\subsubsection{Употреба} Фиг.~ \ref{example-simple-taxonomic-concept-relationships}, Фиг.~\ref{example-rcc5-taxonomic-concept-relationships}, и Фиг.~\ref{example-envo}, и  Fig~\ref{example-treatment-concept}.
 
 \begin{figure}[h!]
 \centering
   \includegraphics[width=\textwidth]{Figures/example-simple-taxonomic-concept-relationships}
   \decoRule
   \caption[Example simple taxonomic concept relationships.]
-  {We can use SKOS semantic properties to illustrate simple relationships between taxonomic concepts.}
+  {Можем да използваме семантичните свойства на SKOS, за да илюстрираме прости отношения между таксономичните концепции.}
   \label{example-simple-taxonomic-concept-relationships}
 \end{figure}
 
@@ -220,7 +209,7 @@ In this section taxonomic concepts are aligned to DarwinCore (DwC) and a discuss
 \centering
   \includegraphics[width=\textwidth]{Figures/example-rcc5-taxonomic-concept-relationships}
   \decoRule
-  \caption[Example of RCC-5 taxonomic concept relationships.]{In order to express an RCC-5 relationship between concepts, create an {\tt :RCC5Sgtatement} and use the corresponding properties to link two taxonomic concepts via it. SKOS relations relate concepts directly.}
+  \caption[Example of RCC-5 taxonomic concept relationships.]{За да се изрази една RCC-5 връзка между концепциите, създайте \cl{RCC5Sgtatement} и използвайте съответните свойства, за да свържете две таксономични концепции през него.}
   \label{example-rcc5-taxonomic-concept-relationships}
 \end{figure}
 
@@ -229,7 +218,7 @@ In this section taxonomic concepts are aligned to DarwinCore (DwC) and a discuss
 \centering
   \includegraphics[width=\textwidth]{Figures/example-envo.png}
   \decoRule
-  \caption[Example of combining ENVO with OpenBiodiv-O.]{We create a shortcut for \emph{has habitat} and instance of the "forest biome" and link them to our taxonomic concept in order to express the fact that specimens of it have been found to live in \emph{Casuarina} trees.}
+  \caption[Example of combining ENVO with OpenBiodiv-O.]{Илюстрация на приравняване към ENVO.}
   \label{example-envo}
 \end{figure}
 
@@ -239,18 +228,14 @@ In this section taxonomic concepts are aligned to DarwinCore (DwC) and a discuss
 \centering
   \includegraphics[width=\textwidth]{Figures/example-treatment-concept}
   \decoRule
-  \caption[Example connection between a treatment and a taxonomic concept.]{A treatment is the realization of a taxonomic concept.}
+  \caption[Example connection between a treatment and a taxonomic concept.]{Таксономичната дискусия е реализация/израз/запис на таксономична концепция.}
   \label{example-treatment-concept}
 \end{figure}
 
-\section{Discussion}
+\section{Дискусия}
 
-OpenBiodiv-O is---together with the Treatment Ontologies (\cite{catapano_treatment_2016})---the first effort to model taxonomic articles as RDF. It introduces classes and properties in the domains of biodiversity publishing and biological taxonomy and aligns them with the SPAR Ontologies, the Treatment Ontologies, the Open Biomedical Ontologies (OBO), TaxPub, NOMEN, and DarwinCore. We believe this introduction bridges the ontological gap that we had outlined in our aims and allows for the creation of a Linked Open Dataset (LOD) of biodiversity information (biodiversity knowledge graph, \cite{senderov_open_2016, page_towards_2016}).
+Обсъжда се как OpenBiodiv-O е първият по рода си опит да се моделира онтологично таксономичната публикация. Тя проправя пътя към създаване на граф от знания за биологичното разнообразие.
 
-Furthermore, this biodiversity knowledge graph, together with this ontology, additional semantic rules, and user software forms the OpenBiodiv system. OpenBiodiv, as any taxonomic information system should, has taxonomic names as a key building block. For any given taxonomic name, the user will be able to rely on two patterns---\emph{replacement name} and \emph{related name}---to get answers to two questions of high importance to the working taxonomist. First: what is the current and historical usage of any given Linnaean name? Second: given a particular name, what other related names ought to be considered in a taxonomic discussion?
+\section{Заключение}
 
-In this section we carry out a discussion how the model of OpenBiodiv can be used to store \emph{multiplicity of opinion} about taxonomic relationships and thus democratize the taxonomic process. We further discuss the usefulness of OpenBiodiv to \emph{answer competency questions} from biological taxonomy. These will be touched upon more in the next chapter.
-
-\section{Conclusions}
-
-The chapter provides an informal conceptualization of the taxonomic process and a formalization in OpenBiodiv-O. It introduces classes and properties in the domains of biodiversity publishing and biological systematics and aligns them with the important domain-specific ontologies. By bridging the ontological gap between the publishing and the biodiversity domains, it will enable the creation of Open Biodiversity Knowledge Management System, consisting of (1) the ontology itself; (2) a Linked Open Dataset (LOD) of biodiversity information (biodiversity knowledge graph); and (3) user interface components aimed at searching, browsing and discovering knowledge in big corpora of previously dispersed scholarly publications. Through the usage of taxonomic concepts, we have included mechanisms for democratization of the scholarly process and not forcing a taxonomic opinion on the users.
+Главата предоставя концептуализация на таксономичния процес и формализация в OpenBiodiv-O. Въвеждат се класове и свойства в областта на публикуването на биоразнообразие и биологичната систематика и ги привежда в съответствие с важните онтологии, специфични за този домейн.
