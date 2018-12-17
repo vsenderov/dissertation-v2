@@ -16,8 +16,6 @@ SELECT ?institution_name (COUNT( DISTINCT ?icu) AS ?times_mentioned) (COUNT(DIST
        rdfs:label ?name .
     ?tnu pkm:mentions ?s .
     
-    
-    
     BIND("Museu Nacional de Rio de Janeiro (MNRJ)" as ?institution_name)
 	?icu rdf:type openbiodiv:InstitutionalCodeUsage ;
          dwc:institutional_code "MNRJ" .

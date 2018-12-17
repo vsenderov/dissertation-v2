@@ -145,7 +145,7 @@ Linked Open Data (LOD, \cite{heath_linked_2011}) е идея на Семанти
 
 Поради машината си за извод, OpenBiodiv може да функционира като експертна система. В тази подсекция даваме примери за такова запитване:
 
-\subsubsection{Проверка на валидноста на таксоночно име}
+\subsubsection{Проверка на валидноста на таксономично име}
 
 \subsubsection{Оценка на научната загуба след пожара в Museu Nacional в Бразилия}
 
@@ -201,8 +201,7 @@ Linked Open Data (LOD, \cite{heath_linked_2011}) е идея на Семанти
 
 След извичане на атомите, те могат да бъдат събрани обратно във формата на RDF.  Пример за генериране на RDF от атомите за даден автор е даден в Listing~\ref{listing:author_rdf}.
 
-\begin{lstlisting}[language=SPARQL,
-caption=RDF за автор на статия.
+\begin{lstlisting}[language=SPARQL,label=listing:author_rdf, caption=RDF за автор на статия., basicstyle=\ttfamily\tiny]
 :a a foaf:Person ;
    rdfs:label "Aijaz Ahmad Wachkoo".
    :affiliation "Central Institute of Temperate Horticulture, Srinagar, Jammu & Kashmir, India"@en ;
