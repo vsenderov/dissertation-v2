@@ -128,11 +128,11 @@ babel=english,bibencoding=inputenc]{biblatex}
 \frametitle{Кратка история на информатиката на биоразнообразието}
 
 \begin{itemize}
-    \item 1985 г. Работна група по таксономични бази-данни (TDWG)
+    \item 1985 г. Работна група по таксономични бази данни (TDWG)
     \item 1999 г. Глобален институт за информация за биологичното разнообразие (GBIF)
     \item 2008 г. ZooBank
-    \item 2010 г. Архитекура за глобални имена (GNA)
-    \item 2010 г. ZooKeys започва публиуване на семантично обогатен XML
+    \item 2010 г. Архитектура за глобални имена (GNA)
+    \item 2010 г. ZooKeys започва публикуване на семантично обогатен XML
     \item 2014 г. Декларация Bouchout
 \end{itemize}
 
@@ -212,7 +212,7 @@ babel=english,bibencoding=inputenc]{biblatex}
     \item Свързани отворени данни OpenBiodiv-LOD, под формата на RDF, обединяващи таксономично знание от Пенсофт, Плаци и GBIF (глава~3).
     \item Софтуерен пакет за манипулиране на RDF в средата за програмиране R, RDF4R (глава~4).
     \item Работен процес за автоматично вмъкване в онлайн ръкопис на данни от BOLD, GBIF, iDigBio, PlutoF. Автоматично създаване на онлайн ръкопис от EML файл с метаданни (глава~5 и \cite{senderov_online_2016}).
-    \item Уеб сайт\href{http://openbiodiv.net}{openbiodiv.net} (глава~6).
+    \item Уеб сайт \href{http://openbiodiv.net}{openbiodiv.net} (глава~6).
 
 \end{enumerate}
     
@@ -249,7 +249,7 @@ babel=english,bibencoding=inputenc]{biblatex}
 \hline
 Семантика & В самата база данни като OWL или RDFS-изрази. Единно пространство за данни. Изисква експертни онтолози да извличат знания. & Формална семантика обикновено липсва. Бързо внедряване. Унифицирано пространство за данни по-трудно постижимо. \\
 \hline
-Извод & От самата база данни от чрез онтологията или посредством SPARQL. С общо предназначение, по-бавен. & Външен за базата данни. Трябва да се напише за всяка конкретна задача. Със специално предназначение. По-бърз. \\
+Извод & От самата база данни чрез онтологията или посредством SPARQL. С общо предназначение, по-бавен. & Външен за базата данни. Трябва да се напише за всяка конкретна задача. Със специално предназначение. По-бърз. \\
 \hline
 Общност & Богата и зряла общност от онтолози и инженери по знания. Много онтологии за различните дисциплини. Стремяща се към стандарти. & Моделите се създават ad-hoc от програмисти за дадена задача. Постигането на интер-оперативност на данните изисква усилия. Стремяща се към работещи приложения. \\
 \hline
@@ -274,6 +274,16 @@ babel=english,bibencoding=inputenc]{biblatex}
 \decoRule
 
 \end{frame}
+
+\begin{frame}{Поток на информацията}
+\centering
+\adjustbox{max height=8cm, max width=\textwidth}{
+\includegraphics[height=8cm]{Figures/new-workflow}
+
+}
+
+\end{frame}
+
 
 
 \section{Oнтология на OpenBiodiv}
@@ -477,7 +487,7 @@ Region Connection Calculus 5
     \end{itemize}
     \item Експертни заявки
     \begin{itemize}
-        \item Проверка на валидноста на таксономично име
+        \item Проверка на валидността на таксономично име
         \item Оценка на научната загуба след пожара в Museu Nacional в Бразилия
     \end{itemize}
 \end{itemize}
@@ -488,6 +498,22 @@ Region Connection Calculus 5
 
 \lstinputlisting[language=SPARQL,
 label=listing:museu-nacional, basicstyle=\ttfamily\tiny]{Listings/museu-nacional-short.txt}
+
+\end{frame}
+
+\begin{frame}{Museu Nacional}
+\begin{itemize}
+    \item 195 споменавания на MNRJ
+    \item в 22 статии на Pensoft
+    \item 6 127 различни имена в статиите, които се позовават на материали от MNRJ
+    \begin{itemize}
+     \item насекоми (Xestoblatta, Charinus, Lamproclasiopa, etc.)
+    \item  нематоди (Paracamallanus, Cucullanus, Pseudascarophis, etc.)
+    \item  птици (Ichthyouris)
+    \item  риби (Sphoeroides)
+    \end{itemize}
+     
+\end{itemize}
 
 \end{frame}
 
@@ -602,7 +628,7 @@ label=listing:museu-nacional, basicstyle=\ttfamily\tiny]{Listings/museu-nacional
     \item Свързани отворени данни OpenBiodiv-LOD, под формата на RDF, обединяващи таксономично знание от Пенсофт, Плаци и GBIF (глава~3).
     \item Софтуерен пакет за манипулиране на RDF в средата за програмиране R, RDF4R (глава~4).
     \item Работен процес за автоматично вмъкване в онлайн ръкопис на данни от BOLD, GBIF, iDigBio, PlutoF. Автоматично създаване на онлайн ръкопис от EML файл с метаданни (глава~5 и \cite{senderov_online_2016}).
-    \item Уеб сайт\href{http://openbiodiv.net}{openbiodiv.net} (глава~6).
+    \item Уеб сайт \href{http://openbiodiv.net}{openbiodiv.net} (глава~6).
 
 \end{enumerate}
 
@@ -678,12 +704,13 @@ label=listing:museu-nacional, basicstyle=\ttfamily\tiny]{Listings/museu-nacional
 \centering
 \includegraphics[width=\textwidth]{Figures/JBS-featured.jpg}
 \decoRule
+\\
 \caption{Статията за OpenBiodiv-O е на началната страница JBS}
 \label{fig:jbs-featured}
 \end{frame}
 
 
-\begin{frame}{Общо цицтати}
+\begin{frame}{Общо цитати}
 
 \centering
 \includegraphics[width=\textwidth]{Figures/Google-scholar.png}
@@ -756,7 +783,7 @@ label=listing:museu-nacional, basicstyle=\ttfamily\tiny]{Listings/museu-nacional
 \begin{frame}{Образователна програма}
 
 \begin{enumerate}
-    \item Изпит по базов специализиран предмет проведен на 20.08.2018 г. Отл. (6). Комисия: проф. д-р Галя Ангелова, доц. д-р Кирил Симов
+    \item Изпит по базов специализиран предмет, проведен на 20.08.2018 г. Отл. (6). Комисия: проф. д-р Галя Ангелова, доц. д-р Кирил Симов
     \item Успешно положен изпит по езикова подготовка. (Изпит по английски език)   
     \item Успешно положен изпит по компютърни умения. (Изпит по програмиране с MATLAB)
     \item Курс ``Основи на таксономията и фаунистиката''. (Лектори: проф. Д.б.н. Бойко Б. Георгиев и Д-р Павел Н. Николов. Семестър: зимен семестър, 2015 г.)
