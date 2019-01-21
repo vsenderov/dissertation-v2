@@ -10,7 +10,11 @@ PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
 PREFIX prism: <http://prismstandard.org/namespaces/basic/2.0/>
 PREFIX dwciri: <http://rs.tdwg.org/dwc/iri/>
 
-SELECT ?institution_name (COUNT( DISTINCT ?icu) AS ?times_mentioned) (COUNT(DISTINCT ?title) AS ?articles) (GROUP_CONCAT(DISTINCT ?title; SEPARATOR=", ") AS ?doi_of_articles)  (GROUP_CONCAT(DISTINCT ?name; SEPARATOR=", ") AS ?names_mentioned) (COUNT (DISTINCT ?name) AS ?number_of_taxa)
+SELECT ?institution_name (COUNT( DISTINCT ?icu) AS ?times_mentioned)
+(COUNT(DISTINCT ?title) AS ?articles) 
+(GROUP_CONCAT(DISTINCT ?title; SEPARATOR=", ") AS ?doi_of_articles)
+(GROUP_CONCAT(DISTINCT ?name; SEPARATOR=", ") AS ?names_mentioned)
+(COUNT (DISTINCT ?name) AS ?number_of_taxa)
 {
    	?s rdf:type openbiodiv:ScientificName ;
        rdfs:label ?name .

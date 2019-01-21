@@ -2,15 +2,61 @@
 \addcontentsline{toc}{chapter}{Conclusion}
 \label{chapter:summary}
 
+\section*{Results}
+\addcontentsline{toc}{section}{Results}
+
+We believe that the presented scientific work fulfills the stated objective and tasks. In this section, we will summarize the results achieved and how they relate to the fulfillment of the stated objectives and tasks. In the course of the study all six tasks were achieved and the results were published in prestigious international journals and presented at major conferences in Bulgaria and abroad. The most important results of the thesis are summarized as follows:
+
+\paragraph{Result 1.} The cenral result of the thesis is the creation of a domain conceptualization of biodiversity publishing and a formal ontology OpenBiodiv-O enabling the linking of biodiversity knowledge on the basis of scholarly publications. OpenBiodiv-O serves as the basis of the Linked Open Data OpenBiodiv-LOD. By developing an ontology focusing on biological taxonomy, we provided an ontology that fills in the gaps between ontologies for biodiversity resources such as Darwin-SW and semantic publishing ontologies such as the ontologies comprising the SPAR Ontologies. Moreover, we take the view that it is advantageous to model the taxonomic process itself rather than any particular state of knowledge. This result has been described in Chapter~\ref{chapter-ontology} and in \cite{senderov_openbiodiv-o:_2018} and fulfills Objective 1. The source code of the ontology is available under \href{https://github.com/pensoft/openbiodiv-o}{github.com/pensoft/openbiodiv-o}. At this stage, the coverage of the ontology of the different types of resources is sufficient to be the basis for creating the LOD. In this sense, it is completed. On the other hand, adding classes and properties for new types of biodiversity data is possible and desirable.
+
+\paragraph{Result 2.} The second result of the thesis is the creation of the software architecture of the OpenBiodiv system outlined in Chapter~\ref{chapter-openbiodiv} and \cite{senderov_open_2016}. This result fulfills Objective 2.
+
+\paragraph{Result 3.} The third result of the thesis has been the creation of a Linked Open Dataset, OpenBiodiv-LOD, consisting of a transformation to RDF-triples and integration in a single store of information from three major repositories of biodiversity data: the XML sources of biological journals published by Pensoft Publishers, the XML sources of treatments freed by Plazi, and a CSV dump of GBIF's taxonomic backbone. OpenBiodiv-LOD is available under \href{http://graph.openbiodiv.net}{\url{graph.openbiodiv.net}} and has been described in Chapter~\ref{chapter-lod}. This result fulfills Objective 3. The LOD, similar to the ontology, are already a solid resource for biologists, as they include information from most articles published by Pensoft and Plazi and count over 600 million triplets. Like the ontology, they should be expanded.
+
+\paragraph{Result 4.} In order to  create the Linked Open Data, a software package for the R programming environment, RDF4R, was developed. RDF4R enables the manipulation of RDF data within R and facilities the transformation of scientific publications from a semi-structured XML format to structured semantic RDF. This result has been discussed in Chapter~\ref{chapter-rdf4r} and fulfills Objective 4. The package is available online as free software under \href{http://github.com/pensoft/rdf4r}{\url{github.com/pensoft/rdf4r}}. Furthermore, additional source code (unoptimized) describing XML schemas of Pensoft and Plazi and working in tandem with RDF4R to convert XML to RDF can be found under \href{http://github.com/pensoft/ropenbio}{\url{github.com/pensoft/ropenbio}}. Since the package was successfully used to create an LOD, it can be considered complete. Like any software package, however, it should be maintained and developed. Details on the directions for its development are listed in the next section.
+
+\paragraph{Result 5.} The mechanisms to convert semi-structured XML into RDF-triples are complemented by workflows enabling the enrichment of the XML sources of Pensoft journals by data automatically imported from the major international biodiversity data repositories: BOLD, GBIF, iDigBio, as well as PlutoF. Furthermore, it is now possible, thanks to this dissertation effort to automatically create manuscripts from metadata encoded in the Ecological Metadata Language (EML). The discussion of these automated workflows---automatic data paper generation and automatic occurrence record import---is carried out in Chapter~\ref{chapter-case-study}. It fulfills Objective 5.
+
+\paragraph{Result 6.} To complement the creation of OpenBiodiv-LOD, we have developed a website running on top of the knowledge graph \href{http://openbiodiv.net}{openbiodiv.net}, containing a semantic search engine and apps. The website is discussed in Chapter~\ref{chapter-webportal} and fulfills Objective 6. The website is still in beta. The functionality that works great is the semantic search engine. For some basic data types there are templates for visualization. However, the site can not be considered complete and most users use the SPARQL search language.
+
+\section * {Summary and outlook}
+\addcontentsline {toc} {section} {Summarizing discussion of the results and future directions}
+
+An important conclusion that can be drawn from the work is that it is possible to use a semantic graph for the integration of a large volume of data on biodiversity. We were unexpectedly given the opportunity to illustrate the power of the knowledge graph by analyzing the damage from the tragic fire at the Museu Nacional in Rio de Janeiro. In addition, we have illustrated that it is possible to write relatively simple logical conclusions to check the validity of a taxonomic name.
+
+Due to the large amount of data, we found that although the use of a semantic graph was possible, some of the initially chosen technologies proved to be inapplicable or difficult to apply. We have observed (see Chapter~\ref {chapter-lod}) that the practical application of the full logical OWL model is difficult due to performance problems. Instead in the end, we utilized RDFS that is less powerful but faster. Another observation of ours is that although the R programming environment has given us some advantages in rapidly creating the prototype of the system, by increasing the complexity of the program code needed in the real-life system to cover all private cases, a language with dynamic types such as R creates headaches in debugging. At the same time, we were impressed by the powerful functional programming toolkit R provided.
+
+A big difficulty was the disambiguation of resources such as author names or taxonomic names. In the functional design of the RDF4R package we have put modules that allow us to insert a list of functions/rules for disambiguation when searching for an identifier for a given resource. However, we had only limited success with the rule-based disambiguation and for this reason in the production system it was discontinued at the moment.
+
+Considering these and other ``lessons,'' the future development of the OpenBiodiv project can be outlined in the following not necessarily comprehensive way:
+
+\begin{enumerate}
+    \item As an immediate goal, to expand the LOD and ontology with new data types and new data sources using the existing framework. Such data are e.g. genomic data, occurrence data, (bio-)geographic data, visual data, descriptive data, etc.
+    \item Look for even closer integration with other existing biodiversity data repositories than GBIF. For example, BioImages, iNaturalist, BOLD, and so on.
+    \item As a longer-term task to study the transition from a semantic graph to a technology where the inference engine is separated from the data base layer as WikiData or Neo4j. In addition to increased performance, this will give extra flexibility to the project, such as allowing the use of non-RDF-based inference engines such as Euler.
+    \item Continue developing system software with an even wider application of functional programming and porting it into a functional language like, for example, Haskell or O'CAML.
+    \item To investigate the problem of disambiguation and related problems for named entity recognition of interesting resources from biodiversity, as well various image recognition tasks, from the point of view of machine learning.
+    \item Expanding the website with more templates and new applications.
+\end{enumerate}
+
+\section*{Key scientific and applied contributions}
+\addcontentsline{toc}{section}{Key scientific and applied contributions}
+
+The results discussed in the previous two sections determine the following scientific and applied contributions:
+
+\begin{enumerate}
+    \item Scientific contribution: creating an ontology and a formal model of the field of biodiversity knowledge publication.
+    \item Applied scientific contribution: analyzing information sources and Creating OpenBiodiv-LOD.
+    \item Applied scientific Contribution: the implementation of OpenBiodiv software modules.
+\end{enumerate}
+
+Our ontology fills the unique niche between bibliographic ontologies such as SPAR and ontologies for biodiversity such as Darwin-SW and as such is undoubtedly of great scientific interest to the biodiversity informatics community. The work has a serious scientific and applied character by providing both a Linked Open Dataset on top of the ontology and software for its users and system developers.
+
 \section*{List of publications}
 \addcontentsline{toc}{section}{List of publications}
 
 \subsection*{Publications in international scientific journals}
 \addcontentsline{toc}{subsection}{Publications in international scientific journals}
-
-A list of publications related to the dissertation follows. The listed articles have been published without exception in international scientific journals. [1] is an early version of the Introduction as well Chapter~\ref{chapter-openbiodiv} and contains work towards Objective 1 (Architecture). The text of publications [2, 3, 5, 6, 7] are not a part of the text of the dissertation one-to-one but contain work towards Objective 5 (Workflows). The ideas presented in these publications have to large degree been incorporated in Chapter~\ref{chapter-case-study} whose backbone is formed by [4]; thus Objective 5 (Workflows) is achieved. [7] is published in the peer-reviewed journal ZooKeys with impact factor 1.031 (early 2018). [8] is the most important publication under this dissertation and was published in the high-impact Journal of Biomedical Semantics with impact factor 2.413 (early 2018). [8] makes up the content of Chapter~\ref{chapter-ontology} and is the main body of work fulfilling Objective 2 (Ontology). It was a featured article on the home-page of JBS (Fig.~\ref{fig:jbs-featured}). Chapter~\ref{chapter-lod} and Chapter~\ref{chapter-rdf4r} that form Objectives 3, 4, respectively are currently being prepared as manuscripts in international journals. Furthermore, the software library RDF4R described in Chapter~\ref{chapter-rdf4r} is being submitted to the open source repository rOpenSci\footnote{``We build software with a community of users and developers, and educate scientists about transparent research practices.'' \url{https://ropensci.org/}}.
-
-The total number of citations that have been accumulated excluding self-citations (cross-citations) is at least 19. The total number of citations that have been accumulated including cross-citations and citations of work outside of the scope of the dissertation is at least 46 (Google Scholar).
 
 \begingroup
 \newcounter{count}
@@ -18,16 +64,20 @@ The total number of citations that have been accumulated excluding self-citation
 \defcounter{maxnames}{\value{count}}%
 
 \begin{enumerate}
-\item \longfullcite{senderov_open_2016} (\ul{at least 3 unique citations})
-\item \longfullcite{sarah_faulwetter_emodnet_2016}
-\item \longfullcite{cardoso_species_2016} (\ul{at least 5 unique citations})
-\item \longfullcite{senderov_online_2016} (\ul{at least 1 unique citation})
-\item \longfullcite{penev_strategies_2017} (\ul{at least 6 unique citations})
-\item \longfullcite{penev_arpha-biodiv:_2017} (\ul{at least 1 unique citations})
-\item \longfullcite{arriaga-varela_review_2017} 
-\item \longfullcite{senderov_openbiodiv-o:_2018} (\ul{at least 3 unique citations})
+\item \longfullcite{senderov_open_2016}. Unique citations by \cite{franz_increase_2018}, \cite{ordynets_aphyllophoroid_2017} and \cite{burt_origin_2017}.
+\item \longfullcite{sarah_faulwetter_emodnet_2016}. Unique citation by \cite{pyron_21st_2018}.
+\item \longfullcite{cardoso_species_2016}. Indexed in WoS SCOPUS, as well as SJR $0.465$. Unique citations by \cite{bachman_quantifying_2018}, \cite{lin_draft_2017}, \cite{li_genomic_2017}, \cite{milano_conservazione_2017}.
+\item \longfullcite{senderov_online_2016}. Unique citations by \cite{ordynets_aphyllophoroid_2017}.
+\item \longfullcite{penev_strategies_2017} Unique citations by \cite{tennant_multi-disciplinary_2017}, \cite{marwick_standard_2017},  \cite{kissling_towards_2018},  \cite{mathieu_egrowth:_2018}, \cite{__2018}, \cite{__2017}, \cite{filippova_biodiversity_2017},  \cite{__2017-1}.
+\item \longfullcite{penev_arpha-biodiv:_2017} 
+\item \longfullcite{arriaga-varela_review_2017}. Indexed in WoS IF $1.079$, Q3 SCOPUS, SJR $0.533$.
+\item \longfullcite{senderov_openbiodiv-o:_2018} Indexed in WoS IF $1.6$, Q3 SCOPUS, SJR $0.952$. Unique citations by \cite{michel_modelling_2018}, \cite{page_ozymandias:_2018}, \cite{page_liberating_2018}.
 \end{enumerate}
 \endgroup
+
+A list of publications related to the dissertation follows. The listed articles have been published without exception in four international scientific journals: five articles in Research Ideas and Outcomes, one article in ZooKeys (WoS IF $1.079$, Q3 SCOPUS, SJR $0.533$), one article in Biodiversity Data Journal (WoS SCOPUS, SJR 0.465) and one article in Journal of Biomedical Semantics (WoS IF $1.6$, Q3 SCOPUS, SJR $0.952$). The total number of citations that have been accumulated for the candidate excluding self-citations (cross-citations) is at least 20. The citing articles are given in the list above. The total number of citations that have been accumulated including cross-citations and citations of work outside of the scope of the dissertation is at least 48 (Google Scholar).
+
+[1] is an early version of the Introduction as well Chapter~\ref{chapter-openbiodiv} and contains work towards Objective 2 (Architecture). The text of publications [2, 3, 5, 6, 7] are not a part of the text of the dissertation one-to-one but contain work towards Objective 5 (Workflows). The ideas presented in these publications have to large degree been incorporated in Chapter~\ref{chapter-case-study} whose backbone is formed by [4]; thus Objective 5 (Workflows) is achieved. [7] is published in the peer-reviewed journal ZooKeys with impact factor 1.031 (early 2018). [8] is the most important publication under this dissertation and was published in the high-impact Journal of Biomedical Semantics with impact factor 2.413 (early 2018). [8] makes up the content of Chapter~\ref{chapter-ontology} and is the main body of work fulfilling Objective 1 (Ontology). It was a featured article on the home-page of JBS (Fig.~\ref{fig:jbs-featured}). Chapter~\ref{chapter-lod} and Chapter~\ref{chapter-rdf4r} that form Objectives 3, 4, respectively are currently being prepared as manuscripts in international journals. Furthermore, the software library RDF4R described in Chapter~\ref{chapter-rdf4r} is being submitted to the open source repository rOpenSci\footnote{``We build software with a community of users and developers, and educate scientists about transparent research practices.'' \url{https://ropensci.org/}}.
 
 \begin{figure}
 \centering
@@ -75,18 +125,6 @@ The total number of citations that have been accumulated excluding self-citation
 \addcontentsline{toc}{section}{Main scientific and applied contributions}
 
 In the course of the investigative effort, all six objectives have been achieved and the results have been published in international journals and have been presented at major conferences in Bulgaria and abroad. The most important contributions of the thesis are summarized as follows:
-
-\paragraph{Contribution 1.} The first key contribution of the thesis is the creation of the software architecture of the OpenBiodiv system outlined in Chapter~\ref{chapter-openbiodiv} and \cite{senderov_open_2016}. This contribution fulfills Objective 1.
-
-\paragraph{Contribution 2} The second key contribution of the thesis is the creation of a domain conceptualization of biodiversity publishing and a formal ontology OpenBiodiv-O enabling the linking of biodiversity knowledge on the basis of scholarly publications. OpenBiodiv-O serves as the basis of the linked open data OpenBiodiv-LOD. By developing an ontology focusing on biological taxonomy, our intent is to provide an ontology that fills in the gaps between ontologies for biodiversity resources such as Darwin-SW and semantic publishing ontologies such as the ontologies comprising the SPAR Ontologies. Moreover, I take the view that it is advantageous to model the taxonomic process itself rather than any particular state of knowledge. This contribution has been described in Chapter~\ref{chapter-ontology} and in \cite{senderov_openbiodiv-o:_2018} and fulfills Objective 2. Its source code can be viewed under \href{https://github.com/pensoft/openbiodiv-o}{github.com/pensoft/openbiodiv-o}.
-
-\paragraph{Contribution 3.} The third key contribution of the thesis has been the creation of a linked open dataset, OpenBiodiv-LOD, consisting of a transformation to RDF-triples and integration in a single store of information from three major repositories of biodiversity data: the XML sources of biological journals published by Pensoft Publishers, the XML sources of treatments freed by Plazi, and a CSV dump of GBIF's taxonomic backbone. OpenBiodiv-LOD is available under \href{http://graph.openbiodiv.net}{\url{graph.openbiodiv.net}} and has been described in Chapter~\ref{chapter-lod}. This contribution fulfills Objective 3.
-
-\paragraph{Contribution 4.} In order to  create the linked open data, a software package for the R programming environment, RDF4R, was developed. RDF4R enables the manipulation of RDF data within R and facilities the transformation of scientific publications from a semi-structured XML format to structured semantic RDF. This contribution has been discussed in Chapter~\ref{chapter-rdf4r} and fulfills Objective 4. The package is available online as free software under \href{http://github.com/pensoft/rdf4r}{\url{github.com/pensoft/rdf4r}}. Furthermore, additional source code (unoptimized) describing XML schemas of Pensoft and Plazi and working in tandem with RDF4R to convert XML to RDF can be found under \href{http://github.com/pensoft/ropenbio}{\url{github.com/pensoft/ropenbio}}.
-
-\paragraph{Contribution 5.} The mechanisms to convert semi-structured XML into RDF-triples are complemented by workflows enabling the enrichment of the XML sources of Pensoft journals by data automatically imported from the major international biodiversity data repositories: BOLD, GBIF, iDigBio, as well as PlutoF. Furthermore, it is now possible, thanks to this dissertation effort to automatically create manuscripts from metadata encoded in the Ecological Metadata Language (EML). The discussion of these automated workflows---automatic data paper generation and automatic occurrence record import---is carried out in Chapter~\ref{chapter-case-study}. It fulfills Objective 5.
-
-\paragraph{Contribution 6.} To complement the creation of OpenBiodiv-LOD, we have developed a web-site running on top of the knowledge graph \href{http://openbiodiv.net}{openbiodiv.net}, containing a semantic search engine and apps. The website is discussed in Chapter~\ref{chapter-webportal} and fulfills Objective 6.
 
 \section*{Декларация за оригиналност}
 \addcontentsline{toc}{section}{Декларация за оригиналност}

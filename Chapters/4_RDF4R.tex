@@ -3,7 +3,7 @@
 
 RDF4R (\cl{rdf4r}) is an R package for working with Resource Description Framework (\cite{rdf_working_group_resource_2014}) data. It was developed as part of the OpenBiodiv project but is completely free of any OpenBiodiv-specific code and can be used for generic purposes requiring tools to work with RDF data in the R programming environment (\cite{r_core_team_r:_2016}).
 
-\section{Installation}
+\section{Prerequisites}
 
 RDF4R depends on the following packages (list may change in future releases):
 
@@ -14,15 +14,6 @@ RDF4R depends on the following packages (list may change in future releases):
 \item{\cl{R6} (\cite{chang_r6:_2017})}
 \item{{\cl{devtools} (\cite{wickham_devtools:_2018})}---needed if one is to do a GitHub install.}
 \end{itemize}
-
-Installation of the above packages via \cl{install.packages} is needed to use RDF4R. Pay attention to error messages during their installation as additional OS-level components may need to be installed.
-
-Install RDF4R from GitHub with the following command:
-
-\begin{lstlisting}[language=R,
-basicstyle=\ttfamily\tiny]
-devtools::install_github("vsenderov/rdf4r")
-\end{lstlisting}
 
 We are currently in the process of submitting the package to a repository and making it available through the standard installation facilities of R. Our intention is to publish it through CRAN and/or rOpenSci\footnote{Repositories accessible under \url{https://cran.r-project.org/} and \url{https://github.com/ropensci/}, respectively.}.
 
@@ -52,17 +43,7 @@ Prefixes are managed automatically during serialization by being extracted from 
 
 \subsection{Creation and serialization of RDF}
 
-RDF4R uses an own implementation of smart dynamically reallocated vector data structure to store RDF triples as mutable R6 objects. Blank nodes are partially supported: a triple may contain an anonymous RDF object (a list of triples with the same subject) as its third position. In this case, the parent RDF is serialized as Turtle by using the bracket syntax (Listing~\ref{fig:turtle-brackets}). Currently, the serialization procedure only supports Turtle (and its variant Trig, \cite{bizer_rdf_2014}) and only supports adding new triples.
-
-\begin{lstlisting}[language=SPARQL,
-caption=Using brackets to express RDF blank nodes in Turtle/TriG.,
-label=fig:turtle-brackets,
-basicstyle=\ttfamily\tiny]
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-
-# :someone knows someone else, who has the name "Bob".
-:someone foaf:knows [ foaf:name "Bob" ] .
-\end{lstlisting}
+RDF4R uses an own implementation of smart dynamically reallocated vector data structure to store RDF triples as mutable R6 objects, called \cl{DynVector}. Blank nodes are partially supported: a triple may contain an anonymous RDF object (a list of triples with the same subject) as its third position. In this case, the parent RDF is serialized as Turtle by using the bracket syntax, i.e. to express that someone knows someone else whose name is ``Bob'', we can write in Turtle \cl{:someone foaf:knows [ foaf:name "Bob" ] .} Currently, the serialization procedure only supports Turtle (and its variant Trig, \cite{bizer_rdf_2014}) and only supports adding new triples.
 
 \subsection{A basic vocabulary of semantic elements}
 
@@ -76,97 +57,24 @@ Here, we explain how to use the package RDF4R by means of examples. In order to 
 
 The code in Listing~\ref{fig:rdf4r-connecting-graphdb} creates an object, \cl{graphdb}, that stores the information needed to access the database. The user needs to supply it to the access functions discussed later. We have also created an object \cl{openbiodiv} that contains read-only access to the main OpenBiodiv instance. All examples in this section use one of these two access points.
 
-\begin{lstlisting}[language=SPARQL,
-caption=R code: connecting to an RDF database using RDF4R. Outputs are given as comments after the statements.,
-label=fig:rdf4r-connecting-graphdb,
-basicstyle=\ttfamily\tiny]
-library(rdf4r)
 
-openbiodiv = rdf4r::basic_triplestore_access(
-  server_url = "http://graph.openbiodiv.net",
-  repository = "depl2018-lite"
-)
-
-graphdb = rdf4r::basic_triplestore_access(
-  server_url = "http://graph.openbiodiv.net",
-  user = "dbuser",
-  password = "public-access",
-  repository = "test"
-)
-
-graphdb
-# $server_url
-# [1] "http://graph.openbiodiv.net"
-# $repository
-# [1] "test"
-# $authentication
-# <request>
-# Options:
-# * httpauth: 1
-# * userpwd: dbuser:public-access
-# $status
-# [1] 8
-# attr(,"class")
-# [1] "list"                       "triplestore_access_options"
-
-openbiodiv
-# $server_url
-# [1] "http://graph.openbiodiv.net"
-# $repository
-# [1] "depl2018-lite"
-# $authentication
-# NULL
-# $status
-# [1] 8
-# attr(,"class")
-# [1] "list"                       "triplestore_access_options"
-
-get_protocol_version(graphdb)
-# [1] 8
-
-list_repositories(graphdb)
-# uri             id readable writable
-# 1         http://graph.openbiodiv.net/repositories/SYSTEM         SYSTEM     true     true
-# 2 http://graph.openbiodiv.net/repositories/depl2018-mini2 depl2018-mini2     true     true
-# 3       http://graph.openbiodiv.net/repositories/depl2018       depl2018     true     true
-# 4           http://graph.openbiodiv.net/repositories/test           test     true     true
-# 5  http://graph.openbiodiv.net/repositories/depl2018-lite  depl2018-lite     true     true
-\end{lstlisting}
 
 \subsection{Example: convert a SPARQL query to an R function}
 
-The purpose of this example is to convert a simple SPARQL lookup query to an R function. The publicly accessible endpoint happens to store some biological information but for the purposes of this example knowledge of biological taxonomy or the ontology of the store is irrelevant. It is only necessary to know that the database stores information about biological papers that contain references to biological names. We are looking for papers that mention the biological name \emph{Drosophila}, which is a genus of flies. Please note the parametrization of the SPARQL query.
+The purpose of this example (Listing~\ref{listing:update_replacement_name}) is to convert a simple SPARQL lookup query to an R function. The publicly accessible endpoint happens to store some biological information but for the purposes of this example knowledge of biological taxonomy or the ontology of the store is irrelevant. It is only necessary to know that the database stores information about biological papers that contain references to biological names. We are looking for papers that mention the biological name \emph{Drosophila}, which is a genus of flies. Please note the parametrization of the SPARQL query.
 
-\lstinputlisting[language=R,
-caption=R. Parameterized SPARQL query to lookup a genus in OpenBiodiv.,
-label=listing:update_replacement_name, basicstyle=\ttfamily\tiny]{Listings/update-replacement-name.SPARQL.txt}
 
-Note that this almost valid SPARQL with one exception - the \cl{\%param} string on the first line of the WHERE clause. A SPARQL query is parameterized by specifying a \% in front of the tokens that have to become the arguments of the generated R function. Construction of a function follows that looks up a genus (a biological rank) by a supplied string.
-
-\begin{lstlisting}[language=R,
-basicstyle=\ttfamily\tiny]
-genus_lookup = rdf4r::query_factory(p_query = p_query, access_options = openbiodiv)
-\end{lstlisting}
+Note that this almost valid SPARQL with one exception: the \%\cl{param} string on the first line of the WHERE clause. A SPARQL query is parameterized by specifying a \% in front of the tokens that have to become the arguments of the generated R function. In order to construct a function that looks up a genus (a biological rank) by a supplied string we then simply write: \cl{genus_lookup = rdf4r::query_factory(p_query = p_query, access_options = openbiodiv)}.
 
 \cl{query_factory} takes two arguments: the parameterized query and an object with access options for an endpoint and returns an R function whose arguments are the parameters of the parameterized SPARQL query and which executes the SPARQL query against the endpoint specified in \cl{access_options} and returns formatted results as a dataframe.
 
-\begin{lstlisting}[language=R,
-basicstyle=\ttfamily\tiny]
-genus_lookup("\"Drosophila\"")
-#    genus title
-# 1   Drosophila  Characterisation of the chemical profiles of Brazilian and Andean
-# morphotypes belonging to the Anastrephafraterculus complex (Diptera, Tephritidae)
-# 2   Drosophila                A new species group in the genus Dichaetophora, with
-# descriptions of six new species from the Oriental region (Diptera, Drosophilidae)
-\end{lstlisting}
+The usage of the function that we have just created is given in Listing~\ref{listing-genus-lookup}. Note that we have enclosed the string \cl{Drosophila} in escaped quotes as only that would make the replacement of the parameter in the parameterized SPARQL query a valid SPARQL. Had the parameter been a resource identifier, we would not have needed the quotes. In a later example, we will show how we can get around this hassle by utilizing the built-in classes for literals and resource identifiers.
 
-Note that we have enclosed the string \cl{Drosophila} in escaped quotes as only that would make the replacement of the parameter in the parameterized SPARQL query a valid SPARQL. Had the parameter been a resource identifier, we would not have needed the quotes. In a later example, we will show how we can get around this hassle by utilizing the built-in classes for literals and resource identifiers.
-
-\paragraph{Excercise.} Try experimenting with \cl{genus_lookup} by looking up information about some other genera (\emph{Eupolybothrus} - a millepede, \emph{Myotis} - a bat).
+\paragraph{Excercise.} Try experimenting with \cl{genus_lookup} by looking up information about some other genera (\emph{Eupolybothrus}: a millepede, \emph{Myotis}: a bat).
 
 \subsection{Setting up literals and identifiers}
 
-We want to model Table~\ref{table:classical-works} (recreated from Alemang and Hendler 2008). We will use the prefix \url{<http://rdflib-rdf4r.net/>} for all instances that we create and a dummy ontology (not actually defined) with the prefix \url{<http://art-ontology.net/>} to reify the example classes and properties.
+We want to model Table~\ref{table:classical-works} (recreated from Alemang and Hendler 2008). We will use the prefix \cl{<http://rdflib-rdf4r.net/>} for all instances that we create and a dummy ontology (not actually defined) with the prefix \cl{<http://art-ontology.net/>} to reify the example classes and properties.
 
 \begin{table}[h!]
 \caption{Tabular Data about Elizabethan Literature and Music recreated from \cite{allemang_semantic_2011}.}
@@ -189,37 +97,16 @@ We want to model Table~\ref{table:classical-works} (recreated from Alemang and H
 
 In Listing~\ref{listing:literal-construction}, we repeatedly called the \cl{literal} function, which is a constructor of objects of class \emph{literal}, with different arguments. \cl{literal} can construct phrases in English (or any other language) with the \cl{lang} argument. It can construct pure strings (by omitting the \cl{lang} argument) of type \cl{xsd:string}. It can also construct literals of a number of defined semantic types by using the \cl{xsd_type} argument. In order to see which types are available execute \cl{?semantic_elements}. Note that the XSD types are implemented as resource identifiers (class \emph{identifier}), which allows the user to implement additional types that are not provided. Behind the scenes the URL of the resource identifier will be appended to the representation (\cl{?represent}) of the literal as text through pasting of \cl{\textasciicircum\textasciicircum} and then the URL.
 
-\lstinputlisting[language=R,
-caption=R. Literal construction.,
-label=listing:literal-construction, basicstyle=\ttfamily\tiny]{Listings/literal-construction.R.txt}
+In other words, for the work titles, we use the argument \cl{lang="en"} telling the literal constructor that the literal value is in English, whereas for the names, we omit this argument. As per semantic web conventions, when the argument is omitted, and no type is explicitly specified, it is assumed that the literal is a string (\cl{xsd:string}). For the literals containing years, on the other hand, we explicitly specify an integer type; otherwise they would have parsed as strings as well. All of this can be seen by inspecting the individual lists in Listing~\ref{listing:literal-representation} (objects of class \emph{literal} are lists).
 
-In other words, for the work titles, we use the argument \cl{lang="en"} telling the literal constructor that the literal value is in English, whereas for the names, we omit this argument. As per semantic web conventions, when the argument is omitted, and no type is explicitly specified, it is assumed that the literal is a string (\cl{xsd:string}). For the literals containing years, on the other hand, we explicitly specify an integer type; otherwise they would have parsed as strings as well. All of this can be seen by inspecting the individual lists (objects of class \emph{literal} are lists):
-
-\lstinputlisting[language=R,
-caption=R. Representation of literals.,
-label=listing:literal-representation, basicstyle=\ttfamily\tiny]{Listings/representation-literals.R.txt}
 
 \subsubsection{Identifiers}
 
-We need resource identifiers for our resources, i.e. playwrights, works of art, as well as for the classes of which those resources are instances of. To make things simpler, we use a fictional ontology with the prefix \url{<http://art-ontology.net/>}. We hardcode identifiers for the ontology classes:
+We need resource identifiers for our resources, i.e. playwrights, works of art, as well as for the classes of which those resources are instances of. To make things simpler, we use a fictional ontology with the prefix \cl{http://art-ontology.net/}. We hardcode identifiers for the ontology classes (Listing~\ref{listing-entering-identifiers}, \ref{listing-entering-identifiers2}).
 
-\lstinputlisting[language=R,
-caption=R. Entering identifiers.,
-label=listing:some-identifiers, basicstyle=\ttfamily\tiny]{Listings/some-identifiers.R.txt}
-
-Inspection of one class and one property:
-
-\lstinputlisting[language=R,
-caption=R. Entering identifiers.,
-label=listing:some-identifiers, basicstyle=\ttfamily\tiny]{Listings/identifier-representation.R.txt}
-
-Note that each identifier object is a list where the field \cl{$uri} gives the URI of the resource and the field \cl{$qname} gives the shortened name (QNAME) with respect to the prefix stored in \cl{$prefix}. Also note that both literal and identifier are \emph{representable}, i.e. we have defined a the generic represent on both of the classes that outputs a proper string representation of the literal or resource identifier that can be used in a serialization.
+Note that each identifier object is a list where the field \$\cl{uri} gives the URI of the resource and the field \$\cl{qname} gives the shortened name (QNAME) with respect to the prefix stored in \$\cl{prefix}. Also note that both literal and identifier are \emph{representable}, i.e. we have defined a the generic represent on both of the classes that outputs a proper string representation of the literal or resource identifier that can be used in a serialization.
 
 We also need resource identifiers for our entities such as Shakespeare, Christopher Marlowe, etc. Semantic Web best practices discourage the liberal minting of identifiers for resources for which somebody has already minted an identifier. Instead, we want to look them up in a database, and only mint if they are not found. For this, RDF4R offers factory functions to create lookup/ mint functions as seen in Listing~\ref{listing:id-factory}.
-
-\lstinputlisting[language=R,
-caption=R. Identifier factory.,
-label=listing:id-factory, basicstyle=\ttfamily\tiny]{Listings/id-factory.R.txt}
 
 \cl{identifer_factory}'s first argument, \cl{fun}, is a list of (lookup) functions that will be tried. \cl{identifier_factory} returns an identifier constructor function, in our case we named it \cl{lookup_or_mind_id}. The lookup functions need to return a single column (labeled e.g. \cl{?id}). They will be tried in order and if any of them returns a unique solution, it will be returned by the constructor function to create an identifier object. If none of the lookup functions returns a unique solution, a new identifier will be minted. 
 
@@ -227,61 +114,16 @@ label=listing:id-factory, basicstyle=\ttfamily\tiny]{Listings/id-factory.R.txt}
 
 To create an RDF representation, create a new \cl{ResourceDescriptionFramework} object and add triples to it (Listing~\ref{listing:rdf-representation}).
 
-\lstinputlisting[language=R,
-caption=R. Creating RDF.,
-label=listing:rdf-representation, basicstyle=\ttfamily\tiny]{Listings/rdf-representation.R.txt}
+The easiest way to inspect the \cl{ResourceDescriptionFramework} object is to serialize it. Before we serialize, however, we need to specify the subgraph where the triples should be stored with \$\cl{set_context(id)}. We will reuse the example for that (Listing~\ref{listing:rdf-2}).
 
-The easiest way to inspect the \cl{ResourceDescriptionFramework} object is to serialize it. Before we serialize, however, we need to specify the subgraph where the triples should be stored with \cl{$set_context(id)}. We will reuse the example for that.
-
-\begin{lstlisting}[language=R,
-basicstyle=\ttfamily\tiny]
-classics_rdf$set_context(identifier(id = "classic_example", prefix  = eg))
-cat(classics_rdf$serialize())
-# @prefix example: <http://rdflib-rdf4r.net/> .
-# @prefix art: <http://art-ontology.net/> .
-# @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-# @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-# example:classic_example {
-# example:0bac3b32-8aac-11e8-a1c9-c961fe5afe72   art:wrote   example:0aeae996-8aac-11e8-a1c9-c961fe5afe72 ,  example:0aff274e-8aac-11e8-a1c9-c961fe5afe72 . 
-# example:0aeae996-8aac-11e8-a1c9-c961fe5afe72   rdfs:label   "King Lear"@en . 
-# example:0aff274e-8aac-11e8-a1c9-c961fe5afe72   rdfs:label   "As You Like It"@en ;
-#	 art:has_year   "1599"^^xsd:integer ;
-#	 rdf:type   art:Play .
-# }
-\end{lstlisting}
 
 \subsection{Submitting RDF to the triple store}
 
-Now that we have created some RDF (\cl{classics_rdf}), we are ready to submit it to the endpoint (\cl{graphdb}). We can either submit it directly via \cl{add_data}, or we can use the \cl{add_data_factory} to create a submitter function.
+Now that we have created some RDF (\cl{classics_rdf}), we are ready to submit it to the endpoint (\cl{graphdb}). We can either submit it directly via \cl{add_data}, or we can use the \cl{add_data_factory} to create a submitter function (Listing~\ref{listing:rdf-3}).
 
-\begin{lstlisting}[language=R,
-basicstyle=\ttfamily\tiny]
-# via add_data
-add_data(classics_rdf$serialize(), access_options = graphdb)
-simple_lookup(represent(lking_lear))
-# id
-# 1 http://rdflib-rdf4r.net/0aeae996-8aac-11e8-a1c9-c961fe5afe72
-simple_lookup(represent(lking_lear))
-# id
-# 1 http://rdflib-rdf4r.net/0aeae996-8aac-11e8-a1c9-c961fe5afe72
-p_query_describe = "PREFIX example: <http://rdflib-rdf4r.net/>
-+ SELECT ?p ?o
-+ WHERE {
-+ %resource ?p ?o .
-+ }"
-describe = query_factory(p_query = p_query_describe, access_options = graphdb)
-describe(represent(idshakespeare))
-# p                                                            o
-# 1 http://art-ontology.net/wrote http://rdflib-rdf4r.net/0aeae996-8aac-11e8-a1c9-c961fe5afe72
-#2 http://art-ontology.net/wrote http://rdflib-rdf4r.net/0aff274e-8aac-11e8-a1c9-c961fe5afe72
-describe(represent(idas_you_like_it))
-#               p                            o
-# 1 http://www.w3.org/1999/02/22-rdf-syntax-ns#type http://art-ontology.net/Play
-# 2      http://www.w3.org/2000/01/rdf-schema#label               As You Like It
-# 3                http://art-ontology.net/has_year                         1599
-\end{lstlisting}
 
-\section{Discussion}
+
+\section{Discussion and Conclusions}
 
 \subsection{Related Packages}
 

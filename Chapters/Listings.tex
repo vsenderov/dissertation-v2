@@ -1,0 +1,277 @@
+\chapter{Listings} % Main chapter title
+%\addcontentsline{toc}{chapter}{Listings}
+\label{chapter-listings}
+
+This chapter contains source code listings that are too long to be included in-line in the previous chapters.
+
+
+\section{Code for the Linked Open Data}
+
+\begin{lstlisting}[language=XML,
+caption=Taxonomic name usage of the name \emph{P. emarginaticeps} in Taxpub. Name parts are tagged with \cl{ tp:taxon-name-part} and the expansion of abbreviations (regularization) is marked up with the attribute \cl{reg},
+label=listing:tnu, basicstyle=\ttfamily\scriptsize]
+<tp:taxon-name>
+  <tp:taxon-name-part taxon-name-part-type="genus" reg="Pristaulacus">
+    P.
+  </tp:taxon-name-part>
+  <tp:taxon-name-part taxon-name-part-type="species" reg="emarginaticeps">
+    emarginaticeps
+  </tp:taxon-name-part>
+  <tp:taxon-name-part taxon-name-part-type="authority">
+    Turner 1922
+  </tp:taxon-name-part>
+</tp:taxon-name> 
+\end{lstlisting}
+
+\lstinputlisting[language=SPARQL,
+caption=Most prolific author SPARQL query.,
+label=listing:prolific_author, basicstyle=\ttfamily\scriptsize]
+{Listings/prolific-author.SPARQL.txt}
+
+\lstinputlisting[language=SPARQL,
+caption=Most mentioned scientific name.,
+label=listing:mentioned_name, basicstyle=\ttfamily\scriptsize]{Listings/name-mentions.SPARQL.txt}
+
+\lstinputlisting[language=SPARQL,
+caption=Most mentioned species name.,
+label=listing:mentioned_species_name, basicstyle=\ttfamily\scriptsize]{Listings/species-name-mentions.SPARQL.txt}
+
+\lstinputlisting[language=SPARQL,
+caption=What are the available taxonomic ranks?,
+label=listing:ranks, basicstyle=\ttfamily\scriptsize]{Listings/ranks.SPARQL.txt}
+
+\lstinputlisting[language=SPARQL,
+caption=Most mentioned species name by number of articles that mention it.,
+label=listing:mentioned_name_articles, basicstyle=\ttfamily\scriptsize]
+{Listings/species-name-mentions-by-articles.SPARQL.txt}
+
+\lstinputlisting[language=SPARQL,
+caption=Most mentioned scientific name in figures,
+label=listing:mentioned_name_figures, basicstyle=\ttfamily\scriptsize]
+{Listings/name-mentions-by-figure.SPARQL.txt}
+
+\lstinputlisting[language=SPARQL,
+caption=Figures of a given article., label=listing:figures_article, basicstyle=\ttfamily\scriptsize]
+{Listings/figures-of-article.SPARQL.txt}
+
+\lstinputlisting[language=SPARQL,
+caption=Taxonomic discoveries in the weevils., label=listing:new_curcu, basicstyle=\ttfamily\scriptsize]
+{Listings/new-curculionidae.SPARQL.txt}
+
+\lstinputlisting[language=SPARQL,
+caption=Sample Lucene query via SPARQL. We have intentionally misspelled the person's name., label=listing:replacement-name, basicstyle=\ttfamily\scriptsize]
+{ Listings/sample-lucene-query.SPARQL.txt}
+
+\lstinputlisting[language=SPARQL,
+caption=Asks if the name given by the label has been replaced., label=listing:replacement-name, basicstyle=\ttfamily\scriptsize]
+{Listings/ask-replacement-name.SPARQL.txt}
+
+\lstinputlisting[language=SPARQL,
+caption=Asks if the name given by the label is considered unavailable., label=listing:unavailable-name, basicstyle=\ttfamily\scriptsize]{Listings/ask-unavailable.name.SPARQL.txt}
+
+\lstinputlisting[language=SPARQL,
+caption=Impact of fire in Museu Nacional on biodiversity knowledge., label=listing:museu-nacional, basicstyle=\ttfamily\scriptsize	]{Listings/museu-nacional.SPARQL.txt}
+
+\begin{lstlisting}[language=XML,
+caption=XML snippet of an author.,
+label=listing:author-xml-snippet, basicstyle=\ttfamily\scriptsize]
+<contrib contrib-type="author" corresp="no">
+  <name name-style="western">
+    <surname>Wachkoo</surname>
+    <given-names>Aijaz Ahmad</given-names>
+  </name>
+  <uri content-type="orcid">https://orcid.org/0000-0003-2506-9840</uri>
+  <xref ref-type="aff" rid="A3">3</xref>
+</contrib>  
+
+<aff id="A3">
+ <label>3</label>
+ <addr-line>
+   Central Institute of Temperate Horticulture, Srinagar, Jammu & Kashmir, India
+ </addr-line>
+</aff>
+\end{lstlisting}
+
+\begin{lstlisting}[language=SPARQL,
+caption=RDF snippet of an author. This is a somewhat idealized situation in which the language of the address was available from the article., label=listing:author_rdf, basicstyle=\ttfamily\scriptsize]
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+:a a foaf:Person ;
+   rdfs:label "Aijaz Ahmad Wachkoo".
+   :affiliation "Central Institute of Temperate Horticulture, Srinagar, Jammu & Kashmir, India"@en ;
+   foaf:familyName "Wachkoo" ;
+   foaf:givenName "Aijaz Ahmad" .
+\end{lstlisting}
+
+\begin{lstlisting}[language=SPARQL,
+caption=., label=listing:parent-node-rdf, basicstyle=\ttfamily\scriptsize]
+:2b836ad5-db56-4093-9752-33c9f7892de6   rdf:type   fabio:JournalArticle ;
+  rdfs:label   "Changes to publication requirements made at the XVIII Internation\
+al Botanical Congress in Melbourne - what does e-publication mean for you?" ;
+  dc:title   "Changes to publication requirements made at the XVIII International\
+ Botanical Congress in Melbourne - what does e-publication mean for you?" ;
+ prism:doi   "10.3897/mycokeys.1.1961" ;
+ dc:publisher   "Pensoft Publishers" ;
+ prism:publicationDate   "2011-9-14"^^xsd:date ;
+ dcterms:publisher   openbiodiv:0df76aab-1fcf-4118-8e50-198e830a7bed .
+ openbiodiv:151a37ba-a337-4855-8e01-200f5ec0251b   rdf:type   deo:Introduction ;
+         po:isContainedBy   openbiodiv:2b836ad5-db56-4093-9752-33c9f7892de6 .
+}
+\end{lstlisting}
+
+\lstinputlisting[language=SPARQL,
+caption=Update rule for replacement name.,
+label=listing:update_replacement_name, basicstyle=\ttfamily\scriptsize]{Listings/update-replacement-name.SPARQL.txt}
+
+\lstinputlisting[language=SPARQL,
+caption=Update rule for related name.,
+label=listing:update_related_name, basicstyle=\ttfamily\scriptsize	]{Listings/update-related-name.SPARQL.txt}
+
+\section{Code for the R Library}
+
+\begin{lstlisting}[language=SPARQL,
+caption=R code: connecting to an RDF database using RDF4R. Outputs are given as comments after the statements.,
+label=fig:rdf4r-connecting-graphdb,
+basicstyle=\ttfamily\scriptsize]
+library(rdf4r)
+
+openbiodiv = rdf4r::basic_triplestore_access(
+  server_url = "http://graph.openbiodiv.net",
+  repository = "depl2018-lite"
+)
+
+graphdb = rdf4r::basic_triplestore_access(
+  server_url = "http://graph.openbiodiv.net",
+  user = "dbuser",
+  password = "public-access",
+  repository = "test"
+)
+
+graphdb
+# $server_url
+# [1] "http://graph.openbiodiv.net"
+# $repository
+# [1] "test"
+# $authentication
+# <request>
+# Options:
+# * httpauth: 1
+# * userpwd: dbuser:public-access
+# $status
+# [1] 8
+# attr(,"class")
+# [1] "list"                       "triplestore_access_options"
+
+openbiodiv
+# $server_url
+# [1] "http://graph.openbiodiv.net"
+# $repository
+# [1] "depl2018-lite"
+# $authentication
+# NULL
+# $status
+# [1] 8
+# attr(,"class")
+# [1] "list"                       "triplestore_access_options"
+
+get_protocol_version(graphdb)
+# [1] 8
+
+list_repositories(graphdb)
+# uri             id                                                 readable writable
+# 1 http://graph.openbiodiv.net/repositories/SYSTEM         SYSTEM   true     true
+# 2 http://graph.openbiodiv.net/repositories/depl2018-mini2 depl2018-mini2    true     true
+# 3 http://graph.openbiodiv.net/repositories/depl2018       depl2018 true     true
+# 4 http://graph.openbiodiv.net/repositories/test           test     true     true
+# 5 http://graph.openbiodiv.net/repositories/depl2018-lite  depl2018-lite     true     true
+\end{lstlisting}
+
+
+\lstinputlisting[language=R,
+caption=R. Parameterized SPARQL query to lookup a genus in OpenBiodiv.,
+label=listing:update_replacement_name, basicstyle=\ttfamily\scriptsize]{Listings/update-replacement-name.SPARQL.txt}
+
+
+\begin{lstlisting}[language=R,
+label=listing-genus-lookup,
+basicstyle=\ttfamily\scriptsize]
+genus_lookup("\"Drosophila\"")
+#    genus title
+# 1   Drosophila  Characterisation of the chemical profiles of Brazilian and Andean
+# morphotypes belonging to the Anastrephafraterculus complex (Diptera, Tephritidae)
+# 2   Drosophila                A new species group in the genus Dichaetophora, with
+# descriptions of six new species from the Oriental region (Diptera, Drosophilidae)
+\end{lstlisting}
+
+\lstinputlisting[language=R,
+caption=R. Literal construction.,
+label=listing:literal-construction, basicstyle=\ttfamily\scriptsize]{Listings/literal-construction.R.txt}
+
+
+\lstinputlisting[language=R,
+caption=R. Representation of literals.,
+label=listing:literal-representation, basicstyle=\ttfamily\scriptsize]{Listings/representation-literals.R.txt}
+
+\lstinputlisting[language=R,label=listing-entering-identifiers,
+caption=R. Entering identifiers.,
+ basicstyle=\ttfamily\scriptsize]{Listings/some-identifiers.R.txt}
+
+\lstinputlisting[language=R,
+caption=R. Entering identifiers.,label=listing-entering-identifiers2,
+basicstyle=\ttfamily\scriptsize]{Listings/identifier-representation.R.txt}
+
+
+\lstinputlisting[language=R,
+caption=R. Identifier factory.,
+label=listing:id-factory, basicstyle=\ttfamily\scriptsize]{Listings/id-factory.R.txt}
+
+\lstinputlisting[language=R,
+caption=R. Creating RDF.,
+label=listing:rdf-representation, basicstyle=\ttfamily\scriptsize]{Listings/rdf-representation.R.txt}
+
+
+
+\begin{lstlisting}[language=R, label=listing:rdf-2, basicstyle=\ttfamily\scriptsize, caption=Creating RDF]
+classics_rdf$set_context(identifier(id = "classic_example", prefix  = eg))
+cat(classics_rdf$serialize())
+# @prefix example: <http://rdflib-rdf4r.net/> .
+# @prefix art: <http://art-ontology.net/> .
+# @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+# @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+# example:classic_example {
+# example:0bac3b32-8aac-11e8-a1c9-c961fe5afe72   art:wrote   example:0aeae996-8aac-11e8-a1c9-c961fe5afe72 ,  example:0aff274e-8aac-11e8-a1c9-c961fe5afe72 . 
+# example:0aeae996-8aac-11e8-a1c9-c961fe5afe72   rdfs:label   "King Lear"@en . 
+# example:0aff274e-8aac-11e8-a1c9-c961fe5afe72   rdfs:label   "As You Like It"@en ;
+#	 art:has_year   "1599"^^xsd:integer ;
+#	 rdf:type   art:Play .
+# }
+\end{lstlisting}
+
+\begin{lstlisting}[language=R,
+label=listing:rdf-3,
+basicstyle=\ttfamily\scriptsize, caption=Creating RDF]
+# via add_data
+add_data(classics_rdf$serialize(), access_options = graphdb)
+simple_lookup(represent(lking_lear))
+# id
+# 1 http://rdflib-rdf4r.net/0aeae996-8aac-11e8-a1c9-c961fe5afe72
+simple_lookup(represent(lking_lear))
+# id
+# 1 http://rdflib-rdf4r.net/0aeae996-8aac-11e8-a1c9-c961fe5afe72
+p_query_describe = "PREFIX example: <http://rdflib-rdf4r.net/>
++ SELECT ?p ?o
++ WHERE {
++ %resource ?p ?o .
++ }"
+describe = query_factory(p_query = p_query_describe, access_options = graphdb)
+describe(represent(idshakespeare))
+# p                                                            o
+# 1 http://art-ontology.net/wrote http://rdflib-rdf4r.net/0aeae996-8aac-11e8-a1c9-c961fe5afe72
+#2 http://art-ontology.net/wrote http://rdflib-rdf4r.net/0aff274e-8aac-11e8-a1c9-c961fe5afe72
+describe(represent(idas_you_like_it))
+#               p                            o
+# 1 http://www.w3.org/1999/02/22-rdf-syntax-ns#type http://art-ontology.net/Play
+# 2      http://www.w3.org/2000/01/rdf-schema#label               As You Like It
+# 3                http://art-ontology.net/has_year                         1599
+\end{lstlisting}

@@ -1,6 +1,6 @@
 % Awtoreferat
-%\input{avtoreferat.tex}
-\input{presentation.tex}
+\input{avtoreferat.tex}
+%\input{presentation.tex}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Masters/Doctoral Thesis 
 % LaTeX Template
@@ -150,7 +150,7 @@ headsepline, % Uncomment to get a line under the header
 \company{\href{http://pensoft.net}{Pensoft Publishers}}
 
 % Your university's name and URL, this is used in the title page and abstract, print it elsewhere with \univname
-\department{\href{http://www.iict.bas.bg}{Institute for Information and Communication Technologies \\ Bulgarian Academy of Sciencess \\ Pensoft Publishers}} % Your department's name and URL, this is used in the title page and abstract, print it elsewhere with \deptname
+\department{\href{http://www.iict.bas.bg}{Institute of Information and Communication Technologies \\ Bulgarian Academy of Sciencess \\ Pensoft Publishers}} % Your department's name and URL, this is used in the title page and abstract, print it elsewhere with \deptname
 \group{\href{http://http://lml.bas.bg/}{Department of Linguistic Modelling and Knowledge Processing}} % Your research group's name and URL, this is used in the title page, print it elsewhere with \groupname
 
 
@@ -268,25 +268,6 @@ OpenBiodiv is a publicly-accessible production-stage semantic system running on 
 
 %\listoftables % Prints the list of tables
 
-% %----------------------------------------------------------------------------------------
-% %	ABBREVIATIONS
-% %----------------------------------------------------------------------------------------
-
-\begin{abbreviations}{ll} % Include a list of abbreviations (a table of two columns)
-\addchaptertocentry{Abbreviations}
-
-\textbf{TDWG} & \textbf{L}ist \textbf{A}Taxonomy \textbf{D}atabase \textbf{W}orking \textbf{G}roup\\
-\textbf{GBIF} &     \textbf{G}lobal  \textbf{B}iodiversity \textbf{I}nformation \textbf{F}acility\\
-\textbf{OECD} &     \textbf{O}rganization for \textbf{E}conomic \textbf{C}ooperation and \textbf{D}evelopment\\
-\textbf{LOD} &     \textbf{L}inked \textbf{O}pen \textbf{D}ata\\
-\textbf{GNA} &     \textbf{G}lobal \textbf{N}ames \textbf{A}rchitecture\\
-\textbf{OBKMS} &    \textbf{O}pen \textbf{B}iodiversity \textbf{K}nowledge \textbf{M}anagement \textbf{S}ystem \\
-\textbf{BDJ} &     \textbf{B}iodiveristy \textbf{D}ata \textbf{J}ournal\\
-\textbf{OWL} & \textbf{W}eb \textbf{O}ntology \textbf{L}anguage \\
-\textbf{RDF} & \textbf{R}esource \textbf{D}escription \textbf{F}ormat\\
-
-\end{abbreviations}
-
 
 
 \begin{software}{ll} % Include a list of abbreviations (a table of two columns)
@@ -332,9 +313,55 @@ OpenBiodiv is a publicly-accessible production-stage semantic system running on 
 \include{Chapters/4_RDF4R}
 \include{Chapters/5_CaseStudy}
 \include{Chapters/6_Webportal}
+\include{Chapters/Listings}
+\include{Chapters/Addendum}
 %\part{Conclusion}
 %\label{part:conclusion}
 \include{Chapters/7_Conclusion}
+
+
+
+% %----------------------------------------------------------------------------------------
+% %	ABBREVIATIONS
+% %----------------------------------------------------------------------------------------
+
+\begin{abbreviations}{ll}% Include a list of abbreviations (a table of two columns)
+\addchaptertocentry{Abbreviations}
+\textbf{AI} & \textbf{A}rtificial \textbf{I}ntelligence\\
+\textbf{API} & \textbf{A}pplication \textbf{P}rogramming \textbf{I}nterfaces\\
+\textbf{BDJ} & \textbf{B}iodiveristy \textbf{D}ata \textbf{J}ournal\\
+\textbf{BIN} & \textbf{B}arcode \textbf{I}dentification \textbf{N}umbers\\
+\textbf{BOLD} & \textbf{B}arcode of \textbf{L}ife \textbf{D}ata \textbf{S}ystems\\
+\textbf{DBMS} & \textbf{D}ata\textbf{D}ase \textbf{M}anagement \textbf{S}ystems\\
+\textbf{DEO} & \textbf{D}iscourse \textbf{E}lement \textbf{O}ntology’s\\
+\textbf{Darwin-SW} & \textbf{Darwin} \textbf{S}emantic \textbf{W}eb\\ 
+\textbf{DwC} & \textbf{D}ar\textbf{w}in \textbf{C}ore\\
+\textbf{DoCO} & \textbf{Do}cument \textbf{C}omponent \textbf{O}ntology\\
+\textbf{DTD} & \textbf{D}ocument \textbf{T}ype \textbf{D}efinition\\
+\textbf{FaBiO} & \textbf{F}RBR-\textbf{a}ligned \textbf{Bi}bliographic \textbf{O}ntology\\
+\textbf{GBIF} & \textbf{G}lobal  \textbf{B}iodiversity \textbf{I}nformation \textbf{F}acility\\
+\textbf{GNA} & \textbf{G}lobal \textbf{N}ames \textbf{A}rchitecture\\
+\textbf{ICZN} & \textbf{I}nternational \textbf{C}ode of \textbf{Z}oological \textbf{N}omenclature\\
+\textbf{IICT} & \textbf{I}nstitute of \textbf{I}nformation and \textbf{C}ommunication \textbf{T}echnology\\
+\textbf{KBMS} & \textbf{K}nowledge \textbf{B}ase \textbf{M}anagement \textbf{S}ystem\\
+\textbf{LOD} & \textbf{L}inked \textbf{O}pen \textbf{D}ata\\
+\textbf{OBKMS} & \textbf{O}pen \textbf{B}iodiversity \textbf{K}nowledge \textbf{M}anagement \textbf{S}ystem \\
+\textbf{OECD} & \textbf{O}rganization for \textbf{E}conomic \textbf{C}ooperation and \textbf{D}evelopment\\
+\textbf{OWL} & \textbf{W}eb \textbf{O}ntology \textbf{L}anguage \\
+\textbf{RDF} & \textbf{R}esource \textbf{D}escription \textbf{F}ormat\\
+\textbf{RDF4R} & A an \textbf{R} package \textbf{for} working with \textbf{RDF}\\
+\textbf{RDFS} & \textbf{RDF} \textbf{S}chema\\
+\textbf{RCC-5} & \textbf{R}egion \textbf{C}onnection \textbf{C}alculus \textbf{5}\\ 
+\textbf{SKOS} & \textbf{S}imple \textbf{K}nowledge \textbf{O}rganization \textbf{S}ystem\\
+\textbf{SPAR} & \textbf{S}emantic \textbf{P}ublishing and \textbf{R}eferencing \textbf{O}ntologies\\
+\textbf{SPARQL} & \textbf{SPARQL} \textbf{P}rotocol and \textbf{R}DF \textbf{Q}uery \textbf{L}anguage\\
+\textbf{TDWG} & \textbf{A}Taxonomy \textbf{D}atabase \textbf{W}orking \textbf{G}roup\\
+\textbf{TNSS} & \textbf{T}axonomic \textbf{N}omenclatural \textbf{S}tatus \textbf{T}erms\\
+\textbf{UI} & \textbf{U}ser \textbf{I}nterface\\
+\textbf{XML} & e\textbf{X}tensible \textbf{M}arkup \textbf{L}anguage
+
+\end{abbreviations}
+
 
 %----------------------------------------------------------------------------------------
 %	THESIS CONTENT - APPENDICES

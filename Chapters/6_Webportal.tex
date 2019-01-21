@@ -7,7 +7,7 @@
 %	SECTION 1
 %----------------------------------------------------------------------------------------
 
-Under \href{http://openbiodiv.net}{openbiodiv.net} one can reach the main portal giving access to OpenBiodiv resources. This portal was developed by Pensoft to support OpenBiodiv. \href{http://openbiodiv.net}{OpenBiodiv.net} presents two visual elements to the user: the search bar and list of application icons in the bottom. Furthermore, under \href{http://graph.openbiodiv.net}{graph.openbiodiv.net} (also accessible from the icon SPARQL endpoint) one can reach the OpenBiodiv workbench, a feature of GraphDB that gives web access to the SPARQL endpoint.
+Under \href{http://openbiodiv.net}{openbiodiv.net} one can reach the main portal giving access to OpenBiodiv resources. This portal was developed to support OpenBiodiv. \href{http://openbiodiv.net}{OpenBiodiv.net} presents two visual elements to the user: the search bar and list of application icons in the bottom. Furthermore, under \href{http://graph.openbiodiv.net}{graph.openbiodiv.net} (also accessible from the icon SPARQL endpoint) one can reach the OpenBiodiv workbench, a feature of GraphDB that gives web access to the SPARQL endpoint.
 
 These User Interface (UI) features are designed to facilitate the three user types of the system that we envisage:
 
@@ -21,7 +21,7 @@ These User Interface (UI) features are designed to facilitate the three user typ
 
 \subsection{Basic usage}
 
-The basic level of interaction is for users who want a quick look into the system's database; they can be beginners without knowledge of the Semantic Web or of taxonomy, or advanced users with little time or a very basic query. An example of such a user will simply look for an entity (e.g. taxonomic name, person) and would like to retrieve some information about it. To do so, one simply needs to type the label of the thing that they are looking for. For example, in Fig.~\ref{fig:basic-level} I typed ``Daniel Mietchen'' in order to get information about a collaborator of mine. The system automatically identified Daniel as a person (\cl{foaf:Person}) and rendered the RDF statements that it received about him with the appropriate template. The templates are different for the different types (e.g. people, taxa, etc.) and easily customized and extensible. For each resource that is rendered, we always display its stable URI. If one clicks on the URI itself, they will land on the same page.
+The basic level of interaction is for users who want a quick look into the system's database; they can be beginners without knowledge of the Semantic Web or of taxonomy, or advanced users with little time or a very basic query. An example of such a user will simply look for an entity (e.g. taxonomic name, person) and would like to retrieve some information about it. To do so, one simply needs to type the label of the thing that they are looking for. For example, in Fig.~\ref{fig:basic-level} we typed ``Daniel Mietchen'' in order to get information about a collaborator of mine. The system automatically identified Daniel as a person (\cl{foaf:Person}) and rendered the RDF statements that it received about him with the appropriate template. The templates are different for the different types (e.g. people, taxa, etc.) and easily customized and extensible. For each resource that is rendered, we always display its stable URI. If one clicks on the URI itself, they will land on the same page.
 
 \begin{figure}
 \centering
@@ -31,7 +31,7 @@ The basic level of interaction is for users who want a quick look into the syste
 \label{fig:basic-level}
 \end{figure}
 
-Note that the system does not need an exact match to display a resource. If I, for example, would misspell Daniel's name and type ``Daniel Mitchen'' instead, a fuzzy lookup of the Lucene search-index powering the system will find that ``Daniel Mietchen'' is the closest match to the string I had typed and display the correct page. If there were to be any ambiguity a list of ``Alternative interpretation'' would be displayed.
+Note that the system does not need an exact match to display a resource. If we, for example, would misspell Daniel's name and type ``Daniel Mitchen'' instead, a fuzzy lookup of the Lucene search-index powering the system will find that ``Daniel Mietchen'' is the closest match to the string we had typed and display the correct page. If there were to be any ambiguity a list of ``Alternative interpretation'' would be displayed.
 
 \subsection{Specialist level}
 
@@ -44,3 +44,9 @@ The power user is someone with knowledge of the Semantic Web and its technologie
 \section{Implementation}
 
 The UI-components of the web portal are developed in the ReactJS JavaScript framework written by Facebook. Server-side processing is done in PHP. This part of OpenBiodiv is omitted from a detailed discussion in the present dissertation effort.
+
+\section{Discussion and Outlook}
+
+The website is still in beta. The functionality that works great is the semantic search engine. For some basic data types there are templates for visualization. However, the site can not be considered complete and most users use the SPARQL search language.
+
+A future direction, in which the site can be taken, is to expand it with more templates and new apps.
