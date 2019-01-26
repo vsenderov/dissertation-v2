@@ -3,19 +3,9 @@ PREFIX openbiodiv: <http://openbiodiv.net/>
 PREFIX pkm: <http://proton.semanticweb.org/protonkm#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX dwciri: <http://rs.tdwg.org/dwc/iri/>
-select (MAX(?name) AS ?name) (COUNT(DISTINCT ?tnu) AS ?nmentions) where { 
+SELECT (MAX(?name) AS ?name) (COUNT(DISTINCT ?tnu) AS ?nmentions) where { 
 	?s rdf:type openbiodiv:ScientificName ;
        rdfs:label ?name ;
        dwciri:taxonRank openbiodiv:Species .
     ?tnu pkm:mentions ?s .
 } GROUP BY ?s ORDER BY DESC(?nmentions)
-\end{lstlisting}
-
-\begin{lstlisting}[language=SPARQL,
-caption=List of ranks in OpenBiodiv.,
-label=listing:ranks, basicstyle=\ttfamily\tiny]
-PREFIX dwciri: <http://rs.tdwg.org/dwc/iri/>
-SELECT DISTINCT ?rank
-WHERE {
-    ?a dwciri:taxonRank ?rank
-}

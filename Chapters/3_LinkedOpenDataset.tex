@@ -1,9 +1,13 @@
 \chapter{OpenBiodiv Linked Open Dataset}
 \label{chapter-lod}
 
-We have created a Linked Open Dataset, OpenBiodiv LOD, comprising biodiversity information extracted from Pensoft journals and Plazi Treatment Bank and which was integrated with the GBIF Taxonomic Backbone. As ontology, we use the new \mbox{OpenBiodiv-O} developed by us. We propose to the biodiversity informatics community to use OpenBiodiv LOD as the central point for a biodiversity knowledge graph. OpenBiodiv LOD is an RDF dataset adhering to the principles of Linked Open Data. It is available under \url{http://graph.openbiodiv.net}, which provides a SPARQL endpoint for it.
+%INTRODUCTION%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-OpenBiodiv LOD is a synthetic dataset. It does not contain previously unpublished data. Instead it integrates information previously found in academic journals and databases into one dataset. It also contains  extracted, previously unaccessible information from the original datasets in the form of relations. In the next few paragraphs we discuss the sources of information that were combined to from OpenBiodiv LOD and the types of resources that have been extracted, as well as the overall data model. We also discuss the principles of Linked Open Data that tie everything together. The chapter ends with many examples of queries on the dataset and with a technical discussion of how it was generated.
+We have created a biodiversity Linked Open Dataset, \mbox{OpenBiodiv-LOD}, comprising biodiversity information extracted from academic journals and public repositories. As ontology, we use the new \mbox{OpenBiodiv-O} developed by us (\cite{senderov_openbiodiv-o:_2018}). We propose to the biodiversity informatics community to use OpenBiodiv-LOD as the central point for the biodiversity knowledge graph. OpenBiodiv-LOD is an RDF dataset adhering to the principles of Linked Open Data. It is available under \url{http://graph.openbiodiv.net}, which provides a SPARQL endpoint for it.
+
+OpenBiodiv LOD is a synthetic dataset. It does not contain previously unpublished data. Instead it integrates information previously found in academic journals and databases into one dataset. It also contains extracted, previously inaccessible information from the original datasets in the form of relations. In the next few sections we discuss the sources of information that were combined to from OpenBiodiv LOD and the types of resources that have been extracted, as well as the overall data model. We also discuss the principles of Linked Open Data that tie everything together. The chapter ends with many examples of queries on the dataset and with a technical discussion of how it was generated.
+
+%INTRODUCTION%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Data Sources}
 
@@ -326,3 +330,7 @@ Considering these and other ``lessons,'' the future development of the OpenBiodi
     \item Look for even closer integration with other existing biodiversity data repositories than GBIF. For example, BioImages, iNaturalist, BOLD, and so on.
     \item As a longer-term task to study the transition from a semantic graph to a technology where the inference engine is separated from the data base layer as WikiData or Neo4j. In addition to increased performance, this will give extra flexibility to the project, such as allowing the use of non-RDF-based inference engines such as Euler.
 \end{enumerate}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
